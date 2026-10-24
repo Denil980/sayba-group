@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 68" fill="none">
+  <!-- Sayba Emblem -->
+  <g id="sayba-emblem">
+    <!-- Architectural Triangle Roof -->
+    <polygon points="32,8 59,47 5,47" fill="#B3B3B3" />
+    
+    <!-- Bold Teal S Monogram -->
+    <text x="32" y="58" font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif" font-size="44" font-weight="900" fill="#80B3AD" text-anchor="middle">S</text>
+  </g>
+
+  <!-- Typography (Original Brand Charcoal/Black #211F1F) -->
+  <g id="sayba-typography" fill="#211F1F">
+    <!-- SAYBA -->
+    <text x="76" y="32" font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif" font-size="24" font-weight="800" letter-spacing="0.2em">SAYBA</text>
+    <!-- GROUP -->
+    <text x="77" y="54" font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif" font-size="17" font-weight="600" letter-spacing="0.38em">GROUP</text>
+  </g>
+</svg>
