@@ -100,14 +100,14 @@ export const ProjectsPage: React.FC = () => {
       {/* ========================================================
           HERO BANNER
           ======================================================== */}
-      <section className="relative bg-[#0A1715] text-white pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden">
+      <section className="relative bg-[#141515] text-white pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=85"
             alt="Sayba Projects Architecture"
             className="w-full h-full object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1715] via-[#0A1715]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#141515] via-[#141515]/80 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -122,11 +122,11 @@ export const ProjectsPage: React.FC = () => {
               variants={heroItemVariants}
               className="flex items-center gap-2 text-xs text-neutral-400 uppercase tracking-widest"
             >
-              <Link to="/" className="hover:text-brand-gold transition-colors">
+              <Link to="/" className="hover:text-[#80B3AD] transition-colors">
                 Home
               </Link>
               <span>/</span>
-              <span className="text-brand-gold font-medium">Our Projects</span>
+              <span className="text-[#80B3AD] font-medium">Our Projects</span>
             </motion.div>
 
             <motion.h1
@@ -156,7 +156,7 @@ export const ProjectsPage: React.FC = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap items-center gap-2.5 mb-10 pb-6 border-b border-[#E5DFD1]"
+          className="flex flex-wrap items-center gap-2.5 mb-10 pb-6 border-b border-[#DCE1DF]"
         >
           {filterTabs.map((tab) => {
             const isActive = selectedFilter === tab.key;
@@ -166,14 +166,14 @@ export const ProjectsPage: React.FC = () => {
                 type="button"
                 onClick={() => handleFilterChange(tab.key)}
                 className={`relative px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer select-none ${
-                  isActive ? 'text-brand-gold' : 'text-neutral-600 hover:text-brand-dark'
+                  isActive ? 'text-[#141515]' : 'text-neutral-600 hover:text-brand-dark'
                 }`}
               >
                 {/* Smooth sliding background pill */}
                 {isActive && (
                   <motion.div
                     layoutId="activeFilterPill"
-                    className="absolute inset-0 bg-[#0A1715] rounded-full shadow-md -z-0"
+                    className="absolute inset-0 bg-[#80B3AD] rounded-full shadow-md -z-0"
                     transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                   />
                 )}
@@ -184,8 +184,8 @@ export const ProjectsPage: React.FC = () => {
                   <span
                     className={`text-[10px] px-2 py-0.5 rounded-full font-sans font-bold transition-colors ${
                       isActive
-                        ? 'bg-brand-gold/20 text-brand-gold'
-                        : 'bg-white text-neutral-500 border border-[#E5DFD1]'
+                        ? 'bg-[#141515] text-white'
+                        : 'bg-white text-neutral-500 border border-[#DCE1DF]'
                     }`}
                   >
                     {tab.count}
@@ -201,14 +201,14 @@ export const ProjectsPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-20 bg-white rounded-2xl border border-[#E5DFD1]"
+            className="text-center py-20 bg-white rounded-2xl border border-[#DCE1DF]"
           >
             <p className="font-serif text-xl text-neutral-600">
               No projects found matching the selected status.
             </p>
             <button
               onClick={() => handleFilterChange('All Projects')}
-              className="mt-4 text-xs font-bold uppercase tracking-wider text-brand-gold-dark hover:underline cursor-pointer"
+              className="mt-4 text-xs font-bold uppercase tracking-wider text-[#80B3AD] hover:underline cursor-pointer"
             >
               View All Projects
             </button>
@@ -262,14 +262,14 @@ export const ProjectsPage: React.FC = () => {
         transition={{ duration: 0.6 }}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20"
       >
-        <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#1A2E2A]">
+        <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#262828]">
           <div className="absolute inset-0 z-0">
             <img
               src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
               alt="Sayba Clubhouse"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-[#0A1715]/85 backdrop-blur-[2px]" />
+            <div className="absolute inset-0 bg-[#141515]/85 backdrop-blur-[2px]" />
           </div>
 
           <div className="relative z-10 py-16 px-6 sm:px-12 text-center text-white space-y-4 max-w-2xl mx-auto">
@@ -284,7 +284,7 @@ export const ProjectsPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => openSiteVisit()}
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#DFCA95] via-[#C5A467] to-[#B59353] text-[#0A1715] font-semibold text-xs tracking-wider uppercase shadow-xl hover:brightness-105 active:scale-95 transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#80B3AD] hover:bg-[#609A93] text-[#141515] font-semibold text-xs tracking-wider uppercase shadow-xl active:scale-95 transition-all cursor-pointer"
               >
                 <span>Book a Site Visit</span>
                 <ArrowRight className="w-4 h-4" />

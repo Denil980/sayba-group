@@ -132,13 +132,13 @@ export const OurJourneyRoadmap: React.FC = () => {
           WAVY ROADMAP DISPLAY (DESKTOP & TABLET VIEW)
           ======================================================== */}
       <div className="hidden md:block relative w-full mb-12">
-        <div className="relative w-full overflow-hidden bg-gradient-to-b from-[#FAF7F2] to-white rounded-3xl p-4 sm:p-6 border border-[#E5DFD1] shadow-sm">
+        <div className="relative w-full overflow-hidden bg-gradient-to-b from-[#F7FAFA] to-white rounded-3xl p-4 sm:p-6 border border-[#DCE1DF] shadow-sm">
           {/* Subtle background luxury pattern / grid */}
           <div
             className="absolute inset-0 opacity-[0.03] pointer-events-none"
             style={{
               backgroundImage:
-                'radial-gradient(#0A1715 1px, transparent 1px), radial-gradient(#0A1715 1px, #FAF7F2 1px)',
+                'radial-gradient(#141515 1px, transparent 1px), radial-gradient(#141515 1px, #F7FAFA 1px)',
               backgroundSize: '24px 24px',
             }}
           />
@@ -151,44 +151,44 @@ export const OurJourneyRoadmap: React.FC = () => {
             <defs>
               {/* Road Drop Shadow */}
               <filter id="road-shadow" x="-5%" y="-10%" width="110%" height="130%">
-                <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#0A1715" floodOpacity="0.25" />
+                <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#141515" floodOpacity="0.25" />
               </filter>
 
               {/* Pin Drop Shadow */}
               <filter id="pin-shadow" x="-30%" y="-30%" width="160%" height="160%">
-                <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#0A1715" floodOpacity="0.3" />
+                <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#141515" floodOpacity="0.3" />
               </filter>
 
               {/* Road Pavement Asphalt Gradient */}
               <linearGradient id="road-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#15322D" />
-                <stop offset="25%" stopColor="#0B1A17" />
-                <stop offset="50%" stopColor="#1B3B35" />
-                <stop offset="75%" stopColor="#0E211E" />
-                <stop offset="100%" stopColor="#15322D" />
+                <stop offset="0%" stopColor="#2A2D2C" />
+                <stop offset="25%" stopColor="#141515" />
+                <stop offset="50%" stopColor="#232625" />
+                <stop offset="75%" stopColor="#141515" />
+                <stop offset="100%" stopColor="#2A2D2C" />
               </linearGradient>
 
-              {/* Pin Gold Gradients */}
+              {/* Pin Teal Gradients */}
               <linearGradient id="pin-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#F5E7C8" />
-                <stop offset="50%" stopColor="#DFC995" />
-                <stop offset="100%" stopColor="#B59353" />
+                <stop offset="0%" stopColor="#CBE5E1" />
+                <stop offset="50%" stopColor="#80B3AD" />
+                <stop offset="100%" stopColor="#4A857E" />
               </linearGradient>
 
               <linearGradient id="pin-dark" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#163832" />
-                <stop offset="100%" stopColor="#071311" />
+                <stop offset="0%" stopColor="#262828" />
+                <stop offset="100%" stopColor="#141515" />
               </linearGradient>
             </defs>
 
             {/* 1. Road Outer Curb / Border */}
             <path
               d={ROAD_PATH}
-              stroke="#DFC995"
+              stroke="#B3B3B3"
               strokeWidth="48"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeOpacity="0.5"
+              strokeOpacity="0.6"
               filter="url(#road-shadow)"
             />
 
@@ -214,10 +214,10 @@ export const OurJourneyRoadmap: React.FC = () => {
             {/* 4. Active Road Progress Glow (Draws along the road up to revealed milestones) */}
             <motion.path
               d={ROAD_PATH}
-              stroke="#DFC995"
+              stroke="#80B3AD"
               strokeWidth="4"
               strokeLinecap="round"
-              strokeOpacity="0.9"
+              strokeOpacity="0.95"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: Math.min(1, (revealedCount - 0.2) / (milestones.length - 1)) }}
               transition={{ duration: 0.8, ease: 'easeInOut' }}
@@ -234,7 +234,7 @@ export const OurJourneyRoadmap: React.FC = () => {
                   key={idx}
                   transform={`translate(${m.x}, ${m.y})`}
                   onClick={() => setActiveMilestone(idx)}
-                  className="cursor-pointer transition-transform hover:scale-110"
+                  className="cursor-pointer transition-all duration-200 hover:brightness-110 select-none"
                 >
                   {/* Radar Ripple Animation when milestone is newly revealed or active */}
                   {isRevealed && (
@@ -243,8 +243,9 @@ export const OurJourneyRoadmap: React.FC = () => {
                       cy="0"
                       r="16"
                       fill="none"
-                      stroke="#DFC995"
+                      stroke="#80B3AD"
                       strokeWidth="2.5"
+                      className="pointer-events-none"
                       initial={{ scale: 0.6, opacity: 1 }}
                       animate={
                         isActive
@@ -260,7 +261,7 @@ export const OurJourneyRoadmap: React.FC = () => {
                     cx="0"
                     cy="0"
                     r={isActive ? '5.5' : '4'}
-                    fill={isRevealed ? '#DFC995' : '#8C8270'}
+                    fill={isRevealed ? '#80B3AD' : '#8A8F8E'}
                     stroke="#FFFFFF"
                     strokeWidth="1.5"
                   />
@@ -288,7 +289,7 @@ export const OurJourneyRoadmap: React.FC = () => {
                         <path
                           d="M 0,0 C -5,-9 -24,-24 -24,-38 A 24,24 0 1,1 24,-38 C 24,-24 5,-9 0,0 Z"
                           fill={isActive ? 'url(#pin-gold)' : 'url(#pin-dark)'}
-                          stroke="#DFC995"
+                          stroke="#80B3AD"
                           strokeWidth="2"
                         />
                         {/* Circular Inset Badge */}
@@ -296,14 +297,14 @@ export const OurJourneyRoadmap: React.FC = () => {
                           cx="0"
                           cy="-38"
                           r="18"
-                          fill={isActive ? '#071311' : '#FFFFFF'}
+                          fill={isActive ? '#141515' : '#FFFFFF'}
                         />
                         {/* Year Text */}
                         <text
                           x="0"
                           y="-33"
                           textAnchor="middle"
-                          fill={isActive ? '#DFC995' : '#071311'}
+                          fill={isActive ? '#80B3AD' : '#141515'}
                           fontSize="11"
                           fontWeight="bold"
                           fontFamily="sans-serif"
@@ -318,7 +319,7 @@ export const OurJourneyRoadmap: React.FC = () => {
                         <path
                           d="M 0,0 C -5,9 -24,24 -24,38 A 24,24 0 1,0 24,38 C 24,24 5,9 0,0 Z"
                           fill={isActive ? 'url(#pin-gold)' : 'url(#pin-dark)'}
-                          stroke="#DFC995"
+                          stroke="#80B3AD"
                           strokeWidth="2"
                         />
                         {/* Circular Inset Badge */}
@@ -326,14 +327,14 @@ export const OurJourneyRoadmap: React.FC = () => {
                           cx="0"
                           cy="38"
                           r="18"
-                          fill={isActive ? '#071311' : '#FFFFFF'}
+                          fill={isActive ? '#141515' : '#FFFFFF'}
                         />
                         {/* Year Text */}
                         <text
                           x="0"
                           y="43"
                           textAnchor="middle"
-                          fill={isActive ? '#DFC995' : '#071311'}
+                          fill={isActive ? '#80B3AD' : '#141515'}
                           fontSize="11"
                           fontWeight="bold"
                           fontFamily="sans-serif"
@@ -372,8 +373,8 @@ export const OurJourneyRoadmap: React.FC = () => {
               onClick={() => setActiveMilestone(idx)}
               className={`group flex flex-col justify-between p-5 rounded-2xl transition-all duration-300 cursor-pointer border ${
                 isActive
-                  ? 'bg-[#FAF7F2] border-brand-gold shadow-lg ring-2 ring-brand-gold/30 -translate-y-1'
-                  : 'bg-white border-[#E5DFD1] hover:border-brand-gold/60 hover:shadow-md'
+                  ? 'bg-[#EDF6F5] border-brand-gold shadow-lg ring-2 ring-brand-gold/30 -translate-y-1'
+                  : 'bg-white border-[#DCE1DF] hover:border-brand-gold/60 hover:shadow-md'
               }`}
             >
               <div>
@@ -451,8 +452,8 @@ export const OurJourneyRoadmap: React.FC = () => {
                 onClick={() => setActiveMilestone(idx)}
                 className={`relative p-5 rounded-2xl border transition-all ${
                   isActive
-                    ? 'bg-[#FAF7F2] border-brand-gold shadow-md ring-2 ring-brand-gold/20'
-                    : 'bg-white border-[#E5DFD1]'
+                    ? 'bg-[#EDF6F5] border-brand-gold shadow-md ring-2 ring-brand-gold/20'
+                    : 'bg-white border-[#DCE1DF]'
                 }`}
               >
                 {/* Pin indicator on the vertical line */}
@@ -461,7 +462,7 @@ export const OurJourneyRoadmap: React.FC = () => {
                     isActive
                       ? 'bg-brand-gold text-white scale-110'
                       : isRevealed
-                      ? 'bg-[#0A1715] text-brand-gold'
+                      ? 'bg-[#141515] text-brand-gold'
                       : 'bg-white text-neutral-400'
                   }`}
                 >

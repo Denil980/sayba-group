@@ -77,7 +77,7 @@ export const ProjectsAutoScroll: React.FC = () => {
         type="button"
         onClick={() => handleManualScroll('left')}
         aria-label="Scroll left"
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 w-11 h-11 rounded-full bg-white/95 text-brand-dark shadow-xl border border-[#E5DFD1] hover:bg-brand-dark hover:text-brand-gold flex items-center justify-center transition-all z-20 opacity-90 hover:opacity-100 hover:scale-110 cursor-pointer"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 w-11 h-11 rounded-full bg-white/95 text-brand-dark shadow-xl border border-[#DCE1DF] hover:bg-brand-dark hover:text-brand-gold flex items-center justify-center transition-all z-20 opacity-90 hover:opacity-100 hover:scale-110 cursor-pointer"
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
@@ -87,7 +87,7 @@ export const ProjectsAutoScroll: React.FC = () => {
         type="button"
         onClick={() => handleManualScroll('right')}
         aria-label="Scroll right"
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-4 w-11 h-11 rounded-full bg-white/95 text-brand-dark shadow-xl border border-[#E5DFD1] hover:bg-brand-dark hover:text-brand-gold flex items-center justify-center transition-all z-20 opacity-90 hover:opacity-100 hover:scale-110 cursor-pointer"
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-4 w-11 h-11 rounded-full bg-white/95 text-brand-dark shadow-xl border border-[#DCE1DF] hover:bg-brand-dark hover:text-brand-gold flex items-center justify-center transition-all z-20 opacity-90 hover:opacity-100 hover:scale-110 cursor-pointer"
       >
         <ChevronRight className="w-6 h-6" />
       </button>

@@ -71,29 +71,29 @@ export const CareersPage: React.FC = () => {
       {/* ========================================================
           HERO BANNER
           ======================================================== */}
-      <section className="relative bg-[#0A1715] text-white pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden">
+      <section className="relative bg-[#141515] text-white pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=85"
             alt="Careers at Sayba Group"
             className="w-full h-full object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1715] via-[#0A1715]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#141515] via-[#141515]/80 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl space-y-4">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs text-neutral-400 uppercase tracking-widest">
-              <Link to="/" className="hover:text-brand-gold transition-colors">
+              <Link to="/" className="hover:text-[#80B3AD] transition-colors">
                 Home
               </Link>
               <span>/</span>
-              <Link to="/contact" className="hover:text-brand-gold transition-colors">
+              <Link to="/contact" className="hover:text-[#80B3AD] transition-colors">
                 Contact Us
               </Link>
               <span>/</span>
-              <span className="text-brand-gold">Careers</span>
+              <span className="text-[#80B3AD]">Careers</span>
             </div>
 
             <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-white">
@@ -113,13 +113,13 @@ export const CareersPage: React.FC = () => {
           ======================================================== */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs uppercase font-bold tracking-[0.25em] text-brand-gold-dark block mb-2">
+          <span className="text-xs uppercase font-bold tracking-[0.25em] text-[#80B3AD] block mb-2">
             WHY JOIN US
           </span>
           <h2 className="font-serif text-3xl font-bold text-brand-dark">
             Build Your Career with an Industry Benchmark
           </h2>
-          <div className="w-16 h-0.5 bg-brand-gold mx-auto mt-3" />
+          <div className="w-16 h-0.5 bg-[#80B3AD] mx-auto mt-3" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -129,15 +129,15 @@ export const CareersPage: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="group relative bg-white rounded-2xl p-6 sm:p-7 border border-[#E5DFD1] hover:border-brand-gold shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center overflow-hidden cursor-pointer"
+                className="group relative bg-white rounded-2xl p-6 sm:p-7 border border-[#DCE1DF] hover:border-[#80B3AD] shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center overflow-hidden cursor-pointer"
               >
-                {/* Subtle top gold accent bar on hover */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-gold/20 via-brand-gold to-brand-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Subtle top teal accent bar on hover */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-[#80B3AD] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                <div className="w-14 h-14 rounded-full bg-brand-cream border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark mb-4 group-hover:bg-[#0A1715] group-hover:text-brand-gold group-hover:border-brand-gold group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md transition-all duration-300">
+                <div className="w-14 h-14 rounded-full bg-brand-cream border border-[#80B3AD]/30 flex items-center justify-center text-[#80B3AD] mb-4 group-hover:bg-[#141515] group-hover:text-[#80B3AD] group-hover:border-[#80B3AD] group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md transition-all duration-300">
                   <Icon className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-lg font-bold text-brand-dark group-hover:text-brand-gold-dark transition-colors duration-300 mb-2">
+                <h3 className="font-serif text-lg font-bold text-brand-dark group-hover:text-[#80B3AD] transition-colors duration-300 mb-2">
                   {perk.title}
                 </h3>
                 <p className="text-xs text-neutral-600 group-hover:text-neutral-700 leading-relaxed transition-colors">
@@ -153,9 +153,9 @@ export const CareersPage: React.FC = () => {
           OPEN POSITIONS
           ======================================================== */}
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-[#E5DFD1]">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-[#DCE1DF]">
           <div>
-            <span className="text-xs uppercase font-bold tracking-[0.25em] text-brand-gold-dark block mb-1">
+            <span className="text-xs uppercase font-bold tracking-[0.25em] text-[#80B3AD] block mb-1">
               CURRENT OPPORTUNITIES
             </span>
             <h2 className="font-serif text-3xl font-bold text-brand-dark">
@@ -176,8 +176,8 @@ export const CareersPage: React.FC = () => {
                 onClick={() => setSelectedJob(job.id)}
                 className={`p-6 rounded-2xl border transition-all cursor-pointer bg-white ${
                   selectedJob === job.id
-                    ? 'border-brand-gold shadow-md ring-1 ring-brand-gold'
-                    : 'border-[#E5DFD1] shadow-sm hover:border-neutral-300'
+                    ? 'border-[#80B3AD] shadow-md ring-1 ring-[#80B3AD]'
+                    : 'border-[#DCE1DF] shadow-sm hover:border-neutral-300'
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
@@ -188,7 +188,7 @@ export const CareersPage: React.FC = () => {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-500 mb-3">
-                  <span className="font-medium text-brand-gold-dark">{job.department}</span>
+                  <span className="font-medium text-[#80B3AD]">{job.department}</span>
                   <span>•</span>
                   <span className="flex items-center gap-1">
                     <MapPin className="w-3.5 h-3.5" /> {job.location}
@@ -203,7 +203,7 @@ export const CareersPage: React.FC = () => {
 
                 <div className="flex items-center justify-between text-xs pt-3 border-t border-neutral-100">
                   <span className="text-neutral-500 font-medium">Click to apply & view details</span>
-                  <span className="font-bold text-brand-gold-dark flex items-center gap-1">
+                  <span className="font-bold text-[#80B3AD] flex items-center gap-1">
                     Apply Now <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
@@ -213,9 +213,9 @@ export const CareersPage: React.FC = () => {
 
           {/* Quick Application Form (Span 5) */}
           <div className="lg:col-span-5">
-            <div className="sticky top-28 bg-gradient-to-b from-[#FAF5EB] via-[#F4ECE0] to-[#FAF5EB] rounded-3xl p-6 sm:p-8 border border-[#DFCA95]/70 shadow-xl space-y-5 text-brand-dark">
+            <div className="sticky top-28 bg-[#F7FAFA] rounded-3xl p-6 sm:p-8 border border-[#DCE1DF] shadow-xl space-y-5 text-brand-dark">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-brand-gold-dark block mb-1">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#80B3AD] block mb-1">
                   Careers Portal
                 </span>
                 <h3 className="font-serif text-2xl font-bold text-brand-dark">
@@ -239,7 +239,7 @@ export const CareersPage: React.FC = () => {
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="text-xs text-brand-gold-dark underline uppercase font-semibold cursor-pointer"
+                    className="text-xs text-[#80B3AD] underline uppercase font-semibold cursor-pointer"
                   >
                     Submit Another Application
                   </button>
@@ -248,44 +248,44 @@ export const CareersPage: React.FC = () => {
                 <form onSubmit={handleApply} className="space-y-4">
                   <div>
                     <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                      Full Name <span className="text-brand-gold-dark">*</span>
+                      Full Name <span className="text-[#80B3AD]">*</span>
                     </label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Ananya Rao"
-                      className="w-full bg-white border border-neutral-200 text-brand-dark text-xs rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-brand-gold placeholder:text-neutral-400 shadow-sm transition-colors"
+                      className="w-full bg-white border border-neutral-200 text-brand-dark text-xs rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-[#80B3AD] placeholder:text-neutral-400 shadow-sm transition-colors"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                      Email Address <span className="text-brand-gold-dark">*</span>
+                      Email Address <span className="text-[#80B3AD]">*</span>
                     </label>
                     <input
                       type="email"
                       required
                       placeholder="ananya@example.com"
-                      className="w-full bg-white border border-neutral-200 text-brand-dark text-xs rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-brand-gold placeholder:text-neutral-400 shadow-sm transition-colors"
+                      className="w-full bg-white border border-neutral-200 text-brand-dark text-xs rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-[#80B3AD] placeholder:text-neutral-400 shadow-sm transition-colors"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                      Phone Number <span className="text-brand-gold-dark">*</span>
+                      Phone Number <span className="text-[#80B3AD]">*</span>
                     </label>
                     <input
                       type="tel"
                       required
                       placeholder="+91 98765 43210"
-                      className="w-full bg-white border border-neutral-200 text-brand-dark text-xs rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-brand-gold placeholder:text-neutral-400 shadow-sm transition-colors"
+                      className="w-full bg-white border border-neutral-200 text-brand-dark text-xs rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-[#80B3AD] placeholder:text-neutral-400 shadow-sm transition-colors"
                     />
                   </div>
 
                   {/* Position Applied For - Custom Luxury Dropdown */}
                   <div>
                     <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                      Position Applied For <span className="text-brand-gold-dark">*</span>
+                      Position Applied For <span className="text-[#80B3AD]">*</span>
                     </label>
                     <div ref={jobDropdownRef} className="relative">
                       <button
@@ -293,8 +293,8 @@ export const CareersPage: React.FC = () => {
                         onClick={() => setIsJobDropdownOpen((prev) => !prev)}
                         className={`w-full bg-white border ${
                           isJobDropdownOpen
-                            ? 'border-brand-gold ring-1 ring-brand-gold/30'
-                            : 'border-neutral-200 hover:border-brand-gold/60'
+                            ? 'border-[#80B3AD] ring-1 ring-[#80B3AD]/30'
+                            : 'border-neutral-200 hover:border-[#80B3AD]/60'
                         } text-brand-dark text-xs rounded-lg px-3.5 py-2.5 flex items-center justify-between transition-colors shadow-sm cursor-pointer select-none text-left`}
                       >
                         {currentJob ? (
@@ -310,7 +310,7 @@ export const CareersPage: React.FC = () => {
                           <span className="text-neutral-400 text-xs font-normal">Select</span>
                         )}
                         <ChevronDown
-                          className={`w-4 h-4 text-brand-gold shrink-0 transition-transform duration-200 ${
+                          className={`w-4 h-4 text-[#80B3AD] shrink-0 transition-transform duration-200 ${
                             isJobDropdownOpen ? 'rotate-180' : ''
                           }`}
                         />
@@ -323,7 +323,7 @@ export const CareersPage: React.FC = () => {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -4, scale: 0.99 }}
                             transition={{ duration: 0.15, ease: 'easeOut' }}
-                            className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-white border border-[#E5DFD1] rounded-xl shadow-2xl overflow-hidden py-1.5 max-h-56 overflow-y-auto"
+                            className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-white border border-[#DCE1DF] rounded-xl shadow-2xl overflow-hidden py-1.5 max-h-56 overflow-y-auto"
                           >
                             {jobOpenings.map((j) => {
                               const isSelected = j.id === selectedJob;
@@ -336,14 +336,14 @@ export const CareersPage: React.FC = () => {
                                     setIsJobDropdownOpen(false);
                                     setFormError(null);
                                   }}
-                                  className={`w-full text-left px-3.5 py-2.5 flex items-center justify-between hover:bg-[#FAF7F2] transition-colors cursor-pointer group ${
+                                  className={`w-full text-left px-3.5 py-2.5 flex items-center justify-between hover:bg-[#EFF3F2] transition-colors cursor-pointer group ${
                                     isSelected
-                                      ? 'bg-brand-cream/80 border-l-2 border-brand-gold text-brand-dark'
+                                      ? 'bg-[#EFF3F2] border-l-2 border-[#80B3AD] text-brand-dark'
                                       : 'border-l-2 border-transparent text-neutral-700'
                                   }`}
                                 >
                                   <div className="flex flex-col pr-2">
-                                    <span className="text-xs font-semibold text-brand-dark group-hover:text-brand-gold-dark transition-colors">
+                                    <span className="text-xs font-semibold text-brand-dark group-hover:text-[#80B3AD] transition-colors">
                                       {j.title}
                                     </span>
                                     <span className="text-[10px] text-neutral-500">
@@ -351,7 +351,7 @@ export const CareersPage: React.FC = () => {
                                     </span>
                                   </div>
                                   {isSelected && (
-                                    <Check className="w-3.5 h-3.5 text-brand-gold shrink-0" />
+                                    <Check className="w-3.5 h-3.5 text-[#80B3AD] shrink-0" />
                                   )}
                                 </button>
                               );
@@ -365,7 +365,7 @@ export const CareersPage: React.FC = () => {
                   {/* Upload your CV * */}
                   <div>
                     <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                      Upload your CV <span className="text-brand-gold-dark">*</span>
+                      Upload your CV <span className="text-[#80B3AD]">*</span>
                     </label>
                     <div className="relative">
                       <input
@@ -382,9 +382,9 @@ export const CareersPage: React.FC = () => {
                         className="sr-only"
                       />
                       {cvFile ? (
-                        <div className="w-full bg-white border border-brand-gold/60 rounded-xl px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs shadow-sm">
+                        <div className="w-full bg-white border border-[#80B3AD]/60 rounded-xl px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs shadow-sm">
                           <div className="flex items-center gap-2 overflow-hidden">
-                            <FileText className="w-4 h-4 text-brand-gold-dark shrink-0" />
+                            <FileText className="w-4 h-4 text-[#80B3AD] shrink-0" />
                             <span className="text-brand-dark font-medium truncate max-w-[200px]">
                               {cvFile.name}
                             </span>
@@ -404,15 +404,15 @@ export const CareersPage: React.FC = () => {
                       ) : (
                         <label
                           htmlFor="cv-upload-input"
-                          className="w-full bg-white border border-dashed border-neutral-300 hover:border-brand-gold/70 rounded-xl px-3.5 py-3 flex items-center justify-between gap-3 cursor-pointer transition-colors group shadow-sm"
+                          className="w-full bg-white border border-dashed border-neutral-300 hover:border-[#80B3AD]/70 rounded-xl px-3.5 py-3 flex items-center justify-between gap-3 cursor-pointer transition-colors group shadow-sm"
                         >
                           <div className="flex items-center gap-2.5">
-                            <Upload className="w-4 h-4 text-brand-gold-dark group-hover:scale-110 transition-transform" />
+                            <Upload className="w-4 h-4 text-[#80B3AD] group-hover:scale-110 transition-transform" />
                             <span className="text-xs text-neutral-600 font-medium">
                               Choose file <span className="text-neutral-400 font-normal">(PDF, DOC, DOCX up to 10MB)</span>
                             </span>
                           </div>
-                          <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-brand-gold/15 text-brand-gold-dark border border-brand-gold/30 shrink-0">
+                          <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-[#80B3AD]/15 text-[#80B3AD] border border-[#80B3AD]/30 shrink-0">
                             Browse
                           </span>
                         </label>
@@ -427,17 +427,17 @@ export const CareersPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3.5 rounded-lg bg-[#0A1715] hover:bg-black text-brand-gold hover:text-white border border-brand-gold/40 font-semibold text-xs tracking-wider uppercase shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
+                    className="w-full py-3.5 rounded-lg bg-[#80B3AD] hover:bg-[#609A93] active:scale-95 text-[#141515] font-bold text-xs tracking-wider uppercase shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin text-brand-gold" />
+                        <Loader2 className="w-4 h-4 animate-spin text-[#141515]" />
                         <span>Submitting...</span>
                       </>
                     ) : (
                       <>
                         <span>Submit Application</span>
-                        <Send className="w-3.5 h-3.5" />
+                        <Send className="w-3.5 h-3.5 text-[#141515]" />
                       </>
                     )}
                   </button>

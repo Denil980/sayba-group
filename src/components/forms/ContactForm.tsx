@@ -86,7 +86,7 @@ export const ContactForm: React.FC = () => {
             setIsSuccess(false);
             reset();
           }}
-          className="text-xs uppercase font-semibold tracking-wider text-brand-gold-dark hover:underline"
+          className="text-xs uppercase font-semibold tracking-wider text-[#80B3AD] hover:underline cursor-pointer"
         >
           Send Another Message
         </button>
@@ -99,7 +99,7 @@ export const ContactForm: React.FC = () => {
       {/* Full Name */}
       <div>
         <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-          Full Name <span className="text-brand-gold">*</span>
+          Full Name <span className="text-[#80B3AD]">*</span>
         </label>
         <input
           type="text"
@@ -107,7 +107,7 @@ export const ContactForm: React.FC = () => {
           {...register('fullName')}
           className={`w-full bg-white border ${
             errors.fullName ? 'border-red-400' : 'border-neutral-200'
-          } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder:text-neutral-400 shadow-sm`}
+          } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:border-[#80B3AD] transition-colors placeholder:text-neutral-400 shadow-sm`}
         />
         {errors.fullName && <p className="text-xs text-red-500 mt-1">{errors.fullName.message}</p>}
       </div>
@@ -116,7 +116,7 @@ export const ContactForm: React.FC = () => {
         {/* Email */}
         <div>
           <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-            Email Address <span className="text-brand-gold">*</span>
+            Email Address <span className="text-[#80B3AD]">*</span>
           </label>
           <input
             type="email"
@@ -124,7 +124,7 @@ export const ContactForm: React.FC = () => {
             {...register('email')}
             className={`w-full bg-white border ${
               errors.email ? 'border-red-400' : 'border-neutral-200'
-            } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder:text-neutral-400 shadow-sm`}
+            } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:border-[#80B3AD] transition-colors placeholder:text-neutral-400 shadow-sm`}
           />
           {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>}
         </div>
@@ -132,7 +132,7 @@ export const ContactForm: React.FC = () => {
         {/* Phone */}
         <div>
           <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-            Phone Number <span className="text-brand-gold">*</span>
+            Phone Number <span className="text-[#80B3AD]">*</span>
           </label>
           <input
             type="tel"
@@ -140,7 +140,7 @@ export const ContactForm: React.FC = () => {
             {...register('phone')}
             className={`w-full bg-white border ${
               errors.phone ? 'border-red-400' : 'border-neutral-200'
-            } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder:text-neutral-400 shadow-sm`}
+            } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:border-[#80B3AD] transition-colors placeholder:text-neutral-400 shadow-sm`}
           />
           {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone.message}</p>}
         </div>
@@ -149,7 +149,7 @@ export const ContactForm: React.FC = () => {
       {/* Project Interested In - Premium Custom Dropdown */}
       <div>
         <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-          Project Interested In <span className="text-brand-gold">*</span>
+          Project Interested In <span className="text-[#80B3AD]">*</span>
         </label>
         <div ref={dropdownRef} className="relative">
           <input type="hidden" {...register('project')} />
@@ -160,8 +160,8 @@ export const ContactForm: React.FC = () => {
               errors.project
                 ? 'border-red-400'
                 : isDropdownOpen
-                ? 'border-brand-gold ring-2 ring-brand-gold/15'
-                : 'border-neutral-200 hover:border-brand-gold/60'
+                ? 'border-[#80B3AD] ring-2 ring-[#80B3AD]/15'
+                : 'border-neutral-200 hover:border-[#80B3AD]/60'
             } text-brand-dark text-sm rounded-lg px-4 py-3 flex items-center justify-between transition-all duration-200 shadow-sm cursor-pointer select-none text-left`}
           >
             {currentSelected ? (
@@ -179,7 +179,7 @@ export const ContactForm: React.FC = () => {
               </span>
             )}
             <ChevronDown
-              className={`w-4 h-4 text-brand-gold shrink-0 transition-transform duration-200 ${
+              className={`w-4 h-4 text-[#80B3AD] shrink-0 transition-transform duration-200 ${
                 isDropdownOpen ? 'rotate-180' : ''
               }`}
             />
@@ -192,7 +192,7 @@ export const ContactForm: React.FC = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -4, scale: 0.99 }}
                 transition={{ duration: 0.15, ease: 'easeOut' }}
-                className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-white border border-[#E5DFD1] rounded-xl shadow-2xl overflow-hidden py-1.5 max-h-64 overflow-y-auto"
+                className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-white border border-[#DCE1DF] rounded-xl shadow-2xl overflow-hidden py-1.5 max-h-64 overflow-y-auto"
               >
                 {projectOptions.map((opt) => {
                   const isSelected = opt.value === selectedProject;
@@ -204,9 +204,9 @@ export const ContactForm: React.FC = () => {
                         setValue('project', opt.value, { shouldValidate: true });
                         setIsDropdownOpen(false);
                       }}
-                      className={`w-full text-left px-4 py-2.5 flex items-center justify-between hover:bg-[#FAF7F2] transition-colors cursor-pointer group ${
+                      className={`w-full text-left px-4 py-2.5 flex items-center justify-between hover:bg-[#EFF3F2] transition-colors cursor-pointer group ${
                         isSelected
-                          ? 'bg-brand-cream/80 border-l-4 border-brand-gold'
+                          ? 'bg-[#EFF3F2] border-l-4 border-[#80B3AD]'
                           : 'border-l-4 border-transparent'
                       }`}
                     >
@@ -214,8 +214,8 @@ export const ContactForm: React.FC = () => {
                         <span
                           className={`text-sm ${
                             isSelected
-                              ? 'font-bold text-brand-gold-dark'
-                              : 'font-medium text-brand-dark group-hover:text-brand-gold-dark'
+                              ? 'font-bold text-[#80B3AD]'
+                              : 'font-medium text-brand-dark group-hover:text-[#80B3AD]'
                           } transition-colors`}
                         >
                           {opt.label}
@@ -225,7 +225,7 @@ export const ContactForm: React.FC = () => {
                         </span>
                       </div>
                       {isSelected && (
-                        <Check className="w-4 h-4 text-brand-gold shrink-0" />
+                        <Check className="w-4 h-4 text-[#80B3AD] shrink-0" />
                       )}
                     </button>
                   );
@@ -242,7 +242,7 @@ export const ContactForm: React.FC = () => {
       {/* Message */}
       <div>
         <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-          Your Message <span className="text-brand-gold">*</span>
+          Your Message <span className="text-[#80B3AD]">*</span>
         </label>
         <textarea
           rows={4}
@@ -250,7 +250,7 @@ export const ContactForm: React.FC = () => {
           {...register('message')}
           className={`w-full bg-white border ${
             errors.message ? 'border-red-400' : 'border-neutral-200'
-          } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:border-brand-gold transition-colors placeholder:text-neutral-400 shadow-sm resize-none`}
+          } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:border-[#80B3AD] transition-colors placeholder:text-neutral-400 shadow-sm resize-none`}
         />
         {errors.message && <p className="text-xs text-red-500 mt-1">{errors.message.message}</p>}
       </div>
@@ -258,17 +258,17 @@ export const ContactForm: React.FC = () => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-3.5 px-6 rounded-lg bg-brand-dark hover:bg-brand-dark-surface text-brand-gold-light border border-brand-gold/40 font-medium text-sm tracking-wide shadow hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
+        className="w-full py-3.5 px-6 rounded-lg bg-[#80B3AD] hover:bg-[#609A93] active:scale-95 text-[#141515] font-bold text-sm tracking-wide shadow hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin text-brand-gold" />
+            <Loader2 className="w-4 h-4 animate-spin text-[#141515]" />
             <span>Sending Message...</span>
           </>
         ) : (
           <>
             <span>Send Message</span>
-            <Send className="w-4 h-4 text-brand-gold" />
+            <Send className="w-4 h-4 text-[#141515]" />
           </>
         )}
       </button>

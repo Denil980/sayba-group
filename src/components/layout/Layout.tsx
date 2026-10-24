@@ -15,7 +15,7 @@ export const Layout: React.FC = () => {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A1715] text-[#1a2321]">
+    <div className="min-h-screen flex flex-col bg-[#141515] text-[#141515]">
       <Navbar />
       <main className="flex-grow pt-0">
         <Outlet />

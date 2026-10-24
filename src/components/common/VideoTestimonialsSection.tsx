@@ -125,7 +125,7 @@ export const VideoTestimonialsSection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-[#FAF7F2] border-t border-[#E5DFD1] overflow-hidden relative">
+    <section className="py-16 sm:py-20 bg-[#F7FAFA] border-t border-[#DCE1DF] overflow-hidden relative">
       {/* Ambient background blur */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-brand-gold/6 blur-3xl pointer-events-none rounded-full" />
 
@@ -168,7 +168,7 @@ export const VideoTestimonialsSection: React.FC = () => {
                 }}
                 className={`absolute w-[220px] sm:w-[250px] md:w-[260px] h-[330px] sm:h-[370px] md:h-[390px] rounded-[26px] overflow-hidden cursor-pointer shadow-xl transition-shadow duration-500 ${
                   isActive
-                    ? 'border-2 border-[#DFCA95] ring-4 ring-brand-gold/25 shadow-[0_20px_50px_rgba(0,0,0,0.35)]'
+                    ? 'border-2 border-[#80B3AD] ring-4 ring-brand-gold/25 shadow-[0_20px_50px_rgba(0,0,0,0.35)]'
                     : 'border border-black/10'
                 }`}
                 style={{
@@ -249,7 +249,7 @@ export const VideoTestimonialsSection: React.FC = () => {
                         handleUserInteraction();
                         openVideo(`${item.name} — Customer Video Story (${item.projectName})`);
                       }}
-                      className="shrink-0 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-gradient-to-r from-[#DFCA95] via-[#C5A467] to-[#B59353] hover:brightness-110 active:scale-95 text-[#0A1715] text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-md transition-all cursor-pointer"
+                      className="shrink-0 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-[#80B3AD] hover:bg-[#609A93] active:scale-95 text-[#141515] text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-md transition-all cursor-pointer"
                     >
                       <span>Watch</span>
                       <Play className="w-2 h-2 fill-current" />
@@ -262,7 +262,7 @@ export const VideoTestimonialsSection: React.FC = () => {
         </div>
 
         {/* Bottom Bar: Counter on Left + Capsule Pagination Dots on Right */}
-        <div className="mt-7 flex items-center justify-between border-t border-[#E5DFD1] pt-5 max-w-3xl mx-auto px-4">
+        <div className="mt-7 flex items-center justify-between border-t border-[#DCE1DF] pt-5 max-w-3xl mx-auto px-4">
           {/* Left Counter */}
           <div className="flex items-center gap-2.5">
             <span className="font-serif text-xl sm:text-2xl font-bold text-brand-dark">
@@ -279,7 +279,7 @@ export const VideoTestimonialsSection: React.FC = () => {
               type="button"
               onClick={handlePrev}
               aria-label="Previous story"
-              className="w-8 h-8 rounded-full bg-white border border-[#E5DFD1] text-brand-dark hover:bg-brand-dark hover:text-brand-gold flex items-center justify-center transition-all shadow-sm hover:scale-105 active:scale-95 cursor-pointer"
+              className="w-8 h-8 rounded-full bg-white border border-[#DCE1DF] text-brand-dark hover:bg-brand-dark hover:text-[#80B3AD] flex items-center justify-center transition-all shadow-sm hover:scale-105 active:scale-95 cursor-pointer"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
             </button>
@@ -287,7 +287,7 @@ export const VideoTestimonialsSection: React.FC = () => {
               type="button"
               onClick={handleNext}
               aria-label="Next story"
-              className="w-8 h-8 rounded-full bg-white border border-[#E5DFD1] text-brand-dark hover:bg-brand-dark hover:text-brand-gold flex items-center justify-center transition-all shadow-sm hover:scale-105 active:scale-95 cursor-pointer"
+              className="w-8 h-8 rounded-full bg-white border border-[#DCE1DF] text-brand-dark hover:bg-brand-dark hover:text-[#80B3AD] flex items-center justify-center transition-all shadow-sm hover:scale-105 active:scale-95 cursor-pointer"
             >
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
@@ -306,7 +306,7 @@ export const VideoTestimonialsSection: React.FC = () => {
                 aria-label={`Go to story ${dotIdx + 1}`}
                 className={`transition-all duration-300 rounded-full cursor-pointer ${
                   dotIdx === activeIndex
-                    ? 'w-6 h-1.5 bg-[#0A1715]'
+                    ? 'w-6 h-1.5 bg-[#80B3AD]'
                     : 'w-1.5 h-1.5 bg-neutral-300 hover:bg-neutral-400'
                 }`}
               />

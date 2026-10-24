@@ -12,9 +12,9 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
   return (
     <div className="bg-brand-cream min-h-screen">
       {/* Top Dark Banner for seamless navbar backdrop */}
-      <div className="bg-[#0A1715] pt-28 sm:pt-36 pb-12 text-white">
+      <div className="bg-[#141515] pt-28 sm:pt-36 pb-12 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <span className="text-xs uppercase font-bold tracking-widest text-brand-gold">
+          <span className="text-xs uppercase font-bold tracking-widest text-[#80B3AD]">
             Legal Documentation
           </span>
           <h1 className="font-serif text-3xl sm:text-5xl font-bold mt-2">
@@ -27,7 +27,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-2xl p-8 sm:p-12 border border-[#E5DFD1] shadow-sm space-y-6">
+        <div className="bg-white rounded-2xl p-8 sm:p-12 border border-[#DCE1DF] shadow-sm space-y-6">
           <div className="border-b border-neutral-100 pb-4">
             <h2 className="font-serif text-2xl font-bold text-brand-dark">
               {title} Agreement
@@ -73,13 +73,13 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
           <div className="pt-6 border-t border-neutral-100 flex items-center justify-between">
             <Link
               to="/"
-              className="text-xs uppercase font-bold tracking-wider text-brand-gold-dark hover:underline"
+              className="text-xs uppercase font-bold tracking-wider text-[#80B3AD] hover:underline"
             >
               ← Return to Home
             </Link>
             <Link
               to="/contact"
-              className="text-xs uppercase font-bold tracking-wider text-brand-gold-dark hover:underline"
+              className="text-xs uppercase font-bold tracking-wider text-[#80B3AD] hover:underline"
             >
               Contact Support →
             </Link>

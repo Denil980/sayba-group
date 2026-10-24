@@ -31,7 +31,7 @@ export const HomePage: React.FC = () => {
   const [phase, setPhase] = useState<'word1' | 'word2' | 'word3' | 'pause'>('word1');
 
   useEffect(() => {
-    const fullWord1 = 'Building ';
+    const fullWord1 = 'Building';
     const fullWord2 = 'Better';
     const fullWord3 = 'Tomorrows';
 
@@ -43,7 +43,7 @@ export const HomePage: React.FC = () => {
           setWord1(fullWord1.slice(0, word1.length + 1));
         }, 90);
       } else {
-        timer = setTimeout(() => setPhase('word2'), 100);
+        timer = setTimeout(() => setPhase('word2'), 220);
       }
     } else if (phase === 'word2') {
       if (word2.length < fullWord2.length) {
@@ -78,7 +78,7 @@ export const HomePage: React.FC = () => {
       {/* ========================================================
           1. HERO SECTION (AS IT IS)
           ======================================================== */}
-      <section className="relative min-h-[90vh] bg-[#0A1715] text-white flex flex-col justify-between overflow-hidden">
+      <section className="relative min-h-[90vh] bg-[#141515] text-white flex flex-col justify-between overflow-hidden">
         {/* Background Image with Dark Luxury Overlay */}
         <div className="absolute inset-0 z-0">
           <img
@@ -86,8 +86,8 @@ export const HomePage: React.FC = () => {
             alt="Sayba Group Luxury Towers"
             className="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity scale-105 animate-pulse duration-10000"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A1715] via-[#0A1715]/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1715] via-transparent to-[#0A1715]/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#141515] via-[#141515]/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#141515] via-transparent to-[#141515]/60" />
         </div>
 
         {/* Hero Content */}
@@ -103,11 +103,16 @@ export const HomePage: React.FC = () => {
               {/* Line 1: Building Better */}
               <div className="inline-flex items-baseline flex-wrap">
                 <span className="text-white">{word1}</span>
+                {phase !== 'word1' && (
+                  <span className="inline-block w-3 sm:w-4.5 lg:w-5" aria-hidden="true">
+                    &nbsp;
+                  </span>
+                )}
                 {word2 && (
-                  <span className="text-[#DFC995] italic font-normal">{word2}</span>
+                  <span className="text-[#80B3AD] italic font-normal">{word2}</span>
                 )}
                 {(phase === 'word1' || phase === 'word2') && (
-                  <span className="inline-block w-1 sm:w-1.5 h-[0.75em] bg-brand-gold ml-1.5 animate-pulse" />
+                  <span className="inline-block w-1 sm:w-1.5 h-[0.75em] bg-[#80B3AD] ml-1.5 animate-pulse" />
                 )}
               </div>
 
@@ -115,7 +120,7 @@ export const HomePage: React.FC = () => {
               <div className="inline-flex items-baseline">
                 <span className="text-white">{word3}</span>
                 {(phase === 'word3' || phase === 'pause') && (
-                  <span className="inline-block w-1 sm:w-1.5 h-[0.75em] bg-brand-gold ml-1.5 animate-pulse" />
+                  <span className="inline-block w-1 sm:w-1.5 h-[0.75em] bg-[#80B3AD] ml-1.5 animate-pulse" />
                 )}
               </div>
             </motion.h1>
@@ -139,7 +144,7 @@ export const HomePage: React.FC = () => {
             >
               <Link
                 to="/projects"
-                className="px-6 py-3.5 rounded-full bg-gradient-to-r from-[#DFCA95] via-[#C5A467] to-[#B59353] text-[#0A1715] font-semibold text-xs tracking-wider uppercase shadow-lg hover:brightness-105 active:scale-95 transition-all inline-flex items-center gap-2 group cursor-pointer"
+                className="px-6 py-3.5 rounded-full bg-[#80B3AD] hover:bg-[#609A93] text-[#141515] font-semibold text-xs tracking-wider uppercase shadow-lg active:scale-95 transition-all inline-flex items-center gap-2 group cursor-pointer"
               >
                 <span>Explore Our Projects</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -148,9 +153,9 @@ export const HomePage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => openSiteVisit()}
-                className="px-6 py-3.5 rounded-full border border-white/30 text-white hover:border-brand-gold hover:text-brand-gold text-xs font-semibold tracking-wider uppercase backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all inline-flex items-center gap-2 cursor-pointer"
+                className="px-6 py-3.5 rounded-full border border-white/30 text-white hover:border-[#80B3AD] hover:text-[#80B3AD] text-xs font-semibold tracking-wider uppercase backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all inline-flex items-center gap-2 cursor-pointer"
               >
-                <Calendar className="w-4 h-4 text-brand-gold" />
+                <Calendar className="w-4 h-4 text-[#80B3AD]" />
                 <span>Book a Site Visit</span>
               </button>
             </motion.div>
@@ -158,7 +163,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Stats Strip */}
-        <div className="relative z-10 border-t border-white/10 bg-[#071311]/90 backdrop-blur-md">
+        <div className="relative z-10 border-t border-white/10 bg-[#111212]/95 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               {companyInfo.stats.map((stat, idx) => (
@@ -173,7 +178,7 @@ export const HomePage: React.FC = () => {
                     decimals={stat.decimals || 0}
                     suffix={stat.suffix || '+'}
                     duration={2000}
-                    className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-gold"
+                    className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#80B3AD]"
                   />
                   <span className="text-xs uppercase tracking-wider text-neutral-300 mt-1 font-medium">
                     {stat.label}
@@ -189,10 +194,10 @@ export const HomePage: React.FC = () => {
           2. ABOUT SAYBA GROUP (SECOND SECTION, WITH VIDEO)
           ======================================================== */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 rounded-3xl overflow-hidden shadow-2xl border border-[#1A2E2A]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 rounded-3xl overflow-hidden shadow-2xl border border-[#262828]">
           {/* Left Dark Content Box */}
-          <div className="lg:col-span-6 bg-[#0A1715] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-center space-y-6">
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-brand-gold">
+          <div className="lg:col-span-6 bg-[#141515] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-center space-y-6">
+            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#80B3AD]">
               ABOUT SAYBA GROUP
             </span>
 
@@ -210,7 +215,7 @@ export const HomePage: React.FC = () => {
             <div>
               <Link
                 to="/about"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#DFCA95] via-[#C5A467] to-[#B59353] text-[#0A1715] font-semibold text-xs tracking-wider uppercase hover:brightness-105 transition-all shadow"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#80B3AD] hover:bg-[#609A93] text-[#141515] font-semibold text-xs tracking-wider uppercase transition-all shadow cursor-pointer"
               >
                 <span>Know More About Us</span>
                 <ArrowRight className="w-4 h-4" />
@@ -233,7 +238,7 @@ export const HomePage: React.FC = () => {
                 type="button"
                 onClick={() => openVideo('Sayba Group - Building Trust, Creating Value')}
                 aria-label="Watch Our Story"
-                className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-white/90 text-brand-dark flex items-center justify-center pl-1 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 border-4 border-brand-gold/60 cursor-pointer"
+                className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-white/90 text-brand-dark flex items-center justify-center pl-1 shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 border-4 border-[#80B3AD] cursor-pointer"
               >
                 <Play className="w-8 h-8 fill-brand-dark text-brand-dark" />
               </button>
@@ -249,26 +254,28 @@ export const HomePage: React.FC = () => {
           3. CARDS OF PROJECTS (FEATURED RESIDENTIAL PROJECTS)
           ======================================================== */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-[#E5DFD1]">
-          <div>
-            <span className="text-xs uppercase font-bold tracking-[0.25em] text-brand-gold-dark block mb-1">
-              PORTFOLIO
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark">
-              Featured Residential Projects
-            </h2>
-          </div>
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-gold-dark hover:text-brand-dark transition-colors mt-3 sm:mt-0"
-          >
-            <span>View All Projects</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+        <div className="mb-10 pb-4 border-b border-[#DCE1DF]">
+          <span className="text-xs uppercase font-bold tracking-[0.25em] text-[#80B3AD] block mb-1">
+            PROJECTS
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-brand-dark">
+            Featured Residential Projects
+          </h2>
         </div>
 
         {/* Auto-scrolling Project Cards Carousel */}
         <ProjectsAutoScroll />
+
+        {/* View All Projects Button (Placed under cards) */}
+        <div className="mt-12 text-center">
+          <Link
+            to="/projects"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#80B3AD] hover:bg-[#609A93] text-[#141515] font-semibold text-xs tracking-wider uppercase shadow-md active:scale-95 transition-all group cursor-pointer"
+          >
+            <span>View All</span>
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
       </section>
 
       {/* ========================================================

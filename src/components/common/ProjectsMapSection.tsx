@@ -58,7 +58,7 @@ export const ProjectsMapSection: React.FC<ProjectsMapSectionProps> = ({
   };
 
   return (
-    <section className="py-20 bg-[#FAF7F2] border-t border-[#E5DFD1]">
+    <section className="py-20 bg-[#F7FAFA] border-t border-[#DCE1DF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
@@ -85,8 +85,8 @@ export const ProjectsMapSection: React.FC<ProjectsMapSectionProps> = ({
                 onClick={() => setSelectedProjectId(project.id)}
                 className={`px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer ${
                   isSelected
-                    ? 'bg-[#0A1715] text-brand-gold shadow-md scale-105'
-                    : 'bg-white text-neutral-700 hover:text-brand-dark border border-[#E5DFD1] hover:border-brand-gold/40'
+                    ? 'bg-[#141515] text-brand-gold shadow-md scale-105'
+                    : 'bg-white text-neutral-700 hover:text-brand-dark border border-[#DCE1DF] hover:border-brand-gold/40'
                 }`}
               >
                 <MapPin
@@ -107,66 +107,31 @@ export const ProjectsMapSection: React.FC<ProjectsMapSectionProps> = ({
           })}
         </div>
 
-        {/* Two-Column Map and Project Detail Showcase */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white rounded-3xl p-4 sm:p-6 lg:p-8 border border-[#E5DFD1] shadow-xl">
-          {/* Left Column: Interactive Map Frame (Span 7) */}
-          <div className="lg:col-span-7 flex flex-col min-h-[420px] lg:min-h-[500px] rounded-2xl overflow-hidden border border-[#E5DFD1] relative bg-[#EAE6DE]">
-            <iframe
-              title={`Map of ${selectedProject.name}`}
-              src={currentEmbedUrl}
-              className="w-full h-full min-h-[420px] lg:min-h-[500px] border-0 filter contrast-[0.95]"
-              loading="lazy"
-              allowFullScreen
-            />
-
-            {/* Floating Quick Location Badge */}
-            <div className="absolute top-4 left-4 bg-[#0A1715]/90 text-white px-4 py-2.5 rounded-xl text-xs font-semibold backdrop-blur-md border border-brand-gold/30 shadow-lg flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold">
-                <MapPin className="w-3.5 h-3.5" />
-              </div>
-              <div>
-                <span className="font-serif text-sm font-bold text-white block">
-                  {selectedProject.name}
-                </span>
-                <span className="text-[11px] text-neutral-300">
-                  {selectedProject.location}
-                </span>
-              </div>
-            </div>
-
-            {/* Direct Google Maps Link Overlay Button */}
-            <div className="absolute bottom-4 right-4">
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  `${selectedProject.name} ${selectedProject.address}`
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-                className="px-4 py-2 rounded-xl bg-white/95 text-brand-dark text-xs font-bold uppercase tracking-wider shadow-lg hover:bg-brand-dark hover:text-white transition-all flex items-center gap-1.5 border border-neutral-200"
-              >
-                <span>Open in Google Maps</span>
-                <ExternalLink className="w-3.5 h-3.5 text-brand-gold-dark" />
-              </a>
-            </div>
-          </div>
-
-          {/* Right Column: Selected Project Detail Card (Span 5) */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-6 p-2 sm:p-4">
-            <div className="space-y-4">
-              {/* Project Image & Status */}
-              <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-900 border border-[#E5DFD1]">
+        {/* Two-Column Project Showcase & Map (Image Bigger on Left, Map Smaller on Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white rounded-3xl p-4 sm:p-6 lg:p-8 border border-[#DCE1DF] shadow-xl">
+          {/* Left Column: Selected Project Detail Card with BIGGER Image (Span 7) */}
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+            <div className="space-y-5">
+              {/* Bigger Project Hero Image & Status */}
+              <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-900 border border-[#DCE1DF] shadow-md group">
                 <img
                   src={selectedProject.heroImage}
                   alt={selectedProject.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute top-3 left-3">
+                <div className="absolute top-4 left-4 z-10">
                   <span
-                    className={`px-3 py-1 text-xs font-semibold rounded-full border backdrop-blur-md shadow-sm ${getStatusBadge(
+                    className={`px-3.5 py-1.5 text-xs font-semibold rounded-full border backdrop-blur-md shadow-md ${getStatusBadge(
                       selectedProject.status
                     )}`}
                   >
                     {selectedProject.status}
+                  </span>
+                </div>
+                <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                <div className="absolute bottom-3 left-4 text-white">
+                  <span className="text-xs tracking-wider uppercase text-[#80B3AD] font-semibold">
+                    {selectedProject.city}
                   </span>
                 </div>
               </div>
@@ -176,32 +141,32 @@ export const ProjectsMapSection: React.FC<ProjectsMapSectionProps> = ({
                 <h3 className="font-serif text-2xl sm:text-3xl font-bold text-brand-dark">
                   {selectedProject.name}
                 </h3>
-                <div className="flex items-center gap-2 text-xs font-semibold text-brand-gold-dark mt-1">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-gold-dark mt-1">
                   <span>{selectedProject.configuration}</span>
                   <span>•</span>
                   <span>{selectedProject.carpetAreaRange}</span>
                 </div>
-                <p className="text-xs text-neutral-500 mt-1 flex items-start gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-brand-gold shrink-0 mt-0.5" />
+                <p className="text-xs sm:text-sm text-neutral-500 mt-1.5 flex items-start gap-1.5">
+                  <MapPin className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
                   <span>{selectedProject.address}</span>
                 </p>
               </div>
 
               {/* Tagline & Description snippet */}
-              <p className="text-xs text-neutral-600 leading-relaxed line-clamp-2">
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
                 {selectedProject.description}
               </p>
 
               {/* Strategic Connectivity Points */}
               <div className="pt-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 block mb-2 flex items-center gap-1.5">
-                  <Navigation className="w-3 h-3 text-brand-gold" /> Nearby Proximity & Transit
+                <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-500 block mb-2.5 flex items-center gap-1.5">
+                  <Navigation className="w-3.5 h-3.5 text-brand-gold" /> Nearby Proximity & Transit
                 </span>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                   {selectedProject.locationPoints.slice(0, 4).map((pt, idx) => (
                     <div
                       key={idx}
-                      className="p-2.5 rounded-lg bg-[#FAF7F2] border border-[#E5DFD1] text-xs"
+                      className="p-3 rounded-xl bg-[#F7FAFA] border border-[#DCE1DF] text-xs hover:border-brand-gold/50 transition-colors"
                     >
                       <span className="text-neutral-500 text-[10px] block line-clamp-1">
                         {pt.name}
@@ -219,7 +184,7 @@ export const ProjectsMapSection: React.FC<ProjectsMapSectionProps> = ({
             <div className="pt-4 border-t border-neutral-100 flex flex-col sm:flex-row items-center gap-3">
               <Link
                 to={`/projects/${selectedProject.slug}`}
-                className="w-full sm:w-1/2 py-3 px-4 rounded-xl bg-white hover:bg-neutral-50 text-brand-dark border border-[#E5DFD1] text-xs font-bold uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-1.5"
+                className="w-full sm:w-1/2 py-3 px-4 rounded-xl bg-white hover:bg-neutral-50 text-brand-dark border border-[#DCE1DF] text-xs font-bold uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-1.5 shadow-xs"
               >
                 <span>View Full Details</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -228,11 +193,52 @@ export const ProjectsMapSection: React.FC<ProjectsMapSectionProps> = ({
               <button
                 type="button"
                 onClick={() => openSiteVisit(selectedProject.name)}
-                className="w-full sm:w-1/2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#DFCA95] via-[#C5A467] to-[#B59353] text-[#0A1715] font-bold text-xs uppercase tracking-wider text-center shadow hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full sm:w-1/2 py-3 px-4 rounded-xl bg-[#80B3AD] hover:bg-[#609A93] text-[#141515] font-bold text-xs uppercase tracking-wider text-center shadow hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Calendar className="w-3.5 h-3.5" />
                 <span>Book Site Visit</span>
               </button>
+            </div>
+          </div>
+
+          {/* Right Column: Interactive Map Frame (Span 5 - Smaller Size) */}
+          <div className="lg:col-span-5 flex flex-col min-h-[380px] lg:min-h-full rounded-2xl overflow-hidden border border-[#DCE1DF] relative bg-[#EEF2F1]">
+            <iframe
+              title={`Map of ${selectedProject.name}`}
+              src={currentEmbedUrl}
+              className="w-full h-full min-h-[380px] lg:min-h-[500px] border-0 filter contrast-[0.95]"
+              loading="lazy"
+              allowFullScreen
+            />
+
+            {/* Floating Quick Location Badge */}
+            <div className="absolute top-4 left-4 bg-[#141515]/90 text-white px-3.5 py-2 rounded-xl text-xs font-semibold backdrop-blur-md border border-[#80B3AD]/30 shadow-lg flex items-center gap-2.5">
+              <div className="w-6 h-6 rounded-full bg-[#80B3AD]/20 flex items-center justify-center text-[#80B3AD]">
+                <MapPin className="w-3.5 h-3.5" />
+              </div>
+              <div>
+                <span className="font-serif text-xs sm:text-sm font-bold text-white block">
+                  {selectedProject.name}
+                </span>
+                <span className="text-[10px] text-neutral-300">
+                  {selectedProject.location}
+                </span>
+              </div>
+            </div>
+
+            {/* Direct Google Maps Link Overlay Button */}
+            <div className="absolute bottom-4 right-4">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  `${selectedProject.name} ${selectedProject.address}`
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-3.5 py-2 rounded-xl bg-white/95 text-brand-dark text-xs font-bold uppercase tracking-wider shadow-lg hover:bg-brand-dark hover:text-white transition-all flex items-center gap-1.5 border border-neutral-200"
+              >
+                <span>Google Maps</span>
+                <ExternalLink className="w-3.5 h-3.5 text-brand-gold-dark" />
+              </a>
             </div>
           </div>
         </div>

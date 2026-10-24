@@ -30,7 +30,7 @@ export const FloorPlanModal: React.FC = () => {
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-brand-cream-border bg-white">
             <div>
-              <span className="text-xs uppercase font-bold tracking-wider text-brand-gold-dark">
+              <span className="text-xs uppercase font-bold tracking-wider text-[#80B3AD]">
                 Architectural Floor Plan
               </span>
               <h3 className="font-serif text-2xl font-bold text-brand-dark">
@@ -47,40 +47,40 @@ export const FloorPlanModal: React.FC = () => {
 
           {/* Blueprint & Visualizer Body */}
           <div className="p-6 overflow-y-auto space-y-6">
-            <div className="relative bg-[#0d1f1c] rounded-xl p-8 flex flex-col items-center justify-center border border-[#1f3a35] shadow-inner min-h-[350px]">
+            <div className="relative bg-[#141515] rounded-xl p-8 flex flex-col items-center justify-center border border-[#2D3030] shadow-inner min-h-[350px]">
               {/* Floor Plan Blueprint Graphic / Architectural SVG */}
-              <div className="w-full max-w-md bg-[#122824] border border-[#2b4d46] rounded-lg p-6 text-emerald-100 text-xs font-mono space-y-3 relative shadow-2xl">
-                <div className="flex justify-between border-b border-[#2b4d46] pb-2 text-brand-gold">
+              <div className="w-full max-w-md bg-[#1A1C1C] border border-[#333737] rounded-lg p-6 text-neutral-200 text-xs font-mono space-y-3 relative shadow-2xl">
+                <div className="flex justify-between border-b border-[#333737] pb-2 text-[#80B3AD] font-bold">
                   <span>RESIDENTIAL UNIT: {floorPlanData.bhk}</span>
                   <span>CARPET: {floorPlanData.area}</span>
                 </div>
                 
                 {/* SVG Blueprint Representation */}
-                <div className="aspect-[4/3] w-full border border-dashed border-[#3a665d] rounded p-4 flex flex-col justify-between relative bg-[#091714]">
+                <div className="aspect-[4/3] w-full border border-dashed border-[#404545] rounded p-4 flex flex-col justify-between relative bg-[#111212]">
                   <div className="flex gap-2 h-1/2">
-                    <div className="w-2/3 border border-[#488277] p-2 flex flex-col justify-between bg-[#112d27]/50">
-                      <span className="text-[10px] text-amber-200">MASTER BEDROOM</span>
-                      <span className="text-[9px] text-emerald-400">12'0" x 14'6"</span>
+                    <div className="w-2/3 border border-[#80B3AD]/50 p-2 flex flex-col justify-between bg-[#80B3AD]/10">
+                      <span className="text-[10px] text-[#80B3AD] font-semibold">MASTER BEDROOM</span>
+                      <span className="text-[9px] text-white">12'0" x 14'6"</span>
                     </div>
-                    <div className="w-1/3 border border-[#488277] p-2 flex flex-col justify-between bg-[#112d27]/30">
-                      <span className="text-[10px] text-amber-200">EN-SUITE</span>
-                      <span className="text-[9px] text-emerald-400">8'0" x 5'6"</span>
+                    <div className="w-1/3 border border-[#80B3AD]/50 p-2 flex flex-col justify-between bg-[#80B3AD]/10">
+                      <span className="text-[10px] text-[#80B3AD] font-semibold">EN-SUITE</span>
+                      <span className="text-[9px] text-white">8'0" x 5'6"</span>
                     </div>
                   </div>
                   
                   <div className="flex gap-2 h-1/2 mt-2">
-                    <div className="w-3/5 border border-[#488277] p-2 flex flex-col justify-between bg-[#112d27]/40">
-                      <span className="text-[10px] text-amber-200">LIVING & DINING</span>
-                      <span className="text-[9px] text-emerald-400">14'0" x 20'0"</span>
+                    <div className="w-3/5 border border-[#80B3AD]/50 p-2 flex flex-col justify-between bg-[#80B3AD]/10">
+                      <span className="text-[10px] text-[#80B3AD] font-semibold">LIVING & DINING</span>
+                      <span className="text-[9px] text-white">14'0" x 20'0"</span>
                     </div>
-                    <div className="w-2/5 border border-[#488277] p-2 flex flex-col justify-between bg-[#112d27]/30">
-                      <span className="text-[10px] text-amber-200">MODULAR KITCHEN</span>
-                      <span className="text-[9px] text-emerald-400">9'0" x 10'6"</span>
+                    <div className="w-2/5 border border-[#80B3AD]/50 p-2 flex flex-col justify-between bg-[#80B3AD]/10">
+                      <span className="text-[10px] text-[#80B3AD] font-semibold">MODULAR KITCHEN</span>
+                      <span className="text-[9px] text-white">9'0" x 10'6"</span>
                     </div>
                   </div>
 
                   {/* Balcony indicator */}
-                  <div className="absolute -bottom-3 right-8 bg-brand-gold text-brand-dark px-2 py-0.5 text-[9px] font-bold rounded">
+                  <div className="absolute -bottom-3 right-8 bg-[#80B3AD] text-[#141515] px-2 py-0.5 text-[9px] font-bold rounded">
                     SUN DECK BALCONY
                   </div>
                 </div>
@@ -127,7 +127,7 @@ export const FloorPlanModal: React.FC = () => {
                 closeFloorPlan();
                 openSiteVisit(floorPlanData.title);
               }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#DFCA95] via-[#C5A467] to-[#B59353] text-[#0A1715] font-semibold text-sm shadow hover:brightness-105 transition-all cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-[#80B3AD] hover:bg-[#609A93] text-[#141515] font-semibold text-sm shadow hover:brightness-105 transition-all cursor-pointer"
             >
               <span>Book Site Visit for this Plan</span>
             </button>

@@ -33,8 +33,8 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   // In 'plinth' mode (e.g. on dark footers or cards), it uses the opaque white/cream badge.
   const isSeamless = variant === 'seamless';
   const badgeStyle = isSeamless
-    ? 'bg-white/90 hover:bg-white backdrop-blur-sm border border-black/10 ring-1 ring-white/80 shadow-sm hover:shadow-md'
-    : 'bg-gradient-to-b from-white via-[#FCFBF8] to-[#FAF8F2] border border-[#DFC995]/70 ring-1 ring-[#DFC995]/20 shadow-[0_2px_12px_rgba(0,0,0,0.22)] group-hover:border-[#C5A467] group-hover:shadow-[0_4px_22px_rgba(223,201,149,0.38)]';
+    ? 'bg-white/95 hover:bg-white backdrop-blur-sm border border-neutral-200/80 shadow-xs hover:shadow-sm'
+    : 'bg-white border border-[#DCE1DF] ring-1 ring-[#80B3AD]/25 shadow-sm group-hover:border-[#80B3AD] group-hover:shadow-[0_4px_20px_rgba(128,179,173,0.3)]';
 
   return (
     <Link

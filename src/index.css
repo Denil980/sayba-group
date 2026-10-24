@@ -7,6 +7,14 @@
     scroll-behavior: smooth;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
 }
 
 /* Custom scrollbar */
@@ -14,19 +22,19 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF7F2;
+  background: #F7FAFA;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C5A467;
+  background: #80B3AD;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B59353;
+  background: #609A93;
 }
 
 /* Glassmorphism utility */
 .glass-dark {
-  background: rgba(10, 23, 21, 0.85);
+  background: rgba(20, 21, 21, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, type Variants } from 'framer-motion';
 import {
@@ -60,28 +60,8 @@ export const ModernAmenitiesSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   
-  // Trigger animation ONLY when the user has scrolled to the cards container and it is clearly visible in screen
-  const isCardsInView = useInView(scrollContainerRef, { amount: 0.45, once: true });
-
-  // 10-Second Showcase State for subtle spotlight cycle
-  const [activeHighlightIndex, setActiveHighlightIndex] = useState<number>(0);
-
-  // 10-second showcase timer: cycles through each of the 5 cards for 2 seconds each (total 10 seconds)
-  useEffect(() => {
-    if (!isCardsInView) return;
-
-    // Start cycling spotlight after cards have finished their entrance animation
-    const startDelay = setTimeout(() => {
-      const interval = setInterval(() => {
-        setActiveHighlightIndex((prev) => (prev + 1) % AMENITIES_LIST.length);
-      }, 2000);
-
-      return () => clearInterval(interval);
-    }, 1800);
-
-    return () => clearTimeout(startDelay);
-  }, [isCardsInView]);
-
+  // Trigger entrance animation when the user scrolls to the cards container
+  const isCardsInView = useInView(scrollContainerRef, { amount: 0.25, once: true });
   const shouldAnimate = isCardsInView;
 
   // Staggered Container Variant (cards appear one by one right when the user arrives)
@@ -119,7 +99,7 @@ export const ModernAmenitiesSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-20 bg-[#F4EFE6] border-y border-[#E5DFD1] relative overflow-hidden"
+      className="py-20 bg-[#EFF3F2] border-y border-[#DCE1DF] relative overflow-hidden"
     >
       {/* Decorative ambient background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-brand-gold/5 blur-3xl pointer-events-none rounded-full" />
@@ -146,53 +126,36 @@ export const ModernAmenitiesSection: React.FC = () => {
           animate={shouldAnimate ? 'visible' : 'hidden'}
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 overflow-x-auto pb-4 pt-2 no-scrollbar"
         >
-            {AMENITIES_LIST.map((amenity, idx) => {
+            {AMENITIES_LIST.map((amenity) => {
               const Icon = amenity.icon;
-              const isSpotlighted = shouldAnimate && activeHighlightIndex === idx;
 
               return (
                 <motion.div
                   key={amenity.id}
                   variants={cardVariants}
                   whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                  className={`relative rounded-2xl p-7 sm:p-8 flex flex-col items-center text-center transition-all duration-500 group border cursor-default ${
-                    isSpotlighted
-                      ? 'bg-white border-brand-gold shadow-[0_15px_35px_rgba(197,164,103,0.22)] -translate-y-2 ring-1 ring-brand-gold/50'
-                      : 'bg-white border-[#E5DFD1] shadow-[0_6px_24px_rgba(0,0,0,0.04)] hover:shadow-xl hover:border-brand-gold/60'
-                  }`}
+                  className="relative rounded-2xl p-7 sm:p-8 flex flex-col items-center text-center transition-all duration-300 group border cursor-default bg-white border-[#DCE1DF] shadow-[0_6px_24px_rgba(0,0,0,0.04)] hover:shadow-xl hover:border-brand-gold/60"
                   style={{ minHeight: '320px' }}
                 >
                   {/* Top Gold Accent Bar */}
-                  <div
-                    className={`absolute top-0 left-1/2 -translate-x-1/2 h-1 rounded-b-full transition-all duration-500 ${
-                      isSpotlighted
-                        ? 'w-20 bg-gradient-to-r from-[#DFCA95] via-[#C5A467] to-[#B59353]'
-                        : 'w-8 bg-transparent group-hover:w-16 group-hover:bg-brand-gold/60'
-                    }`}
-                  />
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-1 rounded-b-full transition-all duration-300 w-8 bg-transparent group-hover:w-16 group-hover:bg-brand-gold/60" />
 
                   {/* Category Pill */}
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-gold-dark mb-4">
                     {amenity.category}
                   </span>
 
-                  {/* Much Bigger, Premium Icon Emblem */}
-                  <div
-                    className={`w-20 h-20 sm:w-22 sm:h-22 rounded-full flex items-center justify-center transition-all duration-500 mb-5 border-2 ${
-                      isSpotlighted
-                        ? 'bg-gradient-to-br from-[#FAF7F2] to-[#F1E8D9] border-brand-gold text-brand-dark scale-110 shadow-md ring-4 ring-brand-gold/20'
-                        : 'bg-[#FAF7F2] border-brand-gold/30 text-brand-gold-dark group-hover:bg-brand-gold group-hover:text-brand-dark group-hover:scale-105 group-hover:border-brand-gold shadow-sm'
-                    }`}
-                  >
+                  {/* Icon Emblem */}
+                  <div className="w-20 h-20 sm:w-22 sm:h-22 rounded-full flex items-center justify-center transition-all duration-300 mb-5 border-2 bg-[#F7FAFA] border-brand-gold/30 text-brand-gold-dark group-hover:bg-brand-gold group-hover:text-brand-dark group-hover:scale-105 group-hover:border-brand-gold shadow-sm">
                     <Icon className="w-9 h-9 sm:w-10 sm:h-10 transition-transform duration-300 group-hover:scale-110" />
                   </div>
 
-                  {/* Amenity Title (Larger & Clearer) */}
-                  <h4 className="font-serif text-lg sm:text-xl font-bold text-brand-dark mb-2.5 tracking-tight">
+                  {/* Amenity Title */}
+                  <h4 className="font-serif text-lg sm:text-xl font-bold text-brand-dark mb-2.5 tracking-tight group-hover:text-brand-gold-dark transition-colors">
                     {amenity.name}
                   </h4>
 
-                  {/* Feature Description (Gives substance and clear visibility) */}
+                  {/* Feature Description */}
                   <p className="text-xs text-neutral-500 leading-relaxed max-w-[210px] font-sans">
                     {amenity.description}
                   </p>

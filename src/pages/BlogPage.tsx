@@ -50,25 +50,25 @@ export const BlogPage: React.FC = () => {
       {/* ========================================================
           HERO BANNER
           ======================================================== */}
-      <section className="relative bg-[#0A1715] text-white pt-28 sm:pt-36 pb-16 sm:pb-24 overflow-hidden">
+      <section className="relative bg-[#141515] text-white pt-28 sm:pt-36 pb-16 sm:pb-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=85"
             alt="Sayba Architecture & Insights"
             className="w-full h-full object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1715] via-[#0A1715]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#141515] via-[#141515]/80 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl space-y-3">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs text-neutral-400 uppercase tracking-widest">
-              <Link to="/" className="hover:text-brand-gold transition-colors">
+              <Link to="/" className="hover:text-[#80B3AD] transition-colors">
                 Home
               </Link>
               <span>/</span>
-              <span className="text-brand-gold font-medium">News & Insights</span>
+              <span className="text-[#80B3AD] font-medium">News & Insights</span>
             </div>
 
             <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white">
@@ -93,7 +93,7 @@ export const BlogPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, ease: 'easeOut' }}
             onClick={() => setActiveArticle(featuredPost)}
-            className="group bg-white rounded-2xl overflow-hidden border border-[#E5DFD1] hover:border-brand-gold/70 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer grid grid-cols-1 md:grid-cols-12"
+            className="group bg-white rounded-2xl overflow-hidden border border-[#DCE1DF] hover:border-[#80B3AD] shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer grid grid-cols-1 md:grid-cols-12"
           >
             {/* Image Column (Sleek, Compact Height) */}
             <div className="md:col-span-4 lg:col-span-4 relative h-48 sm:h-52 md:h-56 md:min-h-full overflow-hidden bg-neutral-900">
@@ -108,7 +108,7 @@ export const BlogPage: React.FC = () => {
             <div className="md:col-span-8 lg:col-span-8 p-5 sm:p-6 flex flex-col justify-between space-y-3 bg-white">
               <div className="space-y-2">
                 <div className="flex items-center gap-2.5 text-[11px] text-neutral-500">
-                  <span className="text-brand-gold-dark font-bold uppercase tracking-wider">
+                  <span className="text-[#80B3AD] font-bold uppercase tracking-wider">
                     {featuredPost.category}
                   </span>
                   <span>•</span>
@@ -117,7 +117,7 @@ export const BlogPage: React.FC = () => {
                   </span>
                 </div>
 
-                <h2 className="font-serif text-lg sm:text-xl md:text-2xl font-bold text-brand-dark group-hover:text-brand-gold-dark transition-colors leading-snug line-clamp-2">
+                <h2 className="font-serif text-lg sm:text-xl md:text-2xl font-bold text-brand-dark group-hover:text-[#80B3AD] transition-colors leading-snug line-clamp-2">
                   {featuredPost.title}
                 </h2>
 
@@ -132,7 +132,7 @@ export const BlogPage: React.FC = () => {
                   <img
                     src={featuredPost.author.avatar}
                     alt={featuredPost.author.name}
-                    className="w-7 h-7 rounded-full object-cover border border-brand-gold/40"
+                    className="w-7 h-7 rounded-full object-cover border border-[#80B3AD]/40"
                   />
                   <div>
                     <h4 className="text-xs font-bold text-brand-dark leading-tight">
@@ -144,7 +144,7 @@ export const BlogPage: React.FC = () => {
                   </div>
                 </div>
 
-                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-brand-gold-dark group-hover:translate-x-1 transition-transform">
+                <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#80B3AD] group-hover:translate-x-1 transition-transform">
                   Read Article <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </div>
@@ -157,7 +157,7 @@ export const BlogPage: React.FC = () => {
           FILTER & SEARCH BAR + BLOG CARDS GRID
           ======================================================== */}
       <section className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 pb-6 border-b border-[#E5DFD1]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 pb-6 border-b border-[#DCE1DF]">
           {/* Categories with Sliding Indicator */}
           <div className="flex flex-wrap items-center gap-2">
             {categories.map((cat) => {
@@ -167,13 +167,13 @@ export const BlogPage: React.FC = () => {
                   key={cat.key}
                   onClick={() => setSelectedCategory(cat.key)}
                   className={`relative px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer select-none ${
-                    isActive ? 'text-brand-gold' : 'text-neutral-600 hover:text-brand-dark'
+                    isActive ? 'text-[#141515]' : 'text-neutral-600 hover:text-brand-dark'
                   }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activeBlogCategoryPill"
-                      className="absolute inset-0 bg-[#0A1715] rounded-full shadow-md -z-0"
+                      className="absolute inset-0 bg-[#80B3AD] rounded-full shadow-md -z-0"
                       transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                     />
                   )}
@@ -190,7 +190,7 @@ export const BlogPage: React.FC = () => {
               placeholder="Search updates or topics..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-[#E5DFD1] text-brand-dark text-xs font-medium rounded-full pl-9 pr-4 py-2.5 focus:outline-none focus:border-brand-gold shadow-sm"
+              className="w-full bg-white border border-[#DCE1DF] text-brand-dark text-xs font-medium rounded-full pl-9 pr-4 py-2.5 focus:outline-none focus:border-[#80B3AD] shadow-sm"
             />
             <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-3" />
           </div>
@@ -198,7 +198,7 @@ export const BlogPage: React.FC = () => {
 
         {/* Blog Posts Grid with Sequential One-by-One Entrance */}
         {filteredPosts.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-2xl border border-[#E5DFD1]">
+          <div className="text-center py-20 bg-white rounded-2xl border border-[#DCE1DF]">
             <BookOpen className="w-12 h-12 text-neutral-300 mx-auto mb-3" />
             <p className="font-serif text-xl text-neutral-600">
               No articles match your search or filter criteria.
@@ -208,7 +208,7 @@ export const BlogPage: React.FC = () => {
                 setSelectedCategory('All');
                 setSearchQuery('');
               }}
-              className="mt-3 text-xs font-bold uppercase tracking-wider text-brand-gold-dark hover:underline cursor-pointer"
+              className="mt-3 text-xs font-bold uppercase tracking-wider text-[#80B3AD] hover:underline cursor-pointer"
             >
               Reset Filters
             </button>
@@ -231,11 +231,10 @@ export const BlogPage: React.FC = () => {
                   transition={{
                     duration: 0.7,
                     ease: [0.22, 1, 0.36, 1],
-                    // In ~1s the first card appears, then the second card, then the third, fourth, fifth, etc.
                     delay: idx * 0.55,
                   }}
                   onClick={() => setActiveArticle(post)}
-                  className="group bg-white rounded-2xl overflow-hidden border border-[#E5DFD1] hover:border-brand-gold/70 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between cursor-pointer"
+                  className="group bg-white rounded-2xl overflow-hidden border border-[#DCE1DF] hover:border-[#80B3AD] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between cursor-pointer"
                 >
                 {/* Cover Image */}
                 <div>
@@ -247,7 +246,7 @@ export const BlogPage: React.FC = () => {
                       loading="lazy"
                     />
                     <div className="absolute top-3 left-3">
-                      <span className="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#0A1715]/85 text-brand-gold backdrop-blur-sm border border-brand-gold/30">
+                      <span className="px-3 py-1 text-[11px] font-semibold rounded-full bg-[#141515]/90 text-[#80B3AD] backdrop-blur-sm border border-[#80B3AD]/30">
                         {post.category}
                       </span>
                     </div>
@@ -263,7 +262,7 @@ export const BlogPage: React.FC = () => {
                       <span>{post.readTime}</span>
                     </div>
 
-                    <h3 className="font-serif text-xl font-bold text-brand-dark group-hover:text-brand-gold-dark transition-colors line-clamp-2">
+                    <h3 className="font-serif text-xl font-bold text-brand-dark group-hover:text-[#80B3AD] transition-colors line-clamp-2">
                       {post.title}
                     </h3>
 
@@ -280,14 +279,14 @@ export const BlogPage: React.FC = () => {
                       <img
                         src={post.author.avatar}
                         alt={post.author.name}
-                        className="w-7 h-7 rounded-full object-cover border border-brand-gold/30"
+                        className="w-7 h-7 rounded-full object-cover border border-[#80B3AD]/30"
                       />
                       <span className="text-xs font-medium text-neutral-700">
                         {post.author.name}
                       </span>
                     </div>
 
-                    <span className="text-xs font-bold text-brand-gold-dark group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                    <span className="text-xs font-bold text-[#80B3AD] group-hover:translate-x-1 transition-transform flex items-center gap-1">
                       Read <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
@@ -319,7 +318,7 @@ export const BlogPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-[#E5DFD1] overflow-hidden z-10 text-brand-dark my-8 max-h-[90vh] flex flex-col"
+              className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-[#DCE1DF] overflow-hidden z-10 text-brand-dark my-8 max-h-[90vh] flex flex-col"
             >
               {/* Floating Close Button - Always accessible */}
               <button
@@ -342,7 +341,7 @@ export const BlogPage: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
 
                   <div className="absolute bottom-4 left-4 sm:left-8">
-                    <span className="px-3.5 py-1 text-xs font-semibold rounded-full bg-brand-gold text-brand-dark shadow">
+                    <span className="px-3.5 py-1 text-xs font-semibold rounded-full bg-[#80B3AD] text-[#141515] font-bold shadow">
                       {activeArticle.category}
                     </span>
                   </div>
@@ -360,7 +359,7 @@ export const BlogPage: React.FC = () => {
                         <img
                           src={activeArticle.author.avatar}
                           alt={activeArticle.author.name}
-                          className="w-8 h-8 rounded-full object-cover border border-brand-gold/40"
+                          className="w-8 h-8 rounded-full object-cover border border-[#80B3AD]/40"
                         />
                         <span className="font-medium text-brand-dark">
                           {activeArticle.author.name} ({activeArticle.author.role})
@@ -378,7 +377,7 @@ export const BlogPage: React.FC = () => {
                   </div>
 
                   {/* Excerpt Lead */}
-                  <div className="p-4 sm:p-5 rounded-xl bg-brand-cream border-l-4 border-brand-gold text-sm sm:text-base italic text-neutral-700">
+                  <div className="p-4 sm:p-5 rounded-xl bg-brand-cream border-l-4 border-[#80B3AD] text-sm sm:text-base italic text-neutral-700">
                     {activeArticle.excerpt}
                   </div>
 
@@ -391,11 +390,11 @@ export const BlogPage: React.FC = () => {
 
                   {/* Tags */}
                   <div className="pt-4 border-t border-neutral-100 flex flex-wrap items-center gap-2">
-                    <Tag className="w-4 h-4 text-brand-gold-dark" />
+                    <Tag className="w-4 h-4 text-[#80B3AD]" />
                     {activeArticle.tags.map((t, idx) => (
                       <span
                         key={idx}
-                        className="px-2.5 py-1 text-xs rounded-md bg-[#FAF7F2] text-neutral-600 border border-[#E5DFD1]"
+                        className="px-2.5 py-1 text-xs rounded-md bg-[#EFF3F2] text-neutral-700 border border-[#DCE1DF]"
                       >
                         #{t}
                       </span>
@@ -405,13 +404,13 @@ export const BlogPage: React.FC = () => {
               </div>
 
               {/* Bottom Footer Actions */}
-              <div className="p-4 px-6 sm:px-8 bg-[#FAF7F2] border-t border-neutral-200 flex items-center justify-between shrink-0">
+              <div className="p-4 px-6 sm:px-8 bg-[#EFF3F2] border-t border-neutral-200 flex items-center justify-between shrink-0">
                 <span className="text-xs text-neutral-500 font-medium">
                   Sayba Group Real Estate Insights
                 </span>
                 <button
                   onClick={() => setActiveArticle(null)}
-                  className="px-5 py-2 rounded-lg bg-[#0A1715] text-brand-gold text-xs font-bold uppercase tracking-wider hover:bg-black transition-colors cursor-pointer"
+                  className="px-5 py-2 rounded-lg bg-[#80B3AD] hover:bg-[#609A93] text-[#141515] text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
                 >
                   Close Article
                 </button>

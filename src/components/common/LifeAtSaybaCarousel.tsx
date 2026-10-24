@@ -149,7 +149,7 @@ export const LifeAtSaybaCarousel: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-[#0A1715] text-white relative overflow-hidden border-y border-[#1A2E2A]">
+    <section className="py-20 bg-[#141515] text-white relative overflow-hidden border-y border-white/10">
       {/* Decorative ambient background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-brand-gold/10 blur-3xl pointer-events-none rounded-full" />
 
@@ -161,7 +161,7 @@ export const LifeAtSaybaCarousel: React.FC = () => {
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
             More Than Homes <br />
-            <span className="text-[#DFC995] italic font-normal">We Build Lifestyles</span>
+            <span className="text-[#80B3AD] italic font-normal">We Build Lifestyles</span>
           </h2>
           <div className="w-16 h-0.5 bg-brand-gold mx-auto mt-4" />
         </div>
@@ -193,7 +193,7 @@ export const LifeAtSaybaCarousel: React.FC = () => {
                 }}
                 className={`absolute w-[230px] sm:w-[260px] md:w-[270px] h-[340px] sm:h-[380px] md:h-[400px] rounded-[28px] overflow-hidden cursor-pointer shadow-2xl transition-all duration-500 ${
                   isActive
-                    ? 'border-2 border-[#DFCA95] ring-4 ring-brand-gold/25 shadow-[0_25px_60px_rgba(0,0,0,0.65)]'
+                    ? 'border-2 border-[#80B3AD] ring-4 ring-brand-gold/25 shadow-[0_25px_60px_rgba(0,0,0,0.65)]'
                     : 'border border-white/10'
                 }`}
                 style={{
@@ -272,7 +272,7 @@ export const LifeAtSaybaCarousel: React.FC = () => {
                 aria-label={`Go to slide ${dotIdx + 1}`}
                 className={`transition-all duration-300 rounded-full cursor-pointer ${
                   dotIdx === activeIndex
-                    ? 'w-6 h-1.5 bg-gradient-to-r from-[#DFCA95] to-[#B59353]'
+                    ? 'w-6 h-1.5 bg-[#80B3AD]'
                     : 'w-1.5 h-1.5 bg-white/20 hover:bg-white/40'
                 }`}
               />

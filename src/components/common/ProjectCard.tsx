@@ -37,8 +37,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, className = '
   };
 
   return (
-    <div
-      className={`group relative bg-white rounded-2xl overflow-hidden border border-[#E5DFD1] hover:border-brand-gold/70 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col h-full cursor-pointer ${className}`}
+    <Link
+      to={`/projects/${project.slug}`}
+      className={`group relative bg-white rounded-2xl overflow-hidden border border-[#DCE1DF] hover:border-brand-gold/70 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col h-full cursor-pointer text-inherit no-underline ${className}`}
     >
       {/* Top Gold Accent Bar on Hover */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
@@ -89,15 +90,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, className = '
 
         {/* View Details Link */}
         <div className="pt-4 mt-4 border-t border-neutral-100 flex items-center justify-between">
-          <Link
-            to={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-700 group-hover:text-brand-gold-dark transition-all duration-300"
-          >
+          <div className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-700 group-hover:text-brand-gold-dark transition-all duration-300">
             <span>View Details</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
-          </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

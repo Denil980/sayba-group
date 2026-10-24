@@ -26,7 +26,7 @@ export const SiteVisitModal: React.FC = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ duration: 0.25 }}
-            className="relative w-full max-w-lg bg-gradient-to-b from-[#FAF5EB] via-[#F4ECE0] to-[#FAF5EB] border border-[#DFCA95]/80 rounded-3xl shadow-2xl p-5 sm:p-7 z-10 text-brand-dark my-auto max-h-[92vh] flex flex-col overflow-hidden"
+            className="relative w-full max-w-lg bg-[#F7FAFA] border border-[#DCE1DF] rounded-3xl shadow-2xl p-5 sm:p-7 z-10 text-brand-dark my-auto max-h-[92vh] flex flex-col overflow-hidden"
           >
             {/* Close Button */}
             <button
@@ -39,8 +39,8 @@ export const SiteVisitModal: React.FC = () => {
 
             {/* Header */}
             <div className="text-center mb-4 shrink-0">
-              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white border border-[#DFCA95] text-brand-gold-dark mb-2 shadow-sm">
-                <CalendarCheck2 className="w-5 h-5 text-brand-gold-dark" />
+              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white border border-[#DCE1DF] text-[#80B3AD] mb-2 shadow-sm">
+                <CalendarCheck2 className="w-5 h-5 text-[#80B3AD]" />
               </div>
               <h3 className="font-serif text-2xl sm:text-3xl font-bold text-brand-dark">
                 Book a Site Visit

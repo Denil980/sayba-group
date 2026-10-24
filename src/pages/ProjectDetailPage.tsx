@@ -96,30 +96,30 @@ export const ProjectDetailPage: React.FC = () => {
       {/* ========================================================
           HERO BANNER
           ======================================================== */}
-      <section className="relative bg-[#0A1715] text-white pt-28 sm:pt-36 pb-16 sm:pb-24 overflow-hidden">
+      <section className="relative bg-[#141515] text-white pt-28 sm:pt-36 pb-16 sm:pb-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={project.heroImage}
             alt={project.name}
             className="w-full h-full object-cover opacity-35"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A1715] via-[#0A1715]/85 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1715] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#141515] via-[#141515]/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#141515] via-transparent to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl space-y-4">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs text-neutral-400 uppercase tracking-widest">
-              <Link to="/" className="hover:text-brand-gold transition-colors">
+              <Link to="/" className="hover:text-[#80B3AD] transition-colors">
                 Home
               </Link>
               <span>/</span>
-              <Link to="/projects" className="hover:text-brand-gold transition-colors">
+              <Link to="/projects" className="hover:text-[#80B3AD] transition-colors">
                 Projects
               </Link>
               <span>/</span>
-              <span className="text-brand-gold">{project.name}</span>
+              <span className="text-[#80B3AD]">{project.name}</span>
             </div>
 
             {/* Title & Badge */}
@@ -135,14 +135,14 @@ export const ProjectDetailPage: React.FC = () => {
             {/* Sub-meta: Location & Configuration */}
             <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-300">
               <div className="flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-brand-gold" />
+                <MapPin className="w-4 h-4 text-[#80B3AD]" />
                 <span>{project.city}</span>
               </div>
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-gold/60" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#80B3AD]/60" />
               <span>{project.configuration}</span>
               {project.reraNumber && (
                 <>
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-gold/60" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#80B3AD]/60" />
                   <span className="text-neutral-400 text-xs">RERA: {project.reraNumber}</span>
                 </>
               )}
@@ -152,7 +152,7 @@ export const ProjectDetailPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => openSiteVisit(project.name)}
-                className="px-6 py-3 rounded-full bg-gradient-to-r from-[#DFCA95] via-[#C5A467] to-[#B59353] text-[#0A1715] font-semibold text-xs tracking-wider uppercase shadow-lg hover:brightness-105 active:scale-95 transition-all inline-flex items-center gap-2 cursor-pointer"
+                className="px-6 py-3 rounded-full bg-[#80B3AD] hover:bg-[#609A93] text-[#141515] font-semibold text-xs tracking-wider uppercase shadow-lg active:scale-95 transition-all inline-flex items-center gap-2 cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book a Site Visit</span>
@@ -165,7 +165,7 @@ export const ProjectDetailPage: React.FC = () => {
       {/* ========================================================
           SUB-NAVIGATION TABS
           ======================================================== */}
-      <section className="sticky top-[72px] z-20 bg-white border-b border-[#E5DFD1] shadow-sm">
+      <section className="sticky top-[72px] z-20 bg-white border-b border-[#DCE1DF] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex space-x-8 overflow-x-auto no-scrollbar">
             {subNavTabs.map((tab) => (
@@ -186,7 +186,7 @@ export const ProjectDetailPage: React.FC = () => {
               >
                 {tab}
                 {activeTab === tab && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-gold" />
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#80B3AD]" />
                 )}
               </button>
             ))}
@@ -202,7 +202,7 @@ export const ProjectDetailPage: React.FC = () => {
           {/* LEFT COLUMN: Project Details (Span 8) */}
           <div className="lg:col-span-8 space-y-12">
             {/* Overview / About the Project */}
-            <div id="overview" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5DFD1] shadow-sm space-y-6 scroll-mt-28">
+            <div id="overview" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#DCE1DF] shadow-sm space-y-6 scroll-mt-28">
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-brand-dark">
                 About the Project
               </h2>
@@ -218,7 +218,7 @@ export const ProjectDetailPage: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {project.highlights.map((highlight, idx) => (
                     <div key={idx} className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded-full bg-brand-gold/15 flex items-center justify-center text-brand-gold-dark shrink-0">
+                      <div className="w-5 h-5 rounded-full bg-[#80B3AD]/15 flex items-center justify-center text-[#80B3AD] shrink-0">
                         <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                       </div>
                       <span className="text-xs sm:text-sm font-medium text-neutral-700">
@@ -231,7 +231,7 @@ export const ProjectDetailPage: React.FC = () => {
             </div>
 
             {/* Key Amenities */}
-            <div id="amenities" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5DFD1] shadow-sm space-y-6 scroll-mt-28">
+            <div id="amenities" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#DCE1DF] shadow-sm space-y-6 scroll-mt-28">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                   <h2 className="font-serif text-2xl sm:text-3xl font-bold text-brand-dark">
@@ -243,7 +243,7 @@ export const ProjectDetailPage: React.FC = () => {
                 </div>
                 <Link
                   to="/amenities"
-                  className="text-xs font-bold uppercase tracking-wider text-brand-gold-dark hover:underline flex items-center gap-1.5 w-fit"
+                  className="text-xs font-bold uppercase tracking-wider text-[#80B3AD] hover:underline flex items-center gap-1.5 w-fit"
                 >
                   <span>View Dedicated Amenities Page</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -256,9 +256,9 @@ export const ProjectDetailPage: React.FC = () => {
                   return (
                     <div
                       key={idx}
-                      className="p-4 rounded-xl bg-[#FAF7F2] border border-[#E5DFD1] flex flex-col items-center text-center group hover:bg-white hover:border-brand-gold/40 transition-all shadow-none hover:shadow-sm"
+                      className="p-4 rounded-xl bg-[#F7FAFA] border border-[#DCE1DF] flex flex-col items-center text-center group hover:bg-white hover:border-[#80B3AD]/50 transition-all shadow-none hover:shadow-sm"
                     >
-                      <div className="w-12 h-12 rounded-full bg-white border border-brand-gold/30 flex items-center justify-center text-brand-gold-dark mb-2.5 group-hover:scale-105 transition-transform">
+                      <div className="w-12 h-12 rounded-full bg-white border border-[#80B3AD]/30 flex items-center justify-center text-[#80B3AD] mb-2.5 group-hover:scale-105 transition-transform">
                         <Icon className="w-5 h-5" />
                       </div>
                       <span className="font-serif text-sm font-semibold text-brand-dark">
@@ -270,9 +270,9 @@ export const ProjectDetailPage: React.FC = () => {
               </div>
 
               {/* Banner linking to full amenities page */}
-              <div className="p-4 rounded-xl bg-[#0A1715] text-white flex items-center justify-between gap-4 mt-2">
+              <div className="p-4 rounded-xl bg-[#141515] text-white flex items-center justify-between gap-4 mt-2">
                 <div className="text-xs">
-                  <span className="text-brand-gold font-bold uppercase tracking-wider block">
+                  <span className="text-[#80B3AD] font-bold uppercase tracking-wider block">
                     Full Lifestyle Package
                   </span>
                   <span className="text-neutral-300">
@@ -281,7 +281,7 @@ export const ProjectDetailPage: React.FC = () => {
                 </div>
                 <Link
                   to="/amenities"
-                  className="px-4 py-2 rounded-lg bg-brand-gold text-brand-dark text-xs font-bold uppercase tracking-wider hover:brightness-105 transition-all shrink-0"
+                  className="px-4 py-2 rounded-lg bg-[#80B3AD] text-[#141515] text-xs font-bold uppercase tracking-wider hover:bg-[#609A93] transition-all shrink-0"
                 >
                   Explore Amenities
                 </Link>
@@ -289,7 +289,7 @@ export const ProjectDetailPage: React.FC = () => {
             </div>
 
             {/* Floor Plans */}
-            <div id="floor-plans" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5DFD1] shadow-sm space-y-6 scroll-mt-28">
+            <div id="floor-plans" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#DCE1DF] shadow-sm space-y-6 scroll-mt-28">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-brand-dark">
                   Floor Plans
@@ -303,8 +303,8 @@ export const ProjectDetailPage: React.FC = () => {
                       onClick={() => setSelectedFloorPlanIndex(idx)}
                       className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                         selectedFloorPlanIndex === idx
-                          ? 'bg-[#0A1715] text-brand-gold shadow'
-                          : 'bg-[#FAF7F2] text-neutral-600 hover:text-brand-dark border border-[#E5DFD1]'
+                          ? 'bg-[#80B3AD] text-[#141515] shadow'
+                          : 'bg-[#F7FAFA] text-neutral-600 hover:text-brand-dark border border-[#DCE1DF]'
                       }`}
                     >
                       {fp.bhk}
@@ -314,27 +314,27 @@ export const ProjectDetailPage: React.FC = () => {
               </div>
 
               {/* Floor Plan Display Card */}
-              <div className="bg-[#FAF7F2] rounded-xl p-6 border border-[#E5DFD1] flex flex-col md:flex-row items-center gap-8">
+              <div className="bg-[#F7FAFA] rounded-xl p-6 border border-[#DCE1DF] flex flex-col md:flex-row items-center gap-8">
                 {/* Blueprint Diagram Box */}
-                <div className="w-full md:w-1/2 aspect-[4/3] bg-[#0A1715] rounded-xl p-4 flex flex-col justify-between border border-[#1A2E2A] text-white">
-                  <div className="flex justify-between items-center text-[11px] text-brand-gold font-mono border-b border-white/10 pb-2">
+                <div className="w-full md:w-1/2 aspect-[4/3] bg-[#141515] rounded-xl p-4 flex flex-col justify-between border border-[#2D3030] text-white">
+                  <div className="flex justify-between items-center text-[11px] text-[#80B3AD] font-mono border-b border-white/10 pb-2">
                     <span>{currentFloorPlan.type}</span>
                     <span>{currentFloorPlan.carpetArea}</span>
                   </div>
 
                   {/* Architectural Graphic */}
-                  <div className="my-auto border border-dashed border-emerald-500/40 rounded p-4 text-center space-y-2 bg-[#0d221e]">
+                  <div className="my-auto border border-dashed border-[#80B3AD]/40 rounded p-4 text-center space-y-2 bg-[#1A1C1C]">
                     <div className="grid grid-cols-2 gap-2 text-[10px] font-mono text-neutral-300">
-                      <div className="border border-emerald-500/30 p-2 rounded">
+                      <div className="border border-[#80B3AD]/30 p-2 rounded">
                         Living & Dining Room
                       </div>
-                      <div className="border border-emerald-500/30 p-2 rounded">
+                      <div className="border border-[#80B3AD]/30 p-2 rounded">
                         Master Bedroom
                       </div>
-                      <div className="border border-emerald-500/30 p-2 rounded">
+                      <div className="border border-[#80B3AD]/30 p-2 rounded">
                         Modular Kitchen
                       </div>
-                      <div className="border border-emerald-500/30 p-2 rounded">
+                      <div className="border border-[#80B3AD]/30 p-2 rounded">
                         Balcony Deck
                       </div>
                     </div>
@@ -370,7 +370,7 @@ export const ProjectDetailPage: React.FC = () => {
                         image: currentFloorPlan.image,
                       })
                     }
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-brand-gold/15 hover:bg-brand-gold text-brand-gold-dark hover:text-brand-dark text-xs font-bold uppercase tracking-wider transition-all border border-brand-gold/40 cursor-pointer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#80B3AD]/20 hover:bg-[#80B3AD] text-brand-dark text-xs font-bold uppercase tracking-wider transition-all border border-[#80B3AD]/40 cursor-pointer"
                   >
                     <Maximize2 className="w-3.5 h-3.5" />
                     <span>View Plan +</span>
@@ -380,7 +380,7 @@ export const ProjectDetailPage: React.FC = () => {
             </div>
 
             {/* Comprehensive In-Page Project Gallery (Per Request) */}
-            <div id="gallery" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5DFD1] shadow-sm space-y-6 scroll-mt-28">
+            <div id="gallery" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#DCE1DF] shadow-sm space-y-6 scroll-mt-28">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h2 className="font-serif text-2xl sm:text-3xl font-bold text-brand-dark">
@@ -400,8 +400,8 @@ export const ProjectDetailPage: React.FC = () => {
                         onClick={() => setGalleryFilter(cat)}
                         className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-wider transition-all cursor-pointer ${
                           galleryFilter === cat
-                            ? 'bg-[#0A1715] text-brand-gold shadow'
-                            : 'bg-[#FAF7F2] text-neutral-600 hover:text-brand-dark border border-[#E5DFD1]'
+                            ? 'bg-[#80B3AD] text-[#141515] shadow'
+                            : 'bg-[#F7FAFA] text-neutral-600 hover:text-brand-dark border border-[#DCE1DF]'
                         }`}
                       >
                         {cat}
@@ -420,7 +420,7 @@ export const ProjectDetailPage: React.FC = () => {
                       setCurrentImageIndex(idx);
                       setIsLightboxOpen(true);
                     }}
-                    className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer border border-[#E5DFD1] bg-neutral-900 shadow-sm hover:shadow-md"
+                    className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer border border-[#DCE1DF] bg-neutral-900 shadow-sm hover:shadow-md"
                   >
                     <img
                       src={item.url}
@@ -431,7 +431,7 @@ export const ProjectDetailPage: React.FC = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
 
                     <div className="absolute top-2.5 left-2.5">
-                      <span className="px-2 py-0.5 text-[10px] font-semibold rounded bg-black/60 text-brand-gold backdrop-blur-sm border border-brand-gold/30">
+                      <span className="px-2 py-0.5 text-[10px] font-semibold rounded bg-black/60 text-[#80B3AD] backdrop-blur-sm border border-[#80B3AD]/30">
                         {item.category}
                       </span>
                     </div>
@@ -453,22 +453,22 @@ export const ProjectDetailPage: React.FC = () => {
             </div>
 
             {/* Location Section */}
-            <div id="location" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5DFD1] shadow-sm space-y-6 scroll-mt-28">
+            <div id="location" className="bg-white rounded-2xl p-6 sm:p-8 border border-[#DCE1DF] shadow-sm space-y-6 scroll-mt-28">
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-brand-dark">
                 Location
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 {/* Map Graphic Preview */}
-                <div className="md:col-span-7 bg-[#EFECE6] rounded-xl overflow-hidden border border-[#E5DFD1] relative aspect-[4/3] flex items-center justify-center">
+                <div className="md:col-span-7 bg-[#EFF3F2] rounded-xl overflow-hidden border border-[#DCE1DF] relative aspect-[4/3] flex items-center justify-center">
                   <iframe
                     title="Sayba Location Map"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.8358485293414!2d72.87635957597148!3d19.07095695213601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c89736c5615d%3A0xb35a51cf32490ec!2sKurla%2C%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
                     className="w-full h-full border-0 filter contrast-90"
                     loading="lazy"
                   />
-                  <div className="absolute top-3 left-3 bg-[#0A1715]/90 text-white px-3 py-1.5 rounded-lg text-xs font-semibold backdrop-blur-sm border border-brand-gold/30 flex items-center gap-1.5 shadow">
-                    <MapPin className="w-3.5 h-3.5 text-brand-gold" />
+                  <div className="absolute top-3 left-3 bg-[#141515]/90 text-white px-3 py-1.5 rounded-lg text-xs font-semibold backdrop-blur-sm border border-[#80B3AD]/30 flex items-center gap-1.5 shadow">
+                    <MapPin className="w-3.5 h-3.5 text-[#80B3AD]" />
                     <span>{project.location}</span>
                   </div>
                 </div>
@@ -476,7 +476,7 @@ export const ProjectDetailPage: React.FC = () => {
                 {/* Location Bullet Points */}
                 <div className="md:col-span-5 space-y-3.5">
                   <div className="flex items-start gap-2.5">
-                    <MapPin className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
+                    <MapPin className="w-4 h-4 text-[#80B3AD] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-neutral-800 block">
                         Prime Location
@@ -488,7 +488,7 @@ export const ProjectDetailPage: React.FC = () => {
                   {project.locationPoints.map((pt, idx) => (
                     <div key={idx} className="flex items-center justify-between text-xs py-1.5 border-b border-neutral-100">
                       <span className="text-neutral-700 font-medium">{pt.name}</span>
-                      <span className="font-bold text-brand-gold-dark">{pt.distance}</span>
+                      <span className="font-bold text-[#80B3AD]">{pt.distance}</span>
                     </div>
                   ))}
 
@@ -499,7 +499,7 @@ export const ProjectDetailPage: React.FC = () => {
                       )}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-gold-dark hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#80B3AD] hover:underline"
                     >
                       <span>Open in Google Maps</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -512,7 +512,7 @@ export const ProjectDetailPage: React.FC = () => {
 
           {/* RIGHT COLUMN: Sticky Schedule a Site Visit Form (Span 4) */}
           <div className="lg:col-span-4">
-            <div className="sticky top-28 bg-[#0A1715] text-white p-6 sm:p-8 rounded-2xl border border-brand-gold/30 shadow-2xl space-y-5">
+            <div className="sticky top-28 bg-[#141515] text-white p-6 sm:p-8 rounded-2xl border border-[#DCE1DF]/40 shadow-2xl space-y-5">
               <div>
                 <h3 className="font-serif text-2xl font-bold text-white">
                   Schedule a Site Visit
