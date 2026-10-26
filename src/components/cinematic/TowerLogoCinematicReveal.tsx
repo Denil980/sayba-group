@@ -40,7 +40,6 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
       '/assets/cinematic/start-tower.png',
       '/assets/cinematic/tower-foreground-mask.png',
       '/assets/cinematic/end-sky-dramatic.jpg',
-      '/assets/sayba-logo-transparent.png',
     ];
     images.forEach((src) => {
       const img = new Image();
@@ -129,15 +128,6 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
   // Horizon anticipatory glow (emerges at 2-4s)
   const horizonGlowOpacity = clamp01((p - 0.18) / 0.4);
 
-  // Giant Logo Vertical Translation:
-  // - 0.00 to 0.25: Hidden completely below the horizon (translateY: 130%)
-  // - 0.25 to 0.85: Rises majestically from translateY(130%) up to translateY(0%)
-  // - 0.85 to 1.00: Holds stable final position
-  const logoProgress = clamp01((p - 0.22) / 0.63);
-  const logoTranslateY = (1 - logoProgress) * 128;
-  const logoOpacity = clamp01((p - 0.18) / 0.25);
-  const logoAuraOpacity = clamp01((p - 0.35) / 0.55);
-
   // Exact Second Timer (0.0s to 10.0s)
   const currentSeconds = (p * 10).toFixed(1);
 
@@ -157,15 +147,15 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
       };
     } else if (p < 0.7) {
       return {
-        phase: '03 / GIANT LOGO RISES (4–7s)',
-        title: 'Monumental Vertical Emergence',
-        sub: 'Logo ascends from ground behind the tower',
+        phase: '03 / ARCHITECTURAL APPROACH (4–7s)',
+        title: 'Ascending Horizon Perspective',
+        sub: 'Cinematic forward camera motion toward the tower',
       };
     } else if (p < 0.9) {
       return {
-        phase: '04 / FULL REVEAL (7–9s)',
-        title: 'Complete Brand Reveal',
-        sub: 'Original logo framed against dramatic sunrise',
+        phase: '04 / GOLDEN SUNRISE (7–9s)',
+        title: 'Dramatic Skyline Reveal',
+        sub: 'Tower framed against golden sunrise clouds',
       };
     } else {
       return {
@@ -238,34 +228,6 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
             style={{ opacity: horizonGlowOpacity }}
           />
 
-          {/* ========================================================
-              LAYER 2 (MIDGROUND): Monumental Rising SAYBA GROUP Logo
-              Physically situated BEHIND the building in 3D depth
-              ======================================================== */}
-          <div
-            className="absolute inset-0 w-full h-full z-[5] pointer-events-none flex items-start justify-center pt-8 sm:pt-12"
-            style={{
-              opacity: logoOpacity,
-              transform: `translateY(${logoTranslateY}%)`,
-              willChange: 'transform, opacity',
-            }}
-          >
-            {/* Luminous Volumetric Halo & Teal Rim Glow around Logo */}
-            <div
-              className="absolute -top-10 w-[75vw] max-w-4xl h-[48vh] rounded-full bg-gradient-to-b from-[#80B3AD]/35 via-[#FFE082]/25 to-transparent blur-3xl pointer-events-none transition-opacity duration-500"
-              style={{ opacity: logoAuraOpacity }}
-            />
-
-            {/* Authoritative Authentic SAYBA GROUP Logo Graphic */}
-            <div className="relative z-10 w-[84vw] max-w-4xl px-4 flex items-center justify-center">
-              <img
-                src="/assets/sayba-logo-transparent.png"
-                alt="SAYBA GROUP"
-                className="w-full h-auto object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.65)] filter brightness-[1.12] contrast-[1.05]"
-                loading="eager"
-              />
-            </div>
-          </div>
 
           {/* ========================================================
               LAYER 3 (FOREGROUND): Precision Tower & Cityscape Mask
