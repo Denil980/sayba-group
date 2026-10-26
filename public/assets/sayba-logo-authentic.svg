@@ -1,17 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208 75" fill="none">
+  <defs>
+    <clipPath id="s-triangle-flush-clip">
+      <!-- 1. Upper portion up to triangle base at y=36.5 (cuts top-right S flush in a straight horizontal line) -->
+      <rect x="0" y="0" width="208" height="36.5" />
+      <!-- 2. Middle spine on left side below y=36.5 -->
+      <rect x="0" y="36.5" width="34" height="38.5" />
+      <!-- 3. Bottom loop of S below y=42 across full width -->
+      <rect x="0" y="42" width="208" height="33" />
+    </clipPath>
+  </defs>
+
   <!-- Architectural Triangle Roof: Exactly placed as roof above S -->
   <polygon points="36.5,7 66,36.5 7,36.5" fill="#B3B3B3" />
   
-  <!-- Bold Teal Monogram S: Only top curve enters into the bottom of triangle -->
-  <text
-    x="36.5"
-    y="65"
-    font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
-    font-size="52"
-    font-weight="900"
-    fill="#80B3AD"
-    text-anchor="middle"
-  >S</text>
+  <!-- Bold Teal Monogram S: Top curve enters triangle and stops flush in a straight horizontal line at the bottom of the triangle -->
+  <g clip-path="url(#s-triangle-flush-clip)">
+    <text
+      x="36.5"
+      y="65"
+      font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+      font-size="52"
+      font-weight="900"
+      fill="#80B3AD"
+      text-anchor="middle"
+    >S</text>
+  </g>
 
   <!-- Typography: SAYBA (Bold Luxury Geometric) -->
   <text
