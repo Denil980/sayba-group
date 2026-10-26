@@ -17,6 +17,7 @@ import { companyInfo } from '../data/company';
 import { ProjectsAutoScroll } from '../components/common/ProjectsAutoScroll';
 import { CounterNumber } from '../components/common/CounterNumber';
 import { useModal } from '../context/ModalContext';
+import { CinematicTowerExperience } from '../components/cinematic/CinematicTowerExperience';
 
 export const HomePage: React.FC = () => {
   const { openSiteVisit, openVideo } = useModal();
@@ -76,9 +77,21 @@ export const HomePage: React.FC = () => {
   return (
     <div className="bg-brand-cream">
       {/* ========================================================
-          1. HERO SECTION (AS IT IS)
+          0. CINEMATIC 3D TOWER REVEAL (Scroll-Driven Intro)
           ======================================================== */}
-      <section className="relative min-h-[90vh] bg-[#141515] text-white flex flex-col justify-between overflow-hidden">
+      <CinematicTowerExperience
+        onComplete={() => {
+          document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
+
+      {/* ========================================================
+          1. HERO SECTION
+          ======================================================== */}
+      <section
+        id="main-content"
+        className="relative min-h-[90vh] bg-[#141515] text-white flex flex-col justify-between overflow-hidden"
+      >
         {/* Background Image with Dark Luxury Overlay */}
         <div className="absolute inset-0 z-0">
           <img

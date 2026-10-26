@@ -11,6 +11,7 @@ import { BlogPage } from './pages/BlogPage';
 import { CareersPage } from './pages/CareersPage';
 import { ContactPage } from './pages/ContactPage';
 import { LegalPage } from './pages/LegalPage';
+import { CinematicExperiencePage } from './pages/CinematicExperiencePage';
 
 export const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ export const App: React.FC = () => {
             <Route path="gallery" element={<Navigate to="/projects/sayba-orchid#gallery" replace />} />
             <Route path="privacy-policy" element={<LegalPage type="privacy" />} />
             <Route path="terms-conditions" element={<LegalPage type="terms" />} />
+            <Route path="cinematic" element={<CinematicExperiencePage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
