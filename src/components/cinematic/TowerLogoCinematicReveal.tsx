@@ -132,13 +132,55 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
               transition: 'transform 0.08s linear, opacity 0.15s ease-out',
             }}
           >
-            {/* Authentic SAYBA GROUP Vector Mark: Exact geometric placement of triangle and S, zero background */}
-            <img
-              src="/assets/sayba-logo-authentic.svg"
-              alt="Sayba Group"
-              className="w-full h-auto object-contain select-none filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.7)] drop-shadow-[0_0_25px_rgba(255,255,255,0.45)]"
-              loading="eager"
-            />
+            {/* 100% Mathematically Smooth Vector SVG: Zero blur, exact triangle & S placement, zero background */}
+            <svg
+              viewBox="0 0 208 75"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-auto select-none filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]"
+            >
+              {/* Architectural Triangle Roof: Exactly placed as roof above S */}
+              <polygon points="36.5,7 66,36.5 7,36.5" fill="#B3B3B3" />
+
+              {/* Bold Teal Monogram S: Only top curve enters into the bottom of triangle */}
+              <text
+                x="36.5"
+                y="65"
+                fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+                fontSize="52"
+                fontWeight="900"
+                fill="#80B3AD"
+                textAnchor="middle"
+              >
+                S
+              </text>
+
+              {/* Typography: SAYBA (Bold Luxury Geometric) */}
+              <text
+                x="71"
+                y="35"
+                fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+                fontSize="27"
+                fontWeight="800"
+                letterSpacing="0.22em"
+                fill="#141515"
+              >
+                SAYBA
+              </text>
+
+              {/* Typography: GROUP (Refined Geometric) */}
+              <text
+                x="71"
+                y="58"
+                fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+                fontSize="19"
+                fontWeight="700"
+                letterSpacing="0.42em"
+                fill="#211F1F"
+              >
+                GROUP
+              </text>
+            </svg>
           </div>
         </div>
 
