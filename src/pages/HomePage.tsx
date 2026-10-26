@@ -17,6 +17,7 @@ import { companyInfo } from '../data/company';
 import { ProjectsAutoScroll } from '../components/common/ProjectsAutoScroll';
 import { CounterNumber } from '../components/common/CounterNumber';
 import { useModal } from '../context/ModalContext';
+import { TowerLogoZoomReveal } from '../components/cinematic/TowerLogoZoomReveal';
 
 export const HomePage: React.FC = () => {
   const { openSiteVisit, openVideo } = useModal();
@@ -76,9 +77,21 @@ export const HomePage: React.FC = () => {
   return (
     <div className="bg-brand-cream">
       {/* ========================================================
+          0. TOWER LOGO ZOOM REVEAL (Scroll-Controlled)
+          ======================================================== */}
+      <TowerLogoZoomReveal
+        onComplete={() => {
+          document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
+
+      {/* ========================================================
           1. HERO SECTION
           ======================================================== */}
-      <section className="relative min-h-[90vh] bg-[#141515] text-white flex flex-col justify-between overflow-hidden">
+      <section
+        id="main-content"
+        className="relative min-h-[90vh] bg-[#141515] text-white flex flex-col justify-between overflow-hidden"
+      >
         {/* Background Image with Dark Luxury Overlay */}
         <div className="absolute inset-0 z-0">
           <img
