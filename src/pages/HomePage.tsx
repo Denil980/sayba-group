@@ -17,7 +17,7 @@ import { companyInfo } from '../data/company';
 import { ProjectsAutoScroll } from '../components/common/ProjectsAutoScroll';
 import { CounterNumber } from '../components/common/CounterNumber';
 import { useModal } from '../context/ModalContext';
-import { TowerLogoZoomReveal } from '../components/cinematic/TowerLogoZoomReveal';
+import { TowerLogoCinematicReveal } from '../components/cinematic/TowerLogoCinematicReveal';
 
 export const HomePage: React.FC = () => {
   const { openSiteVisit, openVideo } = useModal();
@@ -77,9 +77,9 @@ export const HomePage: React.FC = () => {
   return (
     <div className="bg-brand-cream">
       {/* ========================================================
-          0. TOWER LOGO ZOOM REVEAL (Scroll-Controlled)
+          0. 10-SECOND CINEMATIC TOWER-TO-LOGO REVEAL
           ======================================================== */}
-      <TowerLogoZoomReveal
+      <TowerLogoCinematicReveal
         onComplete={() => {
           document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' });
         }}
