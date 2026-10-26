@@ -1,30 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 208 75" fill="none">
-  <defs>
-    <clipPath id="s-triangle-flush-clip">
-      <!-- 1. Upper portion up to triangle base at y=36.5 (cuts top-right S flush in a straight horizontal line) -->
-      <rect x="0" y="0" width="208" height="36.5" />
-      <!-- 2. Middle spine on left side below y=36.5 -->
-      <rect x="0" y="36.5" width="34" height="38.5" />
-      <!-- 3. Bottom loop of S below y=42 across full width -->
-      <rect x="0" y="42" width="208" height="33" />
-    </clipPath>
-  </defs>
-
   <!-- Architectural Triangle Roof: Exactly placed as roof above S -->
   <polygon points="36.5,7 66,36.5 7,36.5" fill="#B3B3B3" />
   
-  <!-- Bold Teal Monogram S: Top curve enters triangle and stops flush in a straight horizontal line at the bottom of the triangle -->
-  <g clip-path="url(#s-triangle-flush-clip)">
-    <text
-      x="36.5"
-      y="65"
-      font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
-      font-size="52"
-      font-weight="900"
-      fill="#80B3AD"
-      text-anchor="middle"
-    >S</text>
-  </g>
+  <!-- Bold Teal Monogram S: 100% mathematical vector Bézier curves with flush horizontal baseline cut at y=36.5, zero crack/notch, unbroken continuous curves -->
+  <path
+    d="M 37.202 65.624 Q 33.562 65.624 30.364 64.298 Q 27.166 62.972 24.852 60.528 Q 22.538 58.084 21.394 54.756 L 27.998 51.792 Q 29.454 54.964 32.028 56.784 Q 34.602 58.604 37.722 58.604 Q 39.386 58.604 40.582 58.084 Q 41.778 57.564 42.454 56.654 Q 43.13 55.744 43.13 54.496 Q 43.13 53.144 42.298 52.182 Q 41.466 51.22 39.698 50.648 L 32.106 48.152 Q 27.478 46.644 25.138 43.862 Q 22.798 41.08 22.798 37.18 Q 22.798 33.748 24.488 31.148 Q 26.178 28.548 29.22 27.092 Q 32.262 25.636 36.214 25.636 Q 39.698 25.636 42.662 26.832 Q 45.626 28.028 47.784 30.212 Q 49.942 32.396 51.403 36.5 L 43.466 36.5 Q 42.54 35.127 41.206 34.19 Q 39.022 32.656 36.214 32.656 Q 34.602 32.656 33.354 33.176 Q 32.106 33.696 31.43 34.658 Q 30.754 35.62 30.754 36.868 Q 30.754 38.22 31.638 39.234 Q 32.522 40.248 34.29 40.82 L 41.726 43.212 Q 46.406 44.72 48.72 47.424 Q 51.034 50.128 51.034 54.028 Q 51.034 57.408 49.266 60.034 Q 47.498 62.66 44.404 64.142 Q 41.31 65.624 37.202 65.624 Z"
+    fill="#80B3AD"
+  />
 
   <!-- Typography: SAYBA (Bold Luxury Geometric) -->
   <text
