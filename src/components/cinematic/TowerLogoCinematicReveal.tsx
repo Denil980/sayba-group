@@ -33,7 +33,7 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
   useEffect(() => {
     const images = [
       '/assets/cinematic/start-tower.png',
-      '/assets/sayba-logo-ultra-hd.png',
+      '/assets/sayba-logo-revealed.png',
     ];
     images.forEach((src) => {
       const img = new Image();
@@ -121,27 +121,22 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
         </div>
 
         {/* ========================================================
-            2. THE LOGO (Appears from ground to center, big, clear, nice)
+            2. THE LOGO (Appears from ground to center on scroll)
             ======================================================== */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 px-4 sm:px-8">
           <div
-            className="relative w-[90vw] max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl flex items-center justify-center will-change-transform"
+            className="relative w-[85vw] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl flex items-center justify-center will-change-transform"
             style={{
               transform: `translateY(${logoTranslateY}vh) scale(${logoScale})`,
               opacity: prefersReducedMotion ? 1 : logoOpacity,
               transition: 'transform 0.08s linear, opacity 0.15s ease-out',
             }}
           >
-            {/* Luminous luxury ambient backlight so dark letters and teal monogram pop with crystal clarity */}
-            <div className="absolute -inset-10 sm:-inset-16 bg-radial from-white/75 via-white/35 to-transparent blur-3xl rounded-full pointer-events-none" />
-            <div className="absolute -inset-4 sm:-inset-8 bg-white/20 backdrop-blur-md rounded-3xl border border-white/30 shadow-[0_20px_60px_rgba(0,0,0,0.35)] pointer-events-none" />
-
-            {/* Authentic, Ultra-Clear SAYBA GROUP Brand Mark */}
+            {/* The exact SAYBA GROUP brand logo */}
             <img
-              src="/assets/sayba-logo-ultra-hd.png"
-              srcSet="/assets/sayba-logo-ultra-hd.png 1x, /assets/sayba-logo-ultra-hd.png 2x"
-              alt="SAYBA GROUP"
-              className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.45)] filter brightness-[1.03] contrast-[1.06]"
+              src="/assets/sayba-logo-revealed.png"
+              alt="Sayba Group"
+              className="w-full h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.5)]"
               loading="eager"
             />
           </div>
