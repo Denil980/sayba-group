@@ -125,20 +125,65 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
             ======================================================== */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 px-4 sm:px-8">
           <div
-            className="relative w-[85vw] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl flex items-center justify-center will-change-transform"
+            className="relative will-change-transform"
             style={{
               transform: `translateY(${logoTranslateY}vh) scale(${logoScale})`,
               opacity: prefersReducedMotion ? 1 : logoOpacity,
               transition: 'transform 0.08s linear, opacity 0.15s ease-out',
             }}
           >
-            {/* The exact SAYBA GROUP brand logo */}
-            <img
-              src="/assets/sayba-logo-revealed.png"
-              alt="Sayba Group"
-              className="w-full h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.5)]"
-              loading="eager"
-            />
+            {/* Pristine Luxury White Brand Plinth (100% vector clarity, maximum contrast against tower) */}
+            <div className="bg-white/95 px-8 sm:px-14 py-5 sm:py-8 rounded-full shadow-[0_25px_60px_rgba(0,0,0,0.55)] border border-[#DCE1DF] flex items-center justify-center w-[85vw] max-w-md sm:max-w-lg md:max-w-xl">
+              <svg
+                viewBox="0 0 210 68"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-full h-auto select-none"
+              >
+                {/* Sayba Emblem */}
+                <g id="sayba-emblem">
+                  {/* Architectural Triangle Roof */}
+                  <polygon points="32,7 59,48 5,48" fill="#B3B3B3" />
+                  
+                  {/* Bold Teal S Monogram */}
+                  <text
+                    x="32"
+                    y="58"
+                    fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+                    fontSize="44"
+                    fontWeight="900"
+                    fill="#80B3AD"
+                    textAnchor="middle"
+                  >
+                    S
+                  </text>
+                </g>
+
+                {/* Typography: Bold, Pitch-Black, 100% Vector Crispness */}
+                <g id="sayba-typography" fill="#211F1F">
+                  <text
+                    x="76"
+                    y="32"
+                    fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+                    fontSize="24"
+                    fontWeight="800"
+                    letterSpacing="0.2em"
+                  >
+                    SAYBA
+                  </text>
+                  <text
+                    x="77"
+                    y="54"
+                    fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+                    fontSize="17"
+                    fontWeight="600"
+                    letterSpacing="0.38em"
+                  >
+                    GROUP
+                  </text>
+                </g>
+              </svg>
+            </div>
           </div>
         </div>
 
