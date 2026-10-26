@@ -11,13 +11,43 @@ export const Navbar: React.FC = () => {
   const { openSiteVisit } = useModal();
   const location = useLocation();
 
+  const isHomePage = location.pathname === '/';
+  const [showNavbar, setShowNavbar] = useState(!isHomePage);
+
   useEffect(() => {
-    const handleScroll = () => {
+    if (!isHomePage) {
+      setShowNavbar(true);
+      const handleScrollOther = () => {
+        setIsScrolled(window.scrollY > 20);
+      };
+      window.addEventListener('scroll', handleScrollOther, { passive: true });
+      return () => window.removeEventListener('scroll', handleScrollOther);
+    }
+
+    const checkHeroVisibility = () => {
+      const heroEl = document.getElementById('main-content');
+      if (heroEl) {
+        const rect = heroEl.getBoundingClientRect();
+        // Reveal navbar as soon as the hero section starts entering the viewport
+        const isHeroReached = rect.top <= window.innerHeight * 0.65;
+        setShowNavbar(isHeroReached);
+      } else {
+        // Fallback for scroll threshold past cinematic reveal
+        setShowNavbar(window.scrollY > window.innerHeight * 1.5);
+      }
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    // Run check on mount and whenever location/viewport changes
+    checkHeroVisibility();
+    window.addEventListener('scroll', checkHeroVisibility, { passive: true });
+    window.addEventListener('resize', checkHeroVisibility);
+
+    return () => {
+      window.removeEventListener('scroll', checkHeroVisibility);
+      window.removeEventListener('resize', checkHeroVisibility);
+    };
+  }, [isHomePage, location.pathname]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -37,8 +67,12 @@ export const Navbar: React.FC = () => {
     <>
       {/* Floating Pill-Shaped Navbar Container */}
       <header
-        className={`fixed left-0 right-0 z-40 px-3 sm:px-6 transition-all duration-300 pointer-events-none ${
-          isScrolled ? 'top-2 sm:top-3.5' : 'top-3 sm:top-5'
+        className={`fixed left-0 right-0 z-40 px-3 sm:px-6 transition-all duration-500 ease-out pointer-events-none ${
+          !showNavbar
+            ? '-translate-y-28 opacity-0 pointer-events-none'
+            : isScrolled
+            ? 'top-2 sm:top-3.5 translate-y-0 opacity-100'
+            : 'top-3 sm:top-5 translate-y-0 opacity-100'
         }`}
       >
         <div
@@ -107,7 +141,7 @@ export const Navbar: React.FC = () => {
       </header>
 
       {/* Mobile Drawer Menu (Styled as floating luxury panel below pill navbar) */}
-      {isMobileMenuOpen && (
+      {isMobileMenuOpen && showNavbar && (
         <div className="fixed inset-0 z-30 lg:hidden">
           {/* Backdrop */}
           <div
