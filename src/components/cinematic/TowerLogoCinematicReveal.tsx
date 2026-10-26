@@ -78,18 +78,7 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
   const logoOpacity = clamp01(p * 3.5); // fades in smoothly from the bottom
   const logoScale = 0.96 + easedRise * 0.22; // scales into a bigger, bolder presence
 
-  // Handle Skip
-  const handleSkip = () => {
-    if (onComplete) {
-      onComplete();
-    } else if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      window.scrollTo({
-        top: window.scrollY + rect.height,
-        behavior: 'smooth',
-      });
-    }
-  };
+
 
   return (
     <div
@@ -180,18 +169,7 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
         {/* ========================================================
             3. DISCREET CONTROLS (Zero clutter, just skip and scroll hint)
             ======================================================== */}
-        {/* Top Right Skip Button */}
-        {!standalone && (
-          <div className="absolute top-0 right-0 z-30 p-5 sm:p-7 pointer-events-auto">
-            <button
-              type="button"
-              onClick={handleSkip}
-              className="bg-black/60 hover:bg-black/85 backdrop-blur-xl border border-white/20 hover:border-[#80B3AD] text-white px-5 py-2 rounded-full font-bold text-xs uppercase tracking-widest transition-all cursor-pointer shadow-xl active:scale-95"
-            >
-              Skip Intro
-            </button>
-          </div>
-        )}
+
 
         {/* Bottom Scroll Prompt (fades away as logo reaches center) */}
         <div
