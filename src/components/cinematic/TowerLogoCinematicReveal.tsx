@@ -39,7 +39,6 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
     const images = [
       '/assets/cinematic/start-tower.png',
       '/assets/cinematic/tower-foreground-mask.png',
-      '/assets/cinematic/end-sky-dramatic.jpg',
     ];
     images.forEach((src) => {
       const img = new Image();
@@ -121,9 +120,6 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
   // Camera forward push and upward tilt (One continuous cinematic motion)
   const cameraScale = 1.0 + clamp01(p) * 0.085;
   const cameraTranslateY = clamp01(p) * -3.2;
-
-  // Sky transition: Calm morning sky -> Dramatic golden sunrise clouds
-  const dramaticSkyOpacity = clamp01((p - 0.2) / 0.65);
 
   // Horizon anticipatory glow (emerges at 2-4s)
   const horizonGlowOpacity = clamp01((p - 0.18) / 0.4);
@@ -209,18 +205,6 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
             />
           </div>
 
-          {/* Dramatic Golden Sunrise Clouds (Interpolating in from 2s to 10s) */}
-          <div
-            className="absolute inset-0 w-full h-full z-[1] transition-opacity duration-300"
-            style={{ opacity: dramaticSkyOpacity }}
-          >
-            <img
-              src="/assets/cinematic/end-sky-dramatic.jpg"
-              alt="Dramatic Sunrise Sky"
-              className="w-full h-full object-cover object-center"
-              loading="eager"
-            />
-          </div>
 
           {/* Volumetric Horizon Sunlight Glow (Anticipation 2–4s) */}
           <div
