@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowDown, Play, Pause, RotateCcw } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -18,14 +18,9 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  const isAutoPlayingRef = useRef(isAutoPlaying);
-  isAutoPlayingRef.current = isAutoPlaying;
-
-  // 1. Detect reduced motion preference
+  // 1. Reduced motion preference
   useEffect(() => {
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(motionQuery.matches);
@@ -34,11 +29,11 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
     return () => motionQuery.removeEventListener('change', handler);
   }, []);
 
-  // 2. Preload all essential assets
+  // 2. Preload assets
   useEffect(() => {
     const images = [
       '/assets/cinematic/start-tower.png',
-      '/assets/cinematic/tower-foreground-mask.png',
+      '/assets/sayba-logo-ultra-hd.png',
     ];
     images.forEach((src) => {
       const img = new Image();
@@ -46,18 +41,7 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
     });
   }, []);
 
-  // 3. Subtle architectural camera perspective parallax
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 12;
-      const y = (e.clientY / window.innerHeight - 0.5) * 8;
-      setMousePos({ x, y });
-    };
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // 4. GSAP ScrollTrigger Setup
+  // 3. GSAP ScrollTrigger setup
   useEffect(() => {
     if (prefersReducedMotion || !containerRef.current) return;
 
@@ -66,11 +50,9 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
         trigger: containerRef.current,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.65, // Smooth scrubbed response
+        scrub: 0.6, // Silky smooth response
         onUpdate: (self) => {
-          if (!isAutoPlayingRef.current) {
-            setScrollProgress(self.progress);
-          }
+          setScrollProgress(self.progress);
         },
       });
     }, containerRef);
@@ -78,91 +60,25 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
     return () => ctx.revert();
   }, [prefersReducedMotion]);
 
-  // 5. Automated Exact 10-Second Cinematic Playback
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-
-    const startTime = performance.now();
-    const duration = 10000; // Exactly 10.0 seconds
-    const startProgress = scrollProgress >= 0.99 ? 0 : scrollProgress;
-    let animFrame: number;
-
-    const tick = (now: number) => {
-      const elapsed = now - startTime;
-      const t = Math.min(1, elapsed / duration);
-      // Smooth cinematic easeInOut curve
-      const eased =
-        t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      const newProgress = startProgress + (1 - startProgress) * eased;
-      setScrollProgress(newProgress);
-
-      if (t < 1) {
-        animFrame = requestAnimationFrame(tick);
-      } else {
-        setIsAutoPlaying(false);
-      }
-    };
-
-    animFrame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animFrame);
-  }, [isAutoPlaying]);
-
-  // 6. Kinematic Calculations for the 10-Second Reveal
-  // Pacing:
-  // 0–2s (0.00 – 0.20): Opening shot - tower centered, logo hidden
-  // 2–4s (0.20 – 0.40): Anticipation - camera pushes forward, horizon glow begins
-  // 4–7s (0.40 – 0.70): Giant logo rises vertically from ground behind building
-  // 7–9s (0.70 – 0.90): Full reveal - complete logo visible behind tower in dramatic sky
-  // 9–10s (0.90 – 1.00): Final hold - stable composition holding on tower & giant logo
+  // 4. Logo Kinematics: Ground (bottom) -> Center of screen
   const p = scrollProgress;
   const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
-  // Camera forward push and upward tilt (One continuous cinematic motion)
-  const cameraScale = 1.0 + clamp01(p) * 0.085;
-  const cameraTranslateY = clamp01(p) * -3.2;
+  // Camera subtle push-in (very restrained and realistic)
+  const cameraScale = 1.0 + clamp01(p) * 0.05;
 
-  // Horizon anticipatory glow (emerges at 2-4s)
-  const horizonGlowOpacity = clamp01((p - 0.18) / 0.4);
+  // Logo rises from bottom (ground) to the center/middle-top of the screen
+  // - Starts at translateY: 75vh (bottom of screen)
+  // - Ascends smoothly to translateY: 0vh (center of screen) by p = 0.72
+  // - Holds in the center through p = 1.0
+  const progressToCenter = clamp01(p / 0.72);
+  // Cubic ease-out curve for natural, elegant rise
+  const easedRise = 1 - Math.pow(1 - progressToCenter, 3);
+  const logoTranslateY = (1 - easedRise) * 75; // in vh
+  const logoOpacity = clamp01(p * 3.5); // fades in smoothly from the bottom
+  const logoScale = 0.9 + easedRise * 0.15; // scales from 0.9 to 1.05 for big, bold presence
 
-  // Exact Second Timer (0.0s to 10.0s)
-  const currentSeconds = (p * 10).toFixed(1);
-
-  // Stage narrative description
-  const currentStage = useMemo(() => {
-    if (p < 0.2) {
-      return {
-        phase: '01 / OPENING SHOT (0–2s)',
-        title: 'Original Skyline Architecture',
-        sub: 'Tower centered beneath calm morning sky',
-      };
-    } else if (p < 0.4) {
-      return {
-        phase: '02 / ANTICIPATION (2–4s)',
-        title: 'Dawn Radiance & Anticipation',
-        sub: 'Warm golden sunlight emerges along horizon',
-      };
-    } else if (p < 0.7) {
-      return {
-        phase: '03 / ARCHITECTURAL APPROACH (4–7s)',
-        title: 'Ascending Horizon Perspective',
-        sub: 'Cinematic forward camera motion toward the tower',
-      };
-    } else if (p < 0.9) {
-      return {
-        phase: '04 / GOLDEN SUNRISE (7–9s)',
-        title: 'Dramatic Skyline Reveal',
-        sub: 'Tower framed against golden sunrise clouds',
-      };
-    } else {
-      return {
-        phase: '05 / FINAL HOLD (9–10s)',
-        title: 'Sayba Group',
-        sub: 'Building Better Tomorrows',
-      };
-    }
-  }, [p]);
-
-  // Handle Skip to Content
+  // Handle Skip
   const handleSkip = () => {
     if (onComplete) {
       onComplete();
@@ -179,144 +95,82 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
     <div
       ref={containerRef}
       className={`relative w-full ${
-        standalone ? 'h-screen' : 'h-[460vh] sm:h-[540vh]'
+        standalone ? 'h-screen' : 'h-[230vh] sm:h-[260vh]'
       } bg-[#0A0B0C]`}
     >
       {/* Sticky 100vh Fullscreen Viewport */}
       <div className="sticky top-0 h-screen w-full overflow-hidden select-none bg-[#0A0B0C]">
-        {/* Parallax Camera Container */}
+        {/* ========================================================
+            1. TOWER BACKGROUND (Just the genuine building photograph)
+            ======================================================== */}
         <div
-          className="relative w-full h-full will-change-transform"
+          className="absolute inset-0 w-full h-full will-change-transform z-0"
           style={{
-            transform: `scale(${cameraScale}) translateY(${cameraTranslateY}%) translate3d(${mousePos.x * 0.25}px, ${mousePos.y * 0.25}px, 0)`,
-            transition: 'transform 0.08s linear',
+            transform: `scale(${cameraScale})`,
+            transition: 'transform 0.1s linear',
           }}
         >
-          {/* ========================================================
-              LAYER 1 (BACKGROUND): Distant Sky & Atmosphere
-              ======================================================== */}
-          {/* Base Morning Sky (Start Image Sky) */}
-          <div className="absolute inset-0 w-full h-full z-0">
-            <img
-              src="/assets/cinematic/start-tower.png"
-              alt="Sayba Morning Skyline"
-              className="w-full h-full object-cover object-center"
-              loading="eager"
-            />
-          </div>
-
-
-          {/* Volumetric Horizon Sunlight Glow (Anticipation 2–4s) */}
-          <div
-            className="absolute bottom-[22%] left-1/2 -translate-x-1/2 w-[85vw] max-w-5xl h-[35vh] rounded-full bg-gradient-to-t from-[#FFA726]/30 via-[#FFE082]/20 to-transparent blur-3xl z-[3] pointer-events-none transition-opacity duration-500"
-            style={{ opacity: horizonGlowOpacity }}
+          <img
+            src="/assets/cinematic/start-tower.png"
+            alt="Sayba Tower Architecture"
+            className="w-full h-full object-cover object-center"
+            loading="eager"
           />
+          {/* Subtle natural vignette to enhance contrast and focus */}
+          <div className="absolute inset-0 bg-radial from-transparent via-black/15 to-black/45 pointer-events-none" />
+        </div>
 
+        {/* ========================================================
+            2. THE LOGO (Appears from ground to center, big, clear, nice)
+            ======================================================== */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 px-4 sm:px-8">
+          <div
+            className="relative w-[90vw] max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl flex items-center justify-center will-change-transform"
+            style={{
+              transform: `translateY(${logoTranslateY}vh) scale(${logoScale})`,
+              opacity: prefersReducedMotion ? 1 : logoOpacity,
+              transition: 'transform 0.08s linear, opacity 0.15s ease-out',
+            }}
+          >
+            {/* Luminous luxury ambient backlight so dark letters and teal monogram pop with crystal clarity */}
+            <div className="absolute -inset-10 sm:-inset-16 bg-radial from-white/75 via-white/35 to-transparent blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute -inset-4 sm:-inset-8 bg-white/20 backdrop-blur-md rounded-3xl border border-white/30 shadow-[0_20px_60px_rgba(0,0,0,0.35)] pointer-events-none" />
 
-          {/* ========================================================
-              LAYER 3 (FOREGROUND): Precision Tower & Cityscape Mask
-              Physically OCCLUDES the logo wherever they overlap
-              ======================================================== */}
-          <div className="absolute inset-0 w-full h-full z-[10] pointer-events-none">
+            {/* Authentic, Ultra-Clear SAYBA GROUP Brand Mark */}
             <img
-              src="/assets/cinematic/tower-foreground-mask.png"
-              alt="Sayba Tower Foreground Occlusion"
-              className="w-full h-full object-cover object-center"
+              src="/assets/sayba-logo-ultra-hd.png"
+              srcSet="/assets/sayba-logo-ultra-hd.png 1x, /assets/sayba-logo-ultra-hd.png 2x"
+              alt="SAYBA GROUP"
+              className="relative z-10 w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.45)] filter brightness-[1.03] contrast-[1.06]"
               loading="eager"
             />
           </div>
         </div>
 
         {/* ========================================================
-            DISCRETE CINEMATIC CONTROLS (Corner-Docked, Zero Clutter)
+            3. DISCREET CONTROLS (Zero clutter, just skip and scroll hint)
             ======================================================== */}
-        {/* Top Control Bar */}
-        <div className="absolute top-0 left-0 right-0 z-30 pointer-events-none p-5 sm:p-7 flex items-center justify-between">
-          {/* Phase & Timecode Badge */}
-          <div className="pointer-events-auto flex items-center gap-3 bg-black/65 backdrop-blur-xl px-4 py-2 rounded-full border border-white/20 text-white shadow-2xl">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#80B3AD] shadow-[0_0_8px_#80B3AD]" />
-            <span className="text-xs font-mono text-[#80B3AD] font-bold">
-              {currentSeconds}s / 10.0s
-            </span>
-            <span className="text-xs text-white/30">|</span>
-            <span className="text-xs uppercase tracking-wider font-semibold text-white">
-              {currentStage.title}
-            </span>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="pointer-events-auto flex items-center gap-2">
-            {/* 10-Second Auto-Play Button */}
+        {/* Top Right Skip Button */}
+        {!standalone && (
+          <div className="absolute top-0 right-0 z-30 p-5 sm:p-7 pointer-events-auto">
             <button
               type="button"
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              className="flex items-center gap-2 bg-black/65 hover:bg-black/90 backdrop-blur-xl px-4 py-2 rounded-full border border-white/20 hover:border-[#80B3AD] text-white text-xs font-semibold tracking-wider uppercase transition-all cursor-pointer shadow-xl active:scale-95"
-              title={isAutoPlaying ? 'Pause 10s Reveal' : 'Play 10-Second Cinematic Reveal'}
+              onClick={handleSkip}
+              className="bg-black/60 hover:bg-black/85 backdrop-blur-xl border border-white/20 hover:border-[#80B3AD] text-white px-5 py-2 rounded-full font-bold text-xs uppercase tracking-widest transition-all cursor-pointer shadow-xl active:scale-95"
             >
-              {isAutoPlaying ? (
-                <>
-                  <Pause className="w-3.5 h-3.5 text-[#80B3AD]" />
-                  <span className="hidden sm:inline">Pause</span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-3.5 h-3.5 text-[#80B3AD] fill-[#80B3AD]" />
-                  <span className="hidden sm:inline">Play 10s Reveal</span>
-                </>
-              )}
+              Skip Intro
             </button>
-
-            {/* Restart Button */}
-            {p >= 0.95 && (
-              <button
-                type="button"
-                onClick={() => {
-                  setScrollProgress(0);
-                  setIsAutoPlaying(true);
-                }}
-                className="flex items-center gap-1.5 bg-black/65 hover:bg-black/90 backdrop-blur-xl px-3.5 py-2 rounded-full border border-white/20 text-white text-xs transition-all cursor-pointer shadow-xl active:scale-95"
-                title="Replay 10s Reveal"
-              >
-                <RotateCcw className="w-3.5 h-3.5 text-[#80B3AD]" />
-              </button>
-            )}
-
-            {/* Skip to Content Button */}
-            {!standalone && (
-              <button
-                type="button"
-                onClick={handleSkip}
-                className="bg-[#80B3AD] hover:bg-[#609A93] text-[#0A0B0C] px-5 py-2 rounded-full font-bold text-xs uppercase tracking-widest transition-all cursor-pointer shadow-xl active:scale-95"
-              >
-                Skip Intro
-              </button>
-            )}
           </div>
-        </div>
+        )}
 
-        {/* Bottom Control Bar */}
-        <div className="absolute bottom-0 left-0 right-0 z-30 pointer-events-none p-5 sm:p-7 flex items-center justify-between">
-          {/* Scroll Down Prompt */}
-          <div
-            className={`pointer-events-auto flex items-center gap-2.5 bg-black/65 backdrop-blur-xl px-4 py-2 rounded-full border border-white/20 text-white text-xs tracking-widest uppercase font-semibold transition-opacity duration-500 shadow-2xl ${
-              p > 0.08 && !isAutoPlaying ? 'opacity-30 hover:opacity-100' : 'opacity-100'
-            }`}
-          >
-            <span>{isAutoPlaying ? 'Playing 10s reveal' : 'Scroll down to reveal'}</span>
+        {/* Bottom Scroll Prompt (fades away as logo reaches center) */}
+        <div
+          className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-opacity duration-500"
+          style={{ opacity: p > 0.4 ? 0 : 1 }}
+        >
+          <div className="flex items-center gap-2 bg-black/60 backdrop-blur-xl px-4 py-2 rounded-full border border-white/20 text-white text-xs tracking-widest uppercase font-semibold shadow-xl">
+            <span>Scroll down</span>
             <ArrowDown className="w-3.5 h-3.5 text-[#80B3AD] animate-bounce" />
-          </div>
-
-          {/* Timeline Progress Bar */}
-          <div className="flex items-center gap-3 bg-black/65 backdrop-blur-xl px-4 py-2 rounded-full border border-white/20 shadow-xl">
-            <div className="w-24 sm:w-32 h-1.5 bg-white/20 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-[#609A93] to-[#80B3AD] transition-all duration-150 rounded-full shadow-[0_0_8px_#80B3AD]"
-                style={{ width: `${Math.round(p * 100)}%` }}
-              />
-            </div>
-            <span className="text-xs font-mono font-bold text-white w-9 text-right">
-              {Math.round(p * 100)}%
-            </span>
           </div>
         </div>
       </div>
