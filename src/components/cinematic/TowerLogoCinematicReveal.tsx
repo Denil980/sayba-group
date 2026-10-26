@@ -33,7 +33,7 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
   useEffect(() => {
     const images = [
       '/assets/cinematic/start-tower.png',
-      '/assets/sayba-logo-revealed.png',
+      '/assets/sayba-logo-authentic.svg',
     ];
     images.forEach((src) => {
       const img = new Image();
@@ -132,56 +132,13 @@ export const TowerLogoCinematicReveal: React.FC<TowerLogoCinematicRevealProps> =
               transition: 'transform 0.08s linear, opacity 0.15s ease-out',
             }}
           >
-            {/* Pure Vector SVG Logo: Zero background, bigger size, crisp and clearly visible */}
-            <svg
-              viewBox="0 0 210 68"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-auto select-none filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.7)] drop-shadow-[0_0_25px_rgba(255,255,255,0.45)]"
-            >
-              {/* Sayba Emblem */}
-              <g id="sayba-emblem">
-                {/* Architectural Triangle Roof */}
-                <polygon points="32,7 59,48 5,48" fill="#B3B3B3" />
-                
-                {/* Bold Teal S Monogram */}
-                <text
-                  x="32"
-                  y="58"
-                  fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
-                  fontSize="44"
-                  fontWeight="900"
-                  fill="#80B3AD"
-                  textAnchor="middle"
-                >
-                  S
-                </text>
-              </g>
-
-              {/* Typography: Bold, Pitch-Black, 100% Vector Crispness */}
-              <g id="sayba-typography" fill="#141515">
-                <text
-                  x="76"
-                  y="32"
-                  fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
-                  fontSize="24"
-                  fontWeight="800"
-                  letterSpacing="0.2em"
-                >
-                  SAYBA
-                </text>
-                <text
-                  x="77"
-                  y="54"
-                  fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
-                  fontSize="17"
-                  fontWeight="600"
-                  letterSpacing="0.38em"
-                >
-                  GROUP
-                </text>
-              </g>
-            </svg>
+            {/* Authentic SAYBA GROUP Vector Mark: Exact geometric placement of triangle and S, zero background */}
+            <img
+              src="/assets/sayba-logo-authentic.svg"
+              alt="Sayba Group"
+              className="w-full h-auto object-contain select-none filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.7)] drop-shadow-[0_0_25px_rgba(255,255,255,0.45)]"
+              loading="eager"
+            />
           </div>
         </div>
 
