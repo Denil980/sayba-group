@@ -14,7 +14,7 @@ async function capture() {
     executablePath: chromePath,
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
-    defaultViewport: { width: 1280, height: 720 }
+    defaultViewport: { width: 1024, height: 457 }
   });
 
   const page = await browser.newPage();

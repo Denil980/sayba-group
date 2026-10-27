@@ -14,7 +14,7 @@ interface BuildingToInteriorExperienceProps {
 }
 
 // =========================================================================
-// GLSL SHADER: Continuous Architectural Cinema Camera Journey
+// GLSL SHADER: Continuous Architectural Fly-Through from Tower to Terrace
 // =========================================================================
 const cinematicVertexShader = `
   varying vec2 vUv;
@@ -31,11 +31,10 @@ const cinematicFragmentShader = `
   uniform sampler2D uTexTower;
   uniform sampler2D uTexBalcony;
   uniform sampler2D uTexInterior;
-  uniform sampler2D uTexEnd;
 
   varying vec2 vUv;
 
-  // ACES Filmic Tone Mapping for cinematic dynamic range
+  // ACES Filmic Tone Mapping for photographic range
   vec3 acesFilm(vec3 x) {
     float a = 2.51;
     float b = 0.03;
@@ -55,13 +54,11 @@ const cinematicFragmentShader = `
     float texAspect = 1376.0 / 768.0;
     vec2 st = vUv;
 
-    // Object-fit: cover mapping across any viewport ratio
+    // Object-fit: cover mapping across any viewport ratio (strictly within [0, 1], zero smearing)
     if (uAspect > texAspect) {
-      float scale = uAspect / texAspect;
-      st.y = (st.y - 0.5) * scale + 0.5;
+      st.y = (vUv.y - 0.5) * (texAspect / uAspect) + 0.5;
     } else {
-      float scale = texAspect / uAspect;
-      st.x = (st.x - 0.5) * scale + 0.5;
+      st.x = (vUv.x - 0.5) * (uAspect / texAspect) + 0.5;
     }
 
     float p = clamp(uProgress, 0.0, 1.0);
@@ -79,9 +76,9 @@ const cinematicFragmentShader = `
     vec4 colTower = texture2D(uTexTower, clamp(uvTower, 0.0, 1.0));
 
     // -------------------------------------------------------------
-    // STAGE 2: Architectural Balcony Entrance (p: 0.28 -> 0.50)
+    // STAGE 2: Architectural Balcony Entrance (p: 0.28 -> 0.48)
     // -------------------------------------------------------------
-    float p2 = clamp((p - 0.28) / 0.22, 0.0, 1.0);
+    float p2 = clamp((p - 0.28) / 0.20, 0.0, 1.0);
     float balconyScale = mix(1.0, 1.7, pow(p2, 1.2));
     vec2 balconyFocus = mix(vec2(0.5, 0.5), vec2(0.54, 0.51), p2);
     vec2 uvBalcony = (st - balconyFocus) / balconyScale + balconyFocus;
@@ -91,28 +88,33 @@ const cinematicFragmentShader = `
     float glassSweep = smoothstep(0.0, 0.12, 0.06 - abs(st.x - 0.42 - (p - 0.35) * 1.8)) * (1.0 - p2);
     colBalcony.rgb += vec3(0.08, 0.10, 0.11) * glassSweep;
 
-    // Crisp optical transition from tower zoom into architectural balcony entrance
+    // Optical transition from tower zoom into architectural balcony entrance
     float balcBlend = smoothstep(0.32, 0.40, p);
     vec3 sceneStage1 = mix(colTower.rgb, colBalcony.rgb, balcBlend);
 
     // -------------------------------------------------------------
-    // STAGE 3 & 4: Open Doorway Passage & Room Traversal (p: 0.44 -> 0.82)
+    // STAGE 3: Passing Through Open Sliding Door (p: 0.42 -> 0.58)
     // -------------------------------------------------------------
-    float p3 = clamp((p - 0.44) / 0.16, 0.0, 1.0);
-    float p4 = clamp((p - 0.58) / 0.24, 0.0, 1.0);
+    float p3 = clamp((p - 0.42) / 0.16, 0.0, 1.0);
 
-    // Inside room: camera travels past sofa and coffee table toward terrace
-    float interiorScale = mix(0.96, 2.10, pow(clamp((p - 0.44) / 0.38, 0.0, 1.0), 1.25));
+    // -------------------------------------------------------------
+    // STAGE 4 & 5: Traversing Living Suite Onto Private Terrace (p: 0.55 -> 1.00)
+    // The camera glides all the way past the furniture, settling
+    // at the balcony railing overlooking the morning city skyline
+    // -------------------------------------------------------------
+    float p4 = clamp((p - 0.55) / 0.45, 0.0, 1.0);
+    // Scales to 2.38 so sofa & coffee table move completely past screen edges
+    float interiorScale = mix(0.96, 2.38, pow(p4, 1.2));
     vec2 interiorFocus = vec2(0.505, 0.495);
     vec2 uvInterior = (st - interiorFocus) / interiorScale + interiorFocus;
 
-    // Multiplane depth parallax: foreground furniture (sofa, coffee table) expands outward
+    // Multiplane depth parallax: foreground furniture expands outward naturally
     float fgDepth = smoothstep(0.35, 0.95, st.y);
-    uvInterior.y += fgDepth * p4 * 0.05;
-    uvInterior.x += (st.x - 0.5) * fgDepth * p4 * 0.055;
+    uvInterior.y += fgDepth * p4 * 0.045;
+    uvInterior.x += (st.x - 0.5) * fgDepth * p4 * 0.05;
 
     // Stabilized cinema gimbal sway
-    float gimbalSway = sin(p * 16.0) * 0.002 * (1.0 - p4);
+    float gimbalSway = sin(p * 16.0) * 0.0018 * (1.0 - p4);
     uvInterior.x += gimbalSway;
     vec4 colInterior = texture2D(uTexInterior, clamp(uvInterior, 0.0, 1.0));
 
@@ -120,22 +122,8 @@ const cinematicFragmentShader = `
     float dLeft = mix(0.46, -0.1, p3);
     float dRight = mix(0.72, 1.1, p3);
     float inDoor = smoothstep(dLeft - 0.04, dLeft + 0.04, st.x) * (1.0 - smoothstep(dRight - 0.04, dRight + 0.04, st.x));
-    float doorWipe = mix(smoothstep(0.44, 0.58, p), 1.0, inDoor * p3);
-    vec3 sceneStage2 = mix(sceneStage1, colInterior.rgb, doorWipe);
-
-    // -------------------------------------------------------------
-    // STAGE 5: Balcony Horizon & Monumental Reveal (p: 0.80 -> 1.00)
-    // As camera reaches the balcony railing, it lifts smoothly into
-    // the monumental exterior reveal behind the tower silhouette
-    // -------------------------------------------------------------
-    float p5 = smoothstep(0.80, 0.96, p);
-    float endScale = mix(1.10, 1.00, p5);
-    vec2 uvEnd = (st - vec2(0.5, 0.5)) / endScale + vec2(0.5, 0.5);
-    vec4 colEnd = texture2D(uTexEnd, clamp(uvEnd, 0.0, 1.0));
-
-    // Upward crane sweep into the golden morning sky
-    float craneWipe = smoothstep(0.0, 0.35, p5 * 1.35 - (1.0 - st.y) * 0.4);
-    vec3 sceneColor = mix(sceneStage2, colEnd.rgb, craneWipe);
+    float doorWipe = mix(smoothstep(0.42, 0.56, p), 1.0, inDoor * p3);
+    vec3 sceneColor = mix(sceneStage1, colInterior.rgb, doorWipe);
 
     // -------------------------------------------------------------
     // CINEMATIC LIGHTING & EXPOSURE DYNAMICS
@@ -145,7 +133,7 @@ const cinematicFragmentShader = `
       float t = (p - 0.42) / 0.36;
       exposure = mix(1.00, 1.15, sin(t * 3.1415926));
     } else if (p > 0.78) {
-      exposure = mix(1.15, 1.02, (p - 0.78) / 0.22);
+      exposure = mix(1.15, 1.04, (p - 0.78) / 0.22);
     }
 
     sceneColor *= exposure;
@@ -207,7 +195,7 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
     // Load High-Res Architectural Textures
     const textureLoader = new THREE.TextureLoader();
     let loadedCount = 0;
-    const totalTextures = 4;
+    const totalTextures = 3;
 
     const checkLoaded = () => {
       loadedCount++;
@@ -240,14 +228,6 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
     texInterior.magFilter = THREE.LinearFilter;
     texInterior.generateMipmaps = true;
 
-    const texEnd = textureLoader.load(
-      '/assets/cinematic/end-composition.jpg',
-      checkLoaded
-    );
-    texEnd.minFilter = THREE.LinearMipmapLinearFilter;
-    texEnd.magFilter = THREE.LinearFilter;
-    texEnd.generateMipmaps = true;
-
     // Shader Uniforms
     const shaderUniforms = {
       uProgress: { value: 0.0 },
@@ -256,7 +236,6 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
       uTexTower: { value: texTower },
       uTexBalcony: { value: texBalcony },
       uTexInterior: { value: texInterior },
-      uTexEnd: { value: texEnd },
     };
 
     const shaderMaterial = new THREE.ShaderMaterial({
@@ -320,16 +299,15 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
       texTower.dispose();
       texBalcony.dispose();
       texInterior.dispose();
-      texEnd.dispose();
     };
   }, [prefersReducedMotion]);
 
   const p = scrollProgress;
 
-  // Final branding CTA button and tag only at the final reveal position (p >= 0.88)
-  const revealProgress = Math.max(0, Math.min(1, (p - 0.88) / 0.12));
-  const revealOpacity = revealProgress;
-  const revealTranslateY = (1 - revealProgress) * 14;
+  // Final logo opacity and subtle rise only when settled at the balcony terrace viewpoint (p >= 0.86)
+  const logoProgress = Math.max(0, Math.min(1, (p - 0.86) / 0.14));
+  const logoOpacity = logoProgress;
+  const logoTranslateY = (1 - logoProgress) * 16;
 
   return (
     <div
@@ -365,43 +343,92 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
             <span>
               {p < 0.35
                 ? 'Exterior Tower View'
-                : p < 0.58
+                : p < 0.55
                 ? 'Balcony Approach & Entry'
-                : p < 0.82
-                ? 'Living Suite & Terrace'
-                : 'Sayba Group Monumental Reveal'}
+                : p < 0.85
+                ? 'Living Residence Traversal'
+                : 'Panoramic Terrace Horizon'}
             </span>
           </div>
         </div>
 
         {/* ========================================================
-            2. EXPLORE BUTTON & BRAND CALL-TO-ACTION (p >= 0.88)
-            Appears at the base of the monumental reveal scene
+            2. FINAL BRAND REVEAL AT BALCONY TERRACE (p >= 0.86)
+            Elegantly revealed in the morning sky above the skyline
             ======================================================== */}
         <div
-          className="absolute bottom-10 left-0 right-0 flex flex-col items-center justify-center pointer-events-none z-20 px-4 transition-opacity duration-700"
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-4 sm:px-8 transition-opacity duration-700"
           style={{
-            opacity: prefersReducedMotion ? 1 : revealOpacity,
-            transform: `translateY(${revealTranslateY}px)`,
+            opacity: prefersReducedMotion ? 1 : logoOpacity,
+            transform: `translateY(${logoTranslateY}px)`,
           }}
         >
-          <div className="pointer-events-auto flex flex-col items-center gap-3">
-            <p className="text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-[#80B3AD] text-center drop-shadow-md">
+          {/* Authentic SAYBA GROUP Vector Branding */}
+          <div className="relative w-[85vw] max-w-sm sm:max-w-md md:max-w-lg flex flex-col items-center">
+            {/* SVG Logo: 100% exact vector geometry, authentic colors, zero cracks */}
+            <svg
+              viewBox="0 0 208 75"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-auto select-none filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.7)] drop-shadow-[0_0_25px_rgba(255,255,255,0.45)]"
+            >
+              {/* Architectural Triangle Roof: Exact authentic coordinates */}
+              <polygon points="36.5,7 66,36.5 7,36.5" fill="#B3B3B3" />
+
+              {/* Bold Teal Monogram S: Continuous mathematical Bézier curves, flush baseline cut */}
+              <path
+                d="M 37.202 65.624 Q 33.562 65.624 30.364 64.298 Q 27.166 62.972 24.852 60.528 Q 22.538 58.084 21.394 54.756 L 27.998 51.792 Q 29.454 54.964 32.028 56.784 Q 34.602 58.604 37.722 58.604 Q 39.386 58.604 40.582 58.084 Q 41.778 57.564 42.454 56.654 Q 43.13 55.744 43.13 54.496 Q 43.13 53.144 42.298 52.182 Q 41.466 51.22 39.698 50.648 L 32.106 48.152 Q 27.478 46.644 25.138 43.862 Q 22.798 41.08 22.798 37.18 Q 22.798 33.748 24.488 31.148 Q 26.178 28.548 29.22 27.092 Q 32.262 25.636 36.214 25.636 Q 39.698 25.636 42.662 26.832 Q 45.626 28.028 47.784 30.212 Q 49.942 32.396 51.403 36.5 L 43.466 36.5 Q 42.54 35.127 41.206 34.19 Q 39.022 32.656 36.214 32.656 Q 34.602 32.656 33.354 33.176 Q 32.106 33.696 31.43 34.658 Q 30.754 35.62 30.754 36.868 Q 30.754 38.22 31.638 39.234 Q 32.522 40.248 34.29 40.82 L 41.726 43.212 Q 46.406 44.72 48.72 47.424 Q 51.034 50.128 51.034 54.028 Q 51.034 57.408 49.266 60.034 Q 47.498 62.66 44.404 64.142 Q 41.31 65.624 37.202 65.624 Z"
+                fill="#80B3AD"
+              />
+
+              {/* Typography: SAYBA (Bold Luxury Geometric) */}
+              <text
+                x="71"
+                y="35"
+                fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+                fontSize="27"
+                fontWeight="800"
+                letterSpacing="0.22em"
+                fill="#FFFFFF"
+              >
+                SAYBA
+              </text>
+
+              {/* Typography: GROUP (Refined Geometric) */}
+              <text
+                x="71"
+                y="58"
+                fontFamily="'Plus Jakarta Sans', Arial, Helvetica, sans-serif"
+                fontSize="19"
+                fontWeight="700"
+                letterSpacing="0.42em"
+                fill="#E8ECEB"
+              >
+                GROUP
+              </text>
+            </svg>
+
+            {/* Tagline */}
+            <p className="mt-4 text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-[#80B3AD] text-center drop-shadow-md">
               Building Trust &bull; Creating Value
             </p>
-            <button
-              type="button"
-              onClick={() => {
-                if (onComplete) {
-                  onComplete();
-                } else {
-                  document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="px-8 py-3 rounded-full bg-[#80B3AD] hover:bg-[#689E98] text-[#141515] font-bold text-xs uppercase tracking-widest transition-all cursor-pointer shadow-[0_4px_25px_rgba(128,179,173,0.5)] active:scale-95"
-            >
-              Explore Sayba Residences
-            </button>
+
+            {/* Explore Button at final reveal */}
+            <div className="mt-8 pointer-events-auto">
+              <button
+                type="button"
+                onClick={() => {
+                  if (onComplete) {
+                    onComplete();
+                  } else {
+                    document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="px-8 py-3 rounded-full bg-[#80B3AD] hover:bg-[#689E98] text-[#141515] font-bold text-xs uppercase tracking-widest transition-all cursor-pointer shadow-[0_4px_25px_rgba(128,179,173,0.5)] active:scale-95"
+              >
+                Explore Sayba Residences
+              </button>
+            </div>
           </div>
         </div>
 
