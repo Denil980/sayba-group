@@ -14,7 +14,7 @@ interface BuildingToInteriorExperienceProps {
 }
 
 // =========================================================================
-// GLSL SHADER: Continuous Architectural Fly-Through from Tower to Terrace
+// GLSL SHADER: Slow, Cinematic Architectural Fly-Through with Portal Occlusion
 // =========================================================================
 const cinematicVertexShader = `
   varying vec2 vUv;
@@ -34,7 +34,7 @@ const cinematicFragmentShader = `
 
   varying vec2 vUv;
 
-  // ACES Filmic Tone Mapping for photographic range
+  // ACES Filmic Tone Mapping for photographic dynamic range
   vec3 acesFilm(vec3 x) {
     float a = 2.51;
     float b = 0.03;
@@ -64,66 +64,100 @@ const cinematicFragmentShader = `
     float p = clamp(uProgress, 0.0, 1.0);
 
     // -------------------------------------------------------------
-    // STAGE 1: Real Tower Exterior Drone Approach (p: 0.00 -> 0.35)
+    // STAGE 1: Exterior Building Approach (p: 0.00 -> 0.35)
+    // Camera starts wide showing complete tower, dollies toward Floor 8 balcony
     // -------------------------------------------------------------
     float p1 = clamp(p / 0.35, 0.0, 1.0);
-    float towerScale = mix(1.0, 2.85, pow(p1, 1.3));
+    float easeP1 = smoothstep(0.0, 1.0, p1);
+    float towerScale = mix(1.0, 2.85, pow(easeP1, 1.25));
     vec2 towerBalconyCenter = vec2(0.485, 0.445);
-    vec2 towerFocus = mix(vec2(0.5, 0.5), towerBalconyCenter, p1);
+    vec2 towerFocus = mix(vec2(0.5, 0.5), towerBalconyCenter, easeP1);
     vec2 uvTower = (st - towerFocus) / towerScale + towerFocus;
     // Perspective tilt (simulates cinema camera tilting upward as it nears the facade)
-    uvTower.y -= (1.0 - uvTower.y) * p1 * 0.035;
+    uvTower.y -= (1.0 - uvTower.y) * easeP1 * 0.032;
     vec4 colTower = texture2D(uTexTower, clamp(uvTower, 0.0, 1.0));
 
+    // Optical match cut from tower zoom into architectural balcony entrance (p: 0.34 -> 0.365)
+    // Fast, crisp transition prevents double-image ghosting
+    float tTowerToBalcony = smoothstep(0.34, 0.365, p);
+
     // -------------------------------------------------------------
-    // STAGE 2: Architectural Balcony Entrance (p: 0.28 -> 0.48)
+    // STAGE 2: Slow Balcony Approach and Close-up (p: 0.35 -> 0.55)
+    // The camera holds and moves slowly across the balcony terrace.
+    // Balcony railing, door frame, travertine wall, and reflections remain visible.
     // -------------------------------------------------------------
-    float p2 = clamp((p - 0.28) / 0.20, 0.0, 1.0);
-    float balconyScale = mix(1.0, 1.7, pow(p2, 1.2));
-    vec2 balconyFocus = mix(vec2(0.5, 0.5), vec2(0.54, 0.51), p2);
+    float p2 = clamp((p - 0.35) / 0.20, 0.0, 1.0);
+    float easeP2 = smoothstep(0.0, 1.0, p2);
+    // Slow, stately camera push across the balcony (1.0 -> 1.25)
+    float balconyScale = mix(1.0, 1.25, easeP2);
+    vec2 balconyFocus = mix(vec2(0.5, 0.5), vec2(0.52, 0.50), easeP2);
     vec2 uvBalcony = (st - balconyFocus) / balconyScale + balconyFocus;
     vec4 colBalcony = texture2D(uTexBalcony, clamp(uvBalcony, 0.0, 1.0));
 
-    // Specular reflection sweep across balcony glass balustrade
-    float glassSweep = smoothstep(0.0, 0.12, 0.06 - abs(st.x - 0.42 - (p - 0.35) * 1.8)) * (1.0 - p2);
-    colBalcony.rgb += vec3(0.08, 0.10, 0.11) * glassSweep;
+    // Specular reflection sweep across balcony glass balustrade as camera moves
+    float glassSweep = smoothstep(0.0, 0.14, 0.07 - abs(st.x - 0.44 - (p - 0.38) * 1.6)) * (1.0 - p2 * 0.5);
+    colBalcony.rgb += vec3(0.07, 0.09, 0.10) * glassSweep;
 
-    // Optical transition from tower zoom into architectural balcony entrance
-    float balcBlend = smoothstep(0.32, 0.40, p);
-    vec3 sceneStage1 = mix(colTower.rgb, colBalcony.rgb, balcBlend);
+    vec3 sceneStage2 = mix(colTower.rgb, colBalcony.rgb, tTowerToBalcony);
 
     // -------------------------------------------------------------
-    // STAGE 3: Passing Through Open Sliding Door (p: 0.42 -> 0.58)
+    // STAGE 3: Gradual Approach to Open Entrance (p: 0.55 -> 0.68)
+    // Moving intentionally toward the open sliding door in center-right
     // -------------------------------------------------------------
-    float p3 = clamp((p - 0.42) / 0.16, 0.0, 1.0);
+    float p3 = clamp((p - 0.55) / 0.13, 0.0, 1.0);
+    float easeP3 = smoothstep(0.0, 1.0, p3);
+    float approachScale = mix(1.25, 1.95, easeP3);
+    vec2 approachFocus = mix(vec2(0.52, 0.50), vec2(0.55, 0.51), easeP3);
+    vec2 uvApproach = (st - approachFocus) / approachScale + approachFocus;
+    vec4 colApproach = texture2D(uTexBalcony, clamp(uvApproach, 0.0, 1.0));
+
+    vec3 sceneStage3 = (p < 0.55) ? sceneStage2 : colApproach.rgb;
 
     // -------------------------------------------------------------
-    // STAGE 4 & 5: Traversing Living Suite Onto Private Terrace (p: 0.55 -> 1.00)
-    // The camera glides all the way past the furniture, settling
-    // at the balcony railing overlooking the morning city skyline
+    // STAGE 4: Crossing the Threshold & Revealing Interior (p: 0.68 -> 0.82)
+    // Pure architectural door aperture occlusion:
+    // Travertine stone wall and door frame remain 100% solid outside door opening.
+    // Interior room is revealed strictly through the expanding door opening!
+    // ZERO ghosting or transparent double-exposure.
     // -------------------------------------------------------------
-    float p4 = clamp((p - 0.55) / 0.45, 0.0, 1.0);
-    // Scales to 2.38 so sofa & coffee table move completely past screen edges
-    float interiorScale = mix(0.96, 2.38, pow(p4, 1.2));
-    vec2 interiorFocus = vec2(0.505, 0.495);
-    vec2 uvInterior = (st - interiorFocus) / interiorScale + interiorFocus;
+    float p4 = clamp((p - 0.68) / 0.14, 0.0, 1.0);
+    float easeP4 = smoothstep(0.0, 1.0, p4);
 
-    // Multiplane depth parallax: foreground furniture expands outward naturally
+    // Door aperture expands outward as camera passes through
+    float doorLeft = mix(0.48, -0.05, easeP4);
+    float doorRight = mix(0.72, 1.05, easeP4);
+    float inDoorway = smoothstep(doorLeft - 0.015, doorLeft + 0.015, st.x) * 
+                      (1.0 - smoothstep(doorRight - 0.015, doorRight + 0.015, st.x));
+
+    // Interior view entering the room
+    float enterIntScale = mix(0.96, 1.35, easeP4);
+    vec2 uvEnterInt = (st - vec2(0.505, 0.495)) / enterIntScale + vec2(0.505, 0.495);
+    vec4 colEnterInt = texture2D(uTexInterior, clamp(uvEnterInt, 0.0, 1.0));
+
+    vec3 sceneStage4 = mix(sceneStage3, colEnterInt.rgb, inDoorway);
+
+    // -------------------------------------------------------------
+    // STAGE 5: Slow Interior Traversal Onto Private Terrace (p: 0.82 -> 1.00)
+    // Traveling past sofa & coffee table, settling on terrace looking at skyline
+    // -------------------------------------------------------------
+    float p5 = clamp((p - 0.82) / 0.18, 0.0, 1.0);
+    float easeP5 = smoothstep(0.0, 1.0, p5);
+    // Scales to 2.85 toward terrace center so furniture moves completely off-screen
+    float traverseScale = mix(1.35, 2.85, easeP5);
+    vec2 traverseFocus = mix(vec2(0.505, 0.495), vec2(0.47, 0.48), easeP5);
+    vec2 uvTraverse = (st - traverseFocus) / traverseScale + traverseFocus;
+
+    // Multiplane depth parallax: foreground furniture expands outward
     float fgDepth = smoothstep(0.35, 0.95, st.y);
-    uvInterior.y += fgDepth * p4 * 0.045;
-    uvInterior.x += (st.x - 0.5) * fgDepth * p4 * 0.05;
+    uvTraverse.y += fgDepth * easeP5 * 0.045;
+    uvTraverse.x += (st.x - 0.5) * fgDepth * easeP5 * 0.05;
 
     // Stabilized cinema gimbal sway
-    float gimbalSway = sin(p * 16.0) * 0.0018 * (1.0 - p4);
-    uvInterior.x += gimbalSway;
-    vec4 colInterior = texture2D(uTexInterior, clamp(uvInterior, 0.0, 1.0));
+    float gimbalSway = sin(p * 14.0) * 0.0012 * (1.0 - easeP5);
+    uvTraverse.x += gimbalSway;
+    vec4 colFinalInterior = texture2D(uTexInterior, clamp(uvTraverse, 0.0, 1.0));
 
-    // Doorway frame occlusion: door opening is at x: 0.48 to 0.72
-    float dLeft = mix(0.46, -0.1, p3);
-    float dRight = mix(0.72, 1.1, p3);
-    float inDoor = smoothstep(dLeft - 0.04, dLeft + 0.04, st.x) * (1.0 - smoothstep(dRight - 0.04, dRight + 0.04, st.x));
-    float doorWipe = mix(smoothstep(0.42, 0.56, p), 1.0, inDoor * p3);
-    vec3 sceneColor = mix(sceneStage1, colInterior.rgb, doorWipe);
+    vec3 sceneColor = (p < 0.82) ? sceneStage4 : colFinalInterior.rgb;
 
     // -------------------------------------------------------------
     // CINEMATIC LIGHTING & EXPOSURE DYNAMICS
@@ -249,13 +283,13 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
     const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMaterial);
     scene.add(quad);
 
-    // Responsive Motion Loop: 0.22 lerp ensures tight scroll tracking without sluggish lag
+    // Responsive Motion Loop: 0.18 lerp ensures tight scroll tracking without sluggish lag
     let currentProgress = 0;
     let targetProgress = 0;
     let animFrameId: number;
 
     const renderLoop = () => {
-      currentProgress += (targetProgress - currentProgress) * 0.22;
+      currentProgress += (targetProgress - currentProgress) * 0.18;
       shaderUniforms.uProgress.value = currentProgress;
       renderer.render(scene, camera);
       animFrameId = requestAnimationFrame(renderLoop);
@@ -263,13 +297,13 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
 
     animFrameId = requestAnimationFrame(renderLoop);
 
-    // GSAP ScrollTrigger Integration: scrub 0.3 for crisp immediate response
+    // GSAP ScrollTrigger Integration: scrub 0.35 for crisp immediate response
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.3,
+        scrub: 0.35,
         onUpdate: (self) => {
           targetProgress = self.progress;
           setScrollProgress(self.progress);
@@ -304,8 +338,8 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
 
   const p = scrollProgress;
 
-  // Final logo opacity and subtle rise only when settled at the balcony terrace viewpoint (p >= 0.86)
-  const logoProgress = Math.max(0, Math.min(1, (p - 0.86) / 0.14));
+  // Final logo opacity and subtle rise only when settled at the balcony terrace viewpoint (p >= 0.94)
+  const logoProgress = Math.max(0, Math.min(1, (p - 0.94) / 0.06));
   const logoOpacity = logoProgress;
   const logoTranslateY = (1 - logoProgress) * 16;
 
@@ -313,7 +347,7 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
     <div
       ref={containerRef}
       className={`relative w-full ${
-        standalone ? 'h-screen' : 'h-[360vh] sm:h-[420vh]'
+        standalone ? 'h-screen' : 'h-[480vh] sm:h-[540vh]'
       } bg-[#0A0B0C]`}
     >
       {/* Sticky 100vh Fullscreen Viewport */}
@@ -344,17 +378,19 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
               {p < 0.35
                 ? 'Exterior Tower View'
                 : p < 0.55
-                ? 'Balcony Approach & Entry'
-                : p < 0.85
-                ? 'Living Residence Traversal'
+                ? 'Balcony Terrace Close-Up'
+                : p < 0.68
+                ? 'Approaching Residence Entrance'
+                : p < 0.82
+                ? 'Entering Living Residence'
                 : 'Panoramic Terrace Horizon'}
             </span>
           </div>
         </div>
 
         {/* ========================================================
-            2. FINAL BRAND REVEAL AT BALCONY TERRACE (p >= 0.86)
-            Elegantly revealed in the morning sky above the skyline
+            2. FINAL BRAND REVEAL AT BALCONY TERRACE (p >= 0.94)
+            Elegantly revealed only at final terrace viewpoint
             ======================================================== */}
         <div
           className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-4 sm:px-8 transition-opacity duration-700"

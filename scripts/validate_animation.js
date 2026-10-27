@@ -14,7 +14,7 @@ async function capture() {
     executablePath: chromePath,
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
-    defaultViewport: { width: 1024, height: 457 }
+    defaultViewport: { width: 1280, height: 720 }
   });
 
   const page = await browser.newPage();
@@ -27,17 +27,18 @@ async function capture() {
   // Get total scrollable height of the cinematic container
   const containerHeight = await page.evaluate(() => {
     const el = document.querySelector('.sticky')?.parentElement;
-    return el ? el.offsetHeight - window.innerHeight : 2500;
+    return el ? el.offsetHeight - window.innerHeight : 3500;
   });
 
   console.log('Cinematic scroll range:', containerHeight);
 
   const steps = [
-    { name: '1_beginning_exterior', p: 0.0 },
-    { name: '2_balcony_approach', p: 0.42 },
-    { name: '3_window_entry', p: 0.55 },
-    { name: '4_room_traversal', p: 0.75 },
-    { name: '5_final_reveal', p: 1.0 }
+    { name: '1_exterior_approach', p: 0.15 },
+    { name: '2_balcony_closeup', p: 0.45 },
+    { name: '3_entrance_approach', p: 0.62 },
+    { name: '4_threshold_entry', p: 0.75 },
+    { name: '5_room_traversal', p: 0.90 },
+    { name: '6_terrace_final_reveal', p: 1.00 }
   ];
 
   for (const step of steps) {
@@ -46,12 +47,12 @@ async function capture() {
       window.scrollTo(0, y);
     }, scrollY);
 
-    // Wait for GSAP scrub & animation loop to render
+    // Wait for GSAP scrub & animation loop to settle
     await new Promise(r => setTimeout(r, 1200));
 
     const shotPath = path.join(outDir, `${step.name}.png`);
     await page.screenshot({ path: shotPath });
-    console.log(`Captured ${step.name} at scrollY=${scrollY}`);
+    console.log(`Captured ${step.name} at p=${step.p} (scrollY=${scrollY})`);
   }
 
   await browser.close();
