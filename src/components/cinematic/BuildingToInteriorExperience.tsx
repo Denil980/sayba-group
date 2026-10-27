@@ -145,28 +145,23 @@ const cinematicFragmentShader = `
     }
 
     // -------------------------------------------------------------
-    // STAGE 5: Slow Interior Traversal Onto Private Terrace (p: 0.82 -> 1.00)
-    // Traveling past sofa & coffee table, settling on terrace looking at skyline
+    // STAGE 5: Smooth Interior Traversal Onto Private Terrace (p: 0.82 -> 1.00)
+    // Straight, rectilinear camera glide toward terrace horizon.
+    // ZERO warping, ZERO tilt, 100% straight architectural lines.
     // -------------------------------------------------------------
     vec3 sceneColor = sceneStage4;
     if (p >= 0.82) {
       float p5 = clamp((p - 0.82) / 0.18, 0.0, 1.0);
+      // Silky-smooth cinematic easing
       float easeP5 = smoothstep(0.0, 1.0, p5);
-      // Scales to 2.85 toward terrace center so furniture moves completely off-screen
-      float traverseScale = mix(1.35, 2.85, easeP5);
-      vec2 traverseFocus = mix(vec2(0.505, 0.495), vec2(0.47, 0.48), easeP5);
+      
+      // Pure rectilinear affine projection:
+      // Preserves every straight line in the architecture (window mullions, door jambs, balustrade)
+      float traverseScale = mix(1.35, 2.30, easeP5);
+      vec2 traverseFocus = mix(vec2(0.505, 0.495), vec2(0.41, 0.485), easeP5);
       vec2 uvTraverse = (st - traverseFocus) / traverseScale + traverseFocus;
 
-      // Multiplane depth parallax: foreground furniture expands outward
-      float fgDepth = smoothstep(0.35, 0.95, st.y);
-      uvTraverse.y += fgDepth * easeP5 * 0.045;
-      uvTraverse.x += (st.x - 0.5) * fgDepth * easeP5 * 0.05;
-
-      // Stabilized cinema gimbal sway
-      float gimbalSway = sin(p * 14.0) * 0.0012 * (1.0 - easeP5);
-      uvTraverse.x += gimbalSway;
       vec4 colFinalInterior = texture2D(uTexInterior, clamp(uvTraverse, 0.0, 1.0));
-
       sceneColor = colFinalInterior.rgb;
     }
 
