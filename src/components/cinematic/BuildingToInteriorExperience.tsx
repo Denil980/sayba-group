@@ -16,8 +16,10 @@ interface BuildingToInteriorExperienceProps {
 interface ArchitecturalSceneContent {
   id: string;
   sceneIndex: string;
+  kicker: string;
   heading: string;
   description: string;
+  highlights: string[];
   start: number;
   fadeInEnd: number;
   fadeOutStart: number;
@@ -28,9 +30,15 @@ const SCENE_CONTENTS: ArchitecturalSceneContent[] = [
   {
     id: 'scene-1-exterior',
     sceneIndex: '01',
+    kicker: '01 / ARCHITECTURAL LANDMARK',
     heading: 'Beyond Ordinary Living',
     description:
-      'Discover thoughtfully designed residences where contemporary architecture meets exceptional living.',
+      'A soaring testament to modern engineering and timeless aesthetic precision. Rising gracefully above the cityscape, Sayba Group’s signature tower integrates expansive panoramic glass exposures, morning sun orientation, and world-class structural integrity.',
+    highlights: [
+      'Iconic High-Rise Elevation',
+      'Uninterrupted Skyline Vistas',
+      'Sustainable Facade Design',
+    ],
     start: 0.00,
     fadeInEnd: 0.05,
     fadeOutStart: 0.24,
@@ -39,9 +47,15 @@ const SCENE_CONTENTS: ArchitecturalSceneContent[] = [
   {
     id: 'scene-2-balcony',
     sceneIndex: '02',
+    kicker: '02 / PRIVATE SKY SANCTUARY',
     heading: 'A View Beyond Expectations',
     description:
-      'Open spaces, beautiful city views, and a sense of calm above the everyday.',
+      'Expansive private terraces designed as natural extensions of the interior living space. Clad in artisanal Italian travertine stone with frameless glass balustrades that invite unobstructed morning breezes and serene horizon panoramas.',
+    highlights: [
+      'Frameless Glass Balustrades',
+      'Italian Travertine Masonry',
+      'Seamless Indoor-Outdoor Flow',
+    ],
     start: 0.35,
     fadeInEnd: 0.39,
     fadeOutStart: 0.49,
@@ -50,9 +64,15 @@ const SCENE_CONTENTS: ArchitecturalSceneContent[] = [
   {
     id: 'scene-3-entrance',
     sceneIndex: '03',
+    kicker: '03 / TIMELESS THRESHOLD',
     heading: 'Step Into Comfort',
     description:
-      'Every detail is designed to bring comfort, elegance, and natural light into your everyday life.',
+      'A transition curated with acoustic comfort and spatial grandeur. Floor-to-ceiling thermal sliding portals glide effortlessly, welcoming natural light into an inviting sanctuary of refined craftsmanship and enduring warmth.',
+    highlights: [
+      'Acoustic Glazing Portals',
+      'High-Ceiling Spatial Volume',
+      'Natural Cross-Ventilation',
+    ],
     start: 0.56,
     fadeInEnd: 0.60,
     fadeOutStart: 0.66,
@@ -61,9 +81,15 @@ const SCENE_CONTENTS: ArchitecturalSceneContent[] = [
   {
     id: 'scene-4-living',
     sceneIndex: '04',
+    kicker: '04 / CURATED RESIDENCES',
     heading: 'Designed Around You',
     description:
-      'Elegant interiors, considered details, and spaces that feel like home.',
+      'Bespoke living environments crafted for modern luxury living and elevated hosting. Featuring European herringbone oak timber floors, custom ambient lighting, and generous proportions that harmonize style with complete daily peace.',
+    highlights: [
+      'Artisan Herringbone Oak Floors',
+      'Designer Ambient Lighting',
+      'Generous Open-Plan Layout',
+    ],
     start: 0.72,
     fadeInEnd: 0.76,
     fadeOutStart: 0.85,
@@ -468,9 +494,9 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
 
         {/* ========================================================
             2. SCENE-SYNCHRONIZED EDITORIAL CONTENT (Scenes 1 - 4)
-            Restrained, luxury editorial typography positioned away from architectural focus
+            High-contrast luxury frosted card with expanded architectural details
             ======================================================== */}
-        <div className="absolute bottom-12 sm:bottom-16 md:bottom-20 left-6 sm:left-12 md:left-20 max-w-[calc(100vw-3rem)] sm:max-w-md md:max-w-lg lg:max-w-xl pointer-events-none z-20">
+        <div className="absolute bottom-8 sm:bottom-12 md:bottom-14 left-4 sm:left-10 md:left-16 max-w-[calc(100vw-2rem)] sm:max-w-lg md:max-w-xl pointer-events-none z-20">
           {SCENE_CONTENTS.map((scene) => {
             const motion = getSceneMotion(p, scene, prefersReducedMotion);
             if (!motion.visible) return null;
@@ -478,24 +504,42 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
             return (
               <div
                 key={scene.id}
-                className="transition-all duration-300 ease-out"
+                className="transition-all duration-300 ease-out bg-black/80 sm:bg-black/75 backdrop-blur-2xl border border-white/20 p-5 sm:p-7 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.8)]"
                 style={{
                   opacity: motion.opacity,
                   transform: `translateY(${motion.translateY}px)`,
                 }}
               >
-                <div className="flex items-center gap-3 mb-2 sm:mb-2.5">
-                  <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.28em] uppercase text-[#80B3AD] drop-shadow-sm">
-                    {scene.sceneIndex} / SAYBA RESIDENCES
+                {/* Kicker / Category tag (Crisp White & Silver, NO blue) */}
+                <div className="flex items-center gap-2.5 mb-2 sm:mb-2.5">
+                  <span className="text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-white/75">
+                    {scene.kicker}
                   </span>
-                  <span className="h-px w-8 bg-[#80B3AD]/60" />
+                  <span className="h-px w-6 sm:w-8 bg-white/30" />
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-medium text-white tracking-tight leading-[1.15] drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]">
+
+                {/* Main Heading (Pure High-Contrast White) */}
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] font-serif font-normal text-white tracking-tight leading-[1.18] drop-shadow-sm">
                   {scene.heading}
                 </h2>
-                <p className="mt-2 sm:mt-2.5 text-sm sm:text-base text-white/85 leading-relaxed font-light max-w-md sm:max-w-lg drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+
+                {/* Expanded Description (Crisp, High-Contrast White) */}
+                <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm md:text-[15px] text-white/90 leading-relaxed font-light drop-shadow-sm">
                   {scene.description}
                 </p>
+
+                {/* Architectural Highlights / Key Specs Badges */}
+                <div className="mt-3.5 pt-3 border-t border-white/15 flex flex-wrap gap-1.5 sm:gap-2">
+                  {scene.highlights.map((highlight, idx) => (
+                    <span
+                      key={idx}
+                      className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/90 text-[11px] sm:text-xs font-medium tracking-wide"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/70" />
+                      {highlight}
+                    </span>
+                  ))}
+                </div>
               </div>
             );
           })}
@@ -557,12 +601,12 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
               </text>
             </svg>
 
-            {/* Tagline */}
-            <p className="mt-4 text-xs sm:text-sm uppercase tracking-[0.3em] font-semibold text-[#80B3AD] text-center drop-shadow-md">
+            {/* Tagline (Crisp Pure White) */}
+            <p className="mt-4 text-xs sm:text-sm uppercase tracking-[0.3em] font-medium text-white text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
               Building Trust &bull; Creating Value
             </p>
 
-            {/* Explore Button at final reveal */}
+            {/* Explore Button (High-Contrast White Luxury) */}
             <div className="mt-8 pointer-events-auto">
               <button
                 type="button"
@@ -573,7 +617,7 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
                     document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="px-8 py-3 rounded-full bg-[#80B3AD] hover:bg-[#689E98] text-[#141515] font-bold text-xs uppercase tracking-widest transition-all cursor-pointer shadow-[0_4px_25px_rgba(128,179,173,0.5)] active:scale-95"
+                className="px-8 py-3.5 rounded-full bg-white hover:bg-neutral-100 text-[#141515] font-bold text-xs uppercase tracking-widest transition-all cursor-pointer shadow-[0_4px_30px_rgba(255,255,255,0.4)] active:scale-95"
               >
                 Explore Sayba Residences
               </button>
@@ -582,15 +626,15 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
         </div>
 
         {/* ========================================================
-            3. SCROLL DOWN HINT (Fades away once movement begins)
+            4. SCROLL DOWN HINT (Fades away once movement begins)
             ======================================================== */}
         <div
           className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-opacity duration-500"
           style={{ opacity: p > 0.12 ? 0 : 1 }}
         >
-          <div className="flex items-center gap-2 bg-black/60 backdrop-blur-xl px-4 py-2 rounded-full border border-white/20 text-white text-xs tracking-widest uppercase font-semibold shadow-xl">
+          <div className="flex items-center gap-2 bg-black/75 backdrop-blur-xl px-4 py-2 rounded-full border border-white/20 text-white text-xs tracking-widest uppercase font-semibold shadow-xl">
             <span>Scroll to Enter</span>
-            <ArrowDown className="w-3.5 h-3.5 text-[#80B3AD] animate-bounce" />
+            <ArrowDown className="w-3.5 h-3.5 text-white animate-bounce" />
           </div>
         </div>
       </div>
