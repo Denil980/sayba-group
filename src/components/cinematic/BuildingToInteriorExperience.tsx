@@ -376,23 +376,6 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
           </div>
         )}
 
-        {/* Stage Indicator Overlay (Discrete luxury architectural cue) */}
-        <div className="absolute top-6 left-6 sm:left-10 z-20 pointer-events-none transition-opacity duration-500">
-          <div className="flex items-center gap-2.5 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 text-white/85 text-[11px] tracking-widest uppercase font-medium shadow-lg">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#80B3AD] animate-pulse" />
-            <span>
-              {p < 0.35
-                ? 'Exterior Tower View'
-                : p < 0.55
-                ? 'Balcony Terrace Close-Up'
-                : p < 0.68
-                ? 'Approaching Residence Entrance'
-                : p < 0.82
-                ? 'Entering Living Residence'
-                : 'Panoramic Terrace Horizon'}
-            </span>
-          </div>
-        </div>
 
         {/* ========================================================
             2. FINAL BRAND REVEAL AT BALCONY TERRACE (p >= 0.94)
