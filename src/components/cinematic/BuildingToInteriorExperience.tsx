@@ -15,11 +15,9 @@ interface BuildingToInteriorExperienceProps {
 
 interface ArchitecturalSceneContent {
   id: string;
-  sceneIndex: string;
-  kicker: string;
+  eyebrow: string;
   heading: string;
-  description: string;
-  highlights: string[];
+  descriptions: string[];
   start: number;
   fadeInEnd: number;
   fadeOutStart: number;
@@ -29,15 +27,10 @@ interface ArchitecturalSceneContent {
 const SCENE_CONTENTS: ArchitecturalSceneContent[] = [
   {
     id: 'scene-1-exterior',
-    sceneIndex: '01',
-    kicker: '01 / ARCHITECTURAL LANDMARK',
+    eyebrow: '01 / ARCHITECTURAL LANDMARK',
     heading: 'Beyond Ordinary Living',
-    description:
-      'A soaring testament to modern engineering and timeless aesthetic precision. Rising gracefully above the cityscape, Sayba Group’s signature tower integrates expansive panoramic glass exposures, morning sun orientation, and world-class structural integrity.',
-    highlights: [
-      'Iconic High-Rise Elevation',
-      'Uninterrupted Skyline Vistas',
-      'Sustainable Facade Design',
+    descriptions: [
+      'Discover thoughtfully designed residences where contemporary architecture meets exceptional living.',
     ],
     start: 0.00,
     fadeInEnd: 0.05,
@@ -46,85 +39,141 @@ const SCENE_CONTENTS: ArchitecturalSceneContent[] = [
   },
   {
     id: 'scene-2-balcony',
-    sceneIndex: '02',
-    kicker: '02 / PRIVATE SKY SANCTUARY',
+    eyebrow: '02 / PRIVATE SKY SANCTUARY',
     heading: 'A View Beyond Expectations',
-    description:
-      'Expansive private terraces designed as natural extensions of the interior living space. Clad in artisanal Italian travertine stone with frameless glass balustrades that invite unobstructed morning breezes and serene horizon panoramas.',
-    highlights: [
-      'Frameless Glass Balustrades',
-      'Italian Travertine Masonry',
-      'Seamless Indoor-Outdoor Flow',
+    descriptions: [
+      'Expansive private terraces designed as natural extensions of the interior living space.',
+      'Experience open city views, beautiful natural light, and peaceful moments above the everyday.',
     ],
     start: 0.35,
-    fadeInEnd: 0.39,
+    fadeInEnd: 0.41,
     fadeOutStart: 0.49,
     end: 0.54,
   },
   {
     id: 'scene-3-entrance',
-    sceneIndex: '03',
-    kicker: '03 / TIMELESS THRESHOLD',
+    eyebrow: '03 / TIMELESS THRESHOLD',
     heading: 'Step Into Comfort',
-    description:
-      'A transition curated with acoustic comfort and spatial grandeur. Floor-to-ceiling thermal sliding portals glide effortlessly, welcoming natural light into an inviting sanctuary of refined craftsmanship and enduring warmth.',
-    highlights: [
-      'Acoustic Glazing Portals',
-      'High-Ceiling Spatial Volume',
-      'Natural Cross-Ventilation',
+    descriptions: [
+      'Every detail is designed to bring comfort, elegance, and natural light into your everyday life.',
     ],
     start: 0.56,
-    fadeInEnd: 0.60,
+    fadeInEnd: 0.61,
     fadeOutStart: 0.66,
     end: 0.70,
   },
   {
     id: 'scene-4-living',
-    sceneIndex: '04',
-    kicker: '04 / CURATED RESIDENCES',
+    eyebrow: '04 / CURATED RESIDENCES',
     heading: 'Designed Around You',
-    description:
-      'Bespoke living environments crafted for modern luxury living and elevated hosting. Featuring European herringbone oak timber floors, custom ambient lighting, and generous proportions that harmonize style with complete daily peace.',
-    highlights: [
-      'Artisan Herringbone Oak Floors',
-      'Designer Ambient Lighting',
-      'Generous Open-Plan Layout',
+    descriptions: [
+      'Elegant interiors, considered details, and spaces that feel like home.',
     ],
     start: 0.72,
-    fadeInEnd: 0.76,
+    fadeInEnd: 0.77,
     fadeOutStart: 0.85,
     end: 0.90,
   },
 ];
 
-const getSceneMotion = (p: number, scene: ArchitecturalSceneContent, reducedMotion: boolean) => {
-  if (p < scene.start || p > scene.end) {
-    return { opacity: 0, translateY: 0, visible: false };
-  }
-  let opacity = 1;
-  let translateY = 0;
+interface SceneTypographyMotion {
+  eyebrowOpacity: number;
+  eyebrowY: number;
+  headingOpacity: number;
+  headingY: number;
+  descOpacity: number;
+  descY: number;
+  visible: boolean;
+}
 
-  // Scene 1 is the establishing exterior shot: already visible at p = 0.00
-  if (scene.start === 0.00 && p < scene.fadeInEnd) {
-    opacity = 1;
-    translateY = 0;
-  } else if (p < scene.fadeInEnd) {
-    const t = (p - scene.start) / (scene.fadeInEnd - scene.start);
-    // Smooth cubic ease
-    const ease = t * t * (3 - 2 * t);
-    opacity = ease;
-    translateY = (1 - ease) * 16;
-  } else if (p > scene.fadeOutStart) {
-    const t = (p - scene.fadeOutStart) / (scene.end - scene.fadeOutStart);
-    const ease = t * t * (3 - 2 * t);
-    opacity = 1 - ease;
-    translateY = -ease * 16;
+const getSceneTypographyMotion = (
+  p: number,
+  scene: ArchitecturalSceneContent,
+  reducedMotion: boolean
+): SceneTypographyMotion => {
+  if (p < scene.start || p > scene.end) {
+    return {
+      eyebrowOpacity: 0,
+      eyebrowY: 0,
+      headingOpacity: 0,
+      headingY: 0,
+      descOpacity: 0,
+      descY: 0,
+      visible: false,
+    };
   }
+
+  // Scene 1 is establishing exterior shot: fully visible at initial state (p = 0.00)
+  if (scene.start === 0.00 && p < scene.fadeInEnd) {
+    return {
+      eyebrowOpacity: 1,
+      eyebrowY: 0,
+      headingOpacity: 1,
+      headingY: 0,
+      descOpacity: 1,
+      descY: 0,
+      visible: true,
+    };
+  }
+
+  const fadeInDuration = scene.fadeInEnd - scene.start;
+  const fadeOutDuration = scene.end - scene.fadeOutStart;
+
+  // Staggered Fade In: Heading & Eyebrow appear first, description follows smoothly after
+  if (p < scene.fadeInEnd) {
+    // 1. Heading & Eyebrow: enters across the first 70% of the fade-in window
+    const tHead = Math.min(1, Math.max(0, (p - scene.start) / (fadeInDuration * 0.70)));
+    const easeHead = tHead * tHead * (3 - 2 * tHead);
+    const headingOpacity = easeHead;
+    const headingY = reducedMotion ? 0 : (1 - easeHead) * 18;
+
+    // 2. Description: begins at 35% of the fade-in window, completes at 100%
+    const tDesc = Math.min(
+      1,
+      Math.max(0, (p - (scene.start + fadeInDuration * 0.35)) / (fadeInDuration * 0.65))
+    );
+    const easeDesc = tDesc * tDesc * (3 - 2 * tDesc);
+    const descOpacity = easeDesc;
+    const descY = reducedMotion ? 0 : (1 - easeDesc) * 18;
+
+    return {
+      eyebrowOpacity: headingOpacity,
+      eyebrowY: headingY,
+      headingOpacity,
+      headingY,
+      descOpacity,
+      descY,
+      visible: headingOpacity > 0.005,
+    };
+  }
+
+  // Full visibility zone
+  if (p <= scene.fadeOutStart) {
+    return {
+      eyebrowOpacity: 1,
+      eyebrowY: 0,
+      headingOpacity: 1,
+      headingY: 0,
+      descOpacity: 1,
+      descY: 0,
+      visible: true,
+    };
+  }
+
+  // Smooth Fade Out naturally into the next scene
+  const tOut = Math.min(1, Math.max(0, (p - scene.fadeOutStart) / fadeOutDuration));
+  const easeOut = tOut * tOut * (3 - 2 * tOut);
+  const exitOpacity = 1 - easeOut;
+  const exitY = reducedMotion ? 0 : -easeOut * 16;
 
   return {
-    opacity: reducedMotion ? (opacity > 0.05 ? 1 : 0) : opacity,
-    translateY: reducedMotion ? 0 : translateY,
-    visible: opacity > 0.005,
+    eyebrowOpacity: exitOpacity,
+    eyebrowY: exitY,
+    headingOpacity: exitOpacity,
+    headingY: exitY,
+    descOpacity: exitOpacity,
+    descY: exitY,
+    visible: exitOpacity > 0.005,
   };
 };
 
@@ -493,51 +542,54 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
 
 
         {/* ========================================================
-            2. SCENE-SYNCHRONIZED EDITORIAL CONTENT (Scenes 1 - 4)
-            High-contrast luxury frosted card with expanded architectural details
+            2. SCENE-SYNCHRONIZED PURE EDITORIAL TYPOGRAPHY (Scenes 1 - 4)
+            Zero boxes, zero cards, zero badges. Pure white typography directly over the scene.
+            Heading & Eyebrow reveal first, followed smoothly by description.
             ======================================================== */}
-        <div className="absolute bottom-8 sm:bottom-12 md:bottom-14 left-4 sm:left-10 md:left-16 max-w-[calc(100vw-2rem)] sm:max-w-lg md:max-w-xl pointer-events-none z-20">
+        <div className="absolute bottom-12 sm:bottom-16 md:bottom-20 left-6 sm:left-12 md:left-20 max-w-[calc(100vw-3rem)] sm:max-w-lg md:max-w-xl pointer-events-none z-20">
           {SCENE_CONTENTS.map((scene) => {
-            const motion = getSceneMotion(p, scene, prefersReducedMotion);
+            const motion = getSceneTypographyMotion(p, scene, prefersReducedMotion);
             if (!motion.visible) return null;
 
             return (
-              <div
-                key={scene.id}
-                className="transition-all duration-300 ease-out bg-black/80 sm:bg-black/75 backdrop-blur-2xl border border-white/20 p-5 sm:p-7 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.8)]"
-                style={{
-                  opacity: motion.opacity,
-                  transform: `translateY(${motion.translateY}px)`,
-                }}
-              >
-                {/* Kicker / Category tag (Crisp White & Silver, NO blue) */}
-                <div className="flex items-center gap-2.5 mb-2 sm:mb-2.5">
-                  <span className="text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-white/75">
-                    {scene.kicker}
-                  </span>
-                  <span className="h-px w-6 sm:w-8 bg-white/30" />
-                </div>
+              <div key={scene.id} className="relative">
+                {/* Small uppercase eyebrow text */}
+                <p
+                  className="text-xs sm:text-[13px] font-medium tracking-[0.25em] uppercase text-white/85 drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)] mb-2.5 sm:mb-3 transition-transform duration-100 ease-out"
+                  style={{
+                    opacity: motion.eyebrowOpacity,
+                    transform: `translateY(${motion.eyebrowY}px)`,
+                  }}
+                >
+                  {scene.eyebrow}
+                </p>
 
-                {/* Main Heading (Pure High-Contrast White) */}
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] font-serif font-normal text-white tracking-tight leading-[1.18] drop-shadow-sm">
+                {/* Elegant serif heading (Reveals first) */}
+                <h2
+                  className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white tracking-tight leading-[1.14] drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)] transition-transform duration-100 ease-out"
+                  style={{
+                    opacity: motion.headingOpacity,
+                    transform: `translateY(${motion.headingY}px)`,
+                  }}
+                >
                   {scene.heading}
                 </h2>
 
-                {/* Expanded Description (Crisp, High-Contrast White) */}
-                <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm md:text-[15px] text-white/90 leading-relaxed font-light drop-shadow-sm">
-                  {scene.description}
-                </p>
-
-                {/* Architectural Highlights / Key Specs Badges */}
-                <div className="mt-3.5 pt-3 border-t border-white/15 flex flex-wrap gap-1.5 sm:gap-2">
-                  {scene.highlights.map((highlight, idx) => (
-                    <span
+                {/* Clean, readable body typography (Reveals second) */}
+                <div
+                  className="mt-3.5 sm:mt-4 space-y-2 max-w-lg transition-transform duration-100 ease-out"
+                  style={{
+                    opacity: motion.descOpacity,
+                    transform: `translateY(${motion.descY}px)`,
+                  }}
+                >
+                  {scene.descriptions.map((desc, idx) => (
+                    <p
                       key={idx}
-                      className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/90 text-[11px] sm:text-xs font-medium tracking-wide"
+                      className="text-sm sm:text-base md:text-[17px] text-white/90 leading-relaxed font-light drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-white/70" />
-                      {highlight}
-                    </span>
+                      {desc}
+                    </p>
                   ))}
                 </div>
               </div>
