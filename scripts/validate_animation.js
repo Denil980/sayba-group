@@ -19,10 +19,15 @@ async function capture() {
 
   const page = await browser.newPage();
   console.log('Navigating to http://localhost:5173...');
-  await page.goto('http://localhost:5173', { waitUntil: 'domcontentloaded', timeout: 15000 });
+  await page.goto('http://localhost:5173', { waitUntil: 'load', timeout: 45000 });
 
-  // Wait 3 seconds for textures and WebGL shaders to compile
-  await new Promise(r => setTimeout(r, 3000));
+  // Wait for loading spinner to disappear (meaning all 3 textures are loaded)
+  try {
+    await page.waitForFunction(() => !document.querySelector('.animate-spin'), { timeout: 20000 });
+  } catch (e) {
+    console.log('Spinner check timeout, continuing...');
+  }
+  await new Promise(r => setTimeout(r, 2500));
 
   // Get total scrollable height of the cinematic container
   const containerHeight = await page.evaluate(() => {
@@ -37,8 +42,8 @@ async function capture() {
     { name: '1_exterior_approach', p: 0.15 },
     { name: '2_balcony_closeup', p: 0.45 },
     { name: '3_entrance_approach', p: 0.62 },
-    { name: '4_threshold_entry', p: 0.75 },
-    { name: '5_room_traversal', p: 0.90 },
+    { name: '4_living_room_entry', p: 0.78 },
+    { name: '5_room_traversal', p: 0.84 },
     { name: '6_terrace_final_reveal', p: 1.00 }
   ];
 

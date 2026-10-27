@@ -13,6 +13,95 @@ interface BuildingToInteriorExperienceProps {
   standalone?: boolean;
 }
 
+interface ArchitecturalSceneContent {
+  id: string;
+  sceneIndex: string;
+  heading: string;
+  description: string;
+  start: number;
+  fadeInEnd: number;
+  fadeOutStart: number;
+  end: number;
+}
+
+const SCENE_CONTENTS: ArchitecturalSceneContent[] = [
+  {
+    id: 'scene-1-exterior',
+    sceneIndex: '01',
+    heading: 'Beyond Ordinary Living',
+    description:
+      'Discover thoughtfully designed residences where contemporary architecture meets exceptional living.',
+    start: 0.00,
+    fadeInEnd: 0.05,
+    fadeOutStart: 0.24,
+    end: 0.31,
+  },
+  {
+    id: 'scene-2-balcony',
+    sceneIndex: '02',
+    heading: 'A View Beyond Expectations',
+    description:
+      'Open spaces, beautiful city views, and a sense of calm above the everyday.',
+    start: 0.35,
+    fadeInEnd: 0.39,
+    fadeOutStart: 0.49,
+    end: 0.54,
+  },
+  {
+    id: 'scene-3-entrance',
+    sceneIndex: '03',
+    heading: 'Step Into Comfort',
+    description:
+      'Every detail is designed to bring comfort, elegance, and natural light into your everyday life.',
+    start: 0.56,
+    fadeInEnd: 0.60,
+    fadeOutStart: 0.66,
+    end: 0.70,
+  },
+  {
+    id: 'scene-4-living',
+    sceneIndex: '04',
+    heading: 'Designed Around You',
+    description:
+      'Elegant interiors, considered details, and spaces that feel like home.',
+    start: 0.72,
+    fadeInEnd: 0.76,
+    fadeOutStart: 0.85,
+    end: 0.90,
+  },
+];
+
+const getSceneMotion = (p: number, scene: ArchitecturalSceneContent, reducedMotion: boolean) => {
+  if (p < scene.start || p > scene.end) {
+    return { opacity: 0, translateY: 0, visible: false };
+  }
+  let opacity = 1;
+  let translateY = 0;
+
+  // Scene 1 is the establishing exterior shot: already visible at p = 0.00
+  if (scene.start === 0.00 && p < scene.fadeInEnd) {
+    opacity = 1;
+    translateY = 0;
+  } else if (p < scene.fadeInEnd) {
+    const t = (p - scene.start) / (scene.fadeInEnd - scene.start);
+    // Smooth cubic ease
+    const ease = t * t * (3 - 2 * t);
+    opacity = ease;
+    translateY = (1 - ease) * 16;
+  } else if (p > scene.fadeOutStart) {
+    const t = (p - scene.fadeOutStart) / (scene.end - scene.fadeOutStart);
+    const ease = t * t * (3 - 2 * t);
+    opacity = 1 - ease;
+    translateY = -ease * 16;
+  }
+
+  return {
+    opacity: reducedMotion ? (opacity > 0.05 ? 1 : 0) : opacity,
+    translateY: reducedMotion ? 0 : translateY,
+    visible: opacity > 0.005,
+  };
+};
+
 // =========================================================================
 // GLSL SHADER: Slow, Cinematic Architectural Fly-Through with Portal Occlusion
 // =========================================================================
@@ -378,7 +467,42 @@ export const BuildingToInteriorExperience: React.FC<BuildingToInteriorExperience
 
 
         {/* ========================================================
-            2. FINAL BRAND REVEAL AT BALCONY TERRACE (p >= 0.94)
+            2. SCENE-SYNCHRONIZED EDITORIAL CONTENT (Scenes 1 - 4)
+            Restrained, luxury editorial typography positioned away from architectural focus
+            ======================================================== */}
+        <div className="absolute bottom-12 sm:bottom-16 md:bottom-20 left-6 sm:left-12 md:left-20 max-w-[calc(100vw-3rem)] sm:max-w-md md:max-w-lg lg:max-w-xl pointer-events-none z-20">
+          {SCENE_CONTENTS.map((scene) => {
+            const motion = getSceneMotion(p, scene, prefersReducedMotion);
+            if (!motion.visible) return null;
+
+            return (
+              <div
+                key={scene.id}
+                className="transition-all duration-300 ease-out"
+                style={{
+                  opacity: motion.opacity,
+                  transform: `translateY(${motion.translateY}px)`,
+                }}
+              >
+                <div className="flex items-center gap-3 mb-2 sm:mb-2.5">
+                  <span className="text-[10px] sm:text-[11px] font-semibold tracking-[0.28em] uppercase text-[#80B3AD] drop-shadow-sm">
+                    {scene.sceneIndex} / SAYBA RESIDENCES
+                  </span>
+                  <span className="h-px w-8 bg-[#80B3AD]/60" />
+                </div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-medium text-white tracking-tight leading-[1.15] drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]">
+                  {scene.heading}
+                </h2>
+                <p className="mt-2 sm:mt-2.5 text-sm sm:text-base text-white/85 leading-relaxed font-light max-w-md sm:max-w-lg drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+                  {scene.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ========================================================
+            3. FINAL BRAND REVEAL AT BALCONY TERRACE (p >= 0.94)
             Elegantly revealed only at final terrace viewpoint
             ======================================================== */}
         <div
