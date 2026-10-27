@@ -33,6 +33,7 @@ async function capture() {
   console.log('Cinematic scroll range:', containerHeight);
 
   const steps = [
+    { name: '0_opening_hero', p: 0.00 },
     { name: '1_exterior_approach', p: 0.15 },
     { name: '2_balcony_closeup', p: 0.45 },
     { name: '3_entrance_approach', p: 0.62 },

@@ -95,10 +95,11 @@ const cinematicFragmentShader = `
     vec4 colBalcony = texture2D(uTexBalcony, clamp(uvBalcony, 0.0, 1.0));
 
     // Specular reflection sweep across balcony glass balustrade as camera moves
-    float glassSweep = smoothstep(0.0, 0.14, 0.07 - abs(st.x - 0.44 - (p - 0.38) * 1.6)) * (1.0 - p2 * 0.5);
+    float glassSweep = (p >= 0.35 && p <= 0.55) ? 
+      smoothstep(0.0, 0.14, 0.07 - abs(st.x - 0.44 - (p - 0.38) * 1.6)) * (1.0 - p2 * 0.5) : 0.0;
     colBalcony.rgb += vec3(0.07, 0.09, 0.10) * glassSweep;
 
-    vec3 sceneStage2 = mix(colTower.rgb, colBalcony.rgb, tTowerToBalcony);
+    vec3 sceneStage2 = (p < 0.34) ? colTower.rgb : mix(colTower.rgb, colBalcony.rgb, tTowerToBalcony);
 
     // -------------------------------------------------------------
     // STAGE 3: Gradual Approach to Open Entrance (p: 0.55 -> 0.68)
@@ -120,44 +121,54 @@ const cinematicFragmentShader = `
     // Interior room is revealed strictly through the expanding door opening!
     // ZERO ghosting or transparent double-exposure.
     // -------------------------------------------------------------
-    float p4 = clamp((p - 0.68) / 0.14, 0.0, 1.0);
-    float easeP4 = smoothstep(0.0, 1.0, p4);
+    vec3 sceneStage4 = sceneStage3;
+    if (p >= 0.68) {
+      float p4 = clamp((p - 0.68) / 0.14, 0.0, 1.0);
+      float easeP4 = smoothstep(0.0, 1.0, p4);
 
-    // Door aperture expands outward as camera passes through
-    float doorLeft = mix(0.48, -0.05, easeP4);
-    float doorRight = mix(0.72, 1.05, easeP4);
-    float inDoorway = smoothstep(doorLeft - 0.015, doorLeft + 0.015, st.x) * 
-                      (1.0 - smoothstep(doorRight - 0.015, doorRight + 0.015, st.x));
+      // Door aperture expands outward as camera passes through
+      float doorLeft = mix(0.48, -0.05, easeP4);
+      float doorRight = mix(0.72, 1.05, easeP4);
+      float inDoorway = smoothstep(doorLeft - 0.015, doorLeft + 0.015, st.x) * 
+                        (1.0 - smoothstep(doorRight - 0.015, doorRight + 0.015, st.x));
 
-    // Interior view entering the room
-    float enterIntScale = mix(0.96, 1.35, easeP4);
-    vec2 uvEnterInt = (st - vec2(0.505, 0.495)) / enterIntScale + vec2(0.505, 0.495);
-    vec4 colEnterInt = texture2D(uTexInterior, clamp(uvEnterInt, 0.0, 1.0));
+      // Interior view entering the room
+      float enterIntScale = mix(0.96, 1.35, easeP4);
+      vec2 uvEnterInt = (st - vec2(0.505, 0.495)) / enterIntScale + vec2(0.505, 0.495);
+      vec4 colEnterInt = texture2D(uTexInterior, clamp(uvEnterInt, 0.0, 1.0));
 
-    vec3 sceneStage4 = mix(sceneStage3, colEnterInt.rgb, inDoorway);
+      // Continuous entrance: the interior view within doorway transitions seamlessly from balcony texture
+      float interiorFade = smoothstep(0.0, 0.35, easeP4);
+      vec3 doorwayContent = mix(colApproach.rgb, colEnterInt.rgb, interiorFade);
+
+      sceneStage4 = mix(colApproach.rgb, doorwayContent, inDoorway);
+    }
 
     // -------------------------------------------------------------
     // STAGE 5: Slow Interior Traversal Onto Private Terrace (p: 0.82 -> 1.00)
     // Traveling past sofa & coffee table, settling on terrace looking at skyline
     // -------------------------------------------------------------
-    float p5 = clamp((p - 0.82) / 0.18, 0.0, 1.0);
-    float easeP5 = smoothstep(0.0, 1.0, p5);
-    // Scales to 2.85 toward terrace center so furniture moves completely off-screen
-    float traverseScale = mix(1.35, 2.85, easeP5);
-    vec2 traverseFocus = mix(vec2(0.505, 0.495), vec2(0.47, 0.48), easeP5);
-    vec2 uvTraverse = (st - traverseFocus) / traverseScale + traverseFocus;
+    vec3 sceneColor = sceneStage4;
+    if (p >= 0.82) {
+      float p5 = clamp((p - 0.82) / 0.18, 0.0, 1.0);
+      float easeP5 = smoothstep(0.0, 1.0, p5);
+      // Scales to 2.85 toward terrace center so furniture moves completely off-screen
+      float traverseScale = mix(1.35, 2.85, easeP5);
+      vec2 traverseFocus = mix(vec2(0.505, 0.495), vec2(0.47, 0.48), easeP5);
+      vec2 uvTraverse = (st - traverseFocus) / traverseScale + traverseFocus;
 
-    // Multiplane depth parallax: foreground furniture expands outward
-    float fgDepth = smoothstep(0.35, 0.95, st.y);
-    uvTraverse.y += fgDepth * easeP5 * 0.045;
-    uvTraverse.x += (st.x - 0.5) * fgDepth * easeP5 * 0.05;
+      // Multiplane depth parallax: foreground furniture expands outward
+      float fgDepth = smoothstep(0.35, 0.95, st.y);
+      uvTraverse.y += fgDepth * easeP5 * 0.045;
+      uvTraverse.x += (st.x - 0.5) * fgDepth * easeP5 * 0.05;
 
-    // Stabilized cinema gimbal sway
-    float gimbalSway = sin(p * 14.0) * 0.0012 * (1.0 - easeP5);
-    uvTraverse.x += gimbalSway;
-    vec4 colFinalInterior = texture2D(uTexInterior, clamp(uvTraverse, 0.0, 1.0));
+      // Stabilized cinema gimbal sway
+      float gimbalSway = sin(p * 14.0) * 0.0012 * (1.0 - easeP5);
+      uvTraverse.x += gimbalSway;
+      vec4 colFinalInterior = texture2D(uTexInterior, clamp(uvTraverse, 0.0, 1.0));
 
-    vec3 sceneColor = (p < 0.82) ? sceneStage4 : colFinalInterior.rgb;
+      sceneColor = colFinalInterior.rgb;
+    }
 
     // -------------------------------------------------------------
     // CINEMATIC LIGHTING & EXPOSURE DYNAMICS
